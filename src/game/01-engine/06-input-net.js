@@ -1,0 +1,536 @@
+// ======================= 输入 =======================
+// 本文件：键盘输入和联机的公共部分。
+//   1. 输入：Ctrl（一位玩家这一帧按了什么）、默认和自定义键位、隐藏的设置点击
+//   2. 联机：NET 状态、连上 / 断开 / 离开、系统消息、掉线后电脑接管或判胜
+//   3. 帧同步：snapshot / applySnapshot（整局状态）、onNetMsg 收消息、netTick 每帧收发、setupNetMatch 开局
+// 回滚联机的核心（存档、重算）在 20-tutorial-rollback-touch.js 的 ROLL 一节，点对点连接在 src/net-p2p.js。
+// 找 bug 提示：联机两边画面不一样，先跑 node tools/tests/netplay-test.mjs，它会指出第一处不一致的字段。
+let clock = 0;
+const DROP_TAP_MS = 280;
+class Ctrl {
+  constructor() { this.held = { left: false, right: false, down: false, atk: false, jump: false }; this.atkT = 0; this.buf = {}; this.lastDownTap = 0; }
+  press(a) { if (a === 'heavy') return; this.buf[a] = clock; if (this.rec) this.rec.push(a); }   // 重斩已取消
+  tapDown(now = (typeof performance !== 'undefined' ? performance.now() : Date.now())) {
+    if (this.lastDownTap > 0 && now - this.lastDownTap <= DROP_TAP_MS) {
+      this.lastDownTap = 0;
+      this.press('drop');
+      return true;
+    }
+    this.lastDownTap = now;
+    return false;
+  }
+  consume(a) { const t = this.buf[a]; if (t !== undefined && clock - t <= BUF) { delete this.buf[a]; return true; } return false; }
+  clear() { this.buf = {}; this.held.left = this.held.right = this.held.down = this.held.atk = this.held.jump = false; this.held.aim = 0; this.lastDownTap = 0; }
+}
+// 1P 攻击用鼠标（左键攻击/蓄力，右键重斩）或者 X 键（按住蓄力），其余用键盘；2P 全键盘
+// X 不和 2P、3P、4P 的任何键重复，同一台电脑多人玩时也不打架
+const DEFAULT_1P_KEYS = {
+  left: 'KeyA', right: 'KeyD', jump: 'KeyW', jump2: 'Space', down: 'KeyS',
+  atk: 'KeyX', dash: 'ShiftLeft', special: 'KeyE', skill: 'KeyQ', skill2: 'KeyR',
+  heavyStrike: 'KeyU', lowKick: 'KeyI', iaido: 'KeyO', grapple: 'KeyH',
+  stance: 'KeyZ', relicStance: 'KeyM', feint: 'KeyC', parry: 'KeyF', pet: 'KeyV',
+  lock: 'KeyG', beacon: 'KeyB', rally: 'KeyT', scoreboard: 'Tab',
+  orderFocus: 'Digit1', orderProtect: 'Digit2', orderSpread: 'Digit3',
+  cmdSelect: 'KeyY', cmdRole: 'KeyN'   // 统帅：选队友 / 给他分任务（Tab 轻点换战术在 25-keyboard-boot.js）
+};
+let custom1PKeys = { ...DEFAULT_1P_KEYS };
+try {
+  const savedKeys = JSON.parse(localStorage.getItem('renying-1p-keys') || '{}');
+  if (savedKeys && typeof savedKeys === 'object') custom1PKeys = { ...DEFAULT_1P_KEYS, ...savedKeys };
+} catch (e) {}
+function keyLabel(code) {
+  if (!code) return '无';
+  if (code.startsWith('Key')) return code.slice(3);
+  if (code.startsWith('Digit')) return code.slice(5);
+  if (code === 'Space') return '空格';
+  if (code === 'ShiftLeft' || code === 'ShiftRight') return 'Shift';
+  if (code === 'ControlLeft' || code === 'ControlRight') return 'Ctrl';
+  if (code === 'AltLeft' || code === 'AltRight') return 'Alt';
+  if (code === 'Tab') return 'Tab';
+  return code;
+}
+const KEYS = [
+  {},
+  { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'jump', ArrowDown: 'down', KeyK: 'atk', KeyJ: 'dash', KeyO: 'skill2', KeyI: 'special', KeyU: 'skill', KeyL: 'stance' },
+  { KeyF: 'left', KeyH: 'right', KeyT: 'jump', KeyG: 'down', KeyC: 'atk', KeyV: 'dash', KeyB: 'skill', KeyN: 'skill2', KeyM: 'special', KeyP: 'stance' },
+  { Numpad4: 'left', Numpad6: 'right', Numpad8: 'jump', Numpad5: 'down', Numpad1: 'atk', Numpad2: 'dash', Numpad7: 'skill', Numpad9: 'skill2', Numpad3: 'special', Numpad0: 'stance' },
+];
+function applyCustomKeys() {
+  KEYS[0] = {};
+  for (const [act, code] of Object.entries(custom1PKeys)) {
+    if (code) {
+      const realAct = act === 'jump2' ? 'jump' : act;
+      KEYS[0][code] = realAct;
+    }
+  }
+}
+applyCustomKeys();
+const human = [new Ctrl(), new Ctrl(), new Ctrl(), new Ctrl()];
+
+// Session-only hidden player automation. Decisions are sent as ordinary local inputs.
+// 要在几秒内连点 12 下才算：开启后 AI 协助战斗，但玩家手动按键、鼠标、触屏与 1/2/3 战术指令始终完全可用
+let secretSettingsClicks = 0, secretLastClick = 0, secretEnabled = false, secretBrain = null;
+let secretHumanUntil = 0;
+const secretHumanHeld = { left: false, right: false, down: false, atk: false, jump: false };
+const SECRET_TACTICAL_ACTS = new Set(['orderFocus', 'orderProtect', 'orderSpread', 'cmdSelect', 'cmdRole', 'lock', 'beacon', 'rally']);
+function secretNoteHumanInput(act, down) {
+  if (!secretEnabled) return;
+  if (SECRET_TACTICAL_ACTS.has(act)) return;
+  if (act === 'left' || act === 'right' || act === 'down' || act === 'atk' || act === 'jump') {
+    secretHumanHeld[act] = !!down;
+  }
+  if (down) secretHumanUntil = clock + 0.45;
+}
+function secretHumanActive() {
+  return clock < secretHumanUntil || secretHumanHeld.left || secretHumanHeld.right || secretHumanHeld.down || secretHumanHeld.atk || secretHumanHeld.jump;
+}
+function secretSettingsClick() {
+  const now = Date.now();
+  if (now - secretLastClick > 600) secretSettingsClicks = 0;
+  secretLastClick = now;
+  if (!secretEnabled && ++secretSettingsClicks >= 12) {
+    secretEnabled = true;
+    if (typeof toast === 'function') toast('AI 托管辅助已开启 · 仍可随时手动操作与使用 1/2/3 战术指令', 3.5);
+  }
+}
+function secretRound() {
+  secretHumanUntil = 0;
+  secretHumanHeld.left = secretHumanHeld.right = secretHumanHeld.down = secretHumanHeld.atk = secretHumanHeld.jump = false;
+  if (secretEnabled) { secretBrain = new AIBrain(human[0], 'god'); }
+}
+function secretThink(f, networkInput = false) {
+  if (!secretEnabled || (M.mode === 'net' && NET.isRanked) || RESIM || REPLAY.on || M.watchAi || M.mode === 'demo' || !f || f.hidden || f.hp <= 0 || M.phase !== 'fight') return;
+  if (secretHumanActive()) return;
+  if (!secretBrain) secretRound();
+  const oldTarget = f.target, foe = foeOf(f);
+  if (!foe) return;
+  // The AI writes opponent combo history; that private observation must not alter rollback state.
+  const hadCombo = Object.prototype.hasOwnProperty.call(foe, 'lastComboHits'), oldCombo = foe.lastComboHits;
+  try { secretBrain.think(f, foe); }
+  finally {
+    if (networkInput) { if (hadCombo) foe.lastComboHits = oldCombo; else delete foe.lastComboHits; f.target = oldTarget; }
+  }
+}
+
+
+// ======================= 联机（公共部分） =======================
+// 联机只有一种连法：浏览器之间用 WebRTC 直接连（PeerJS 只负责牵线），不需要自己的服务器，见 net-p2p.js。
+// 房主叫 host（青锋那一边），加入的人叫 client。对战用“回滚联机”（见下面 ROLL 一节）：两边每帧只交换按键。
+const NET = { role: null, open: false, remote: new Ctrl(), out: [], presses: [], presses2: [], forfeit: false, forfeitResult: '' };
+const localIdx = () => M.mode === 'net' && NET.role === 'client' ? 1 : 0;
+const localTeam = () => {
+  if (M.mode === '2v2' || (typeof is2v2 === 'function' && is2v2())) {
+    if (M.subMode === 'pp_cc' || (M.mode === 'net' && netRoomMode === 'pp_cc')) return 0;
+    if (M.mode === 'net') return NET.role === 'client' ? 1 : 0;
+    return 0;
+  }
+  return localIdx();
+};
+// NET.solo：对方中途掉线，这台接着把对局打完（见 netSolo），这时自己就是唯一算对局的一方
+const isClient = () => M.mode === 'net' && NET.role === 'client' && !ROLL.on && !NET.solo;
+function netEmit(ev) { if (M.mode === 'net' && NET.role === 'host' && !ROLL.on && !NET.solo) NET.out.push(ev); }
+function netReset() {
+  ROLL.on = false;
+  if (typeof MM !== 'undefined' && MM.on && typeof statQueueResult === 'function') statQueueResult(!!NET.open);
+  if (typeof mmStop === 'function') mmStop();
+  mmUI(null);
+  NET.peerQuit = false; NET.solo = false; NET.forfeit = false; NET.forfeitResult = ''; NET.keepRoom = false;
+  NET.matching = false; NET.hold = false;
+  p2pClose();
+  NET.open = false; NET.code = null; NET.out = []; NET.presses.length = 0; NET.remote.clear();
+  if (typeof updateNetLobby === 'function') updateNetLobby(false);
+  if ($id('copyCodeBtn')) $id('copyCodeBtn').classList.add('hidden');
+  if ($id('postToComBtn')) $id('postToComBtn').classList.add('hidden');
+}
+// 主动离开：告诉对方不用等我
+function netLeave() {
+  NET.leaving = true;
+  if (NET.isRanked && !NET.rkDone && rkOwner() && rkState().pending && !(M.mode === 'net' && M.phase === 'end')) {   // 排位打到一半自己走：判负（已经打完、在等两边核对结果时不算）
+    NET.rkDone = true;
+    const r = rkFinish(false, 'quit');
+    if (r) toast(`中途离开排位赛，判负（${r.delta} 分）`);
+  }
+  p2pBye();
+  netOverlay(''); netReset();
+}
+// 建房 / 加入（快速匹配和排位走 mmGo）
+function netConnect(asHost, code) { netConnectP2P(asHost, code); }
+function netOverlay(text) { const o = $id('netOv'); o.textContent = text; o.classList.toggle('on', !!text); }
+function onSys(m) {
+  if (m.sys === 'room' && m.matched) {
+    if (typeof statQueueResult === 'function') statQueueResult(true);
+    NET.role = m.role; NET.matching = false; NET.isRanked = !!m.ranked; NET.rkDone = false;
+    let targetRule = 'normal';
+    if (m.mmKind === '2v2_coop') targetRule = 'pp_cc';
+    else if (m.mmKind === '2v2_vs') targetRule = 'pp_pp';
+    if (typeof setRoomModeUI === 'function') setRoomModeUI(targetRule);
+    if (m.mmKind === '2v2_coop') netStatus('2v2 双人共斗同袍已就位！');
+    else if (m.mmKind === '2v2_vs') netStatus('2v2 对手已找到！');
+    else netStatus(m.ranked ? '排位对手已找到！' : '对手已找到！');
+    SFX.chargeFull();
+    return;
+  }
+  if (m.sys === 'room') {
+    NET.role = m.role; NET.code = m.code;
+    if (m.role === 'host') {
+      $id('roomCode').textContent = m.code;
+      if ($id('copyCodeBtn')) $id('copyCodeBtn').classList.remove('hidden');
+      if ($id('postToComBtn')) $id('postToComBtn').classList.remove('hidden');
+      updateNetLobby(true, (ACC && ACC.name) || '侠客 (房主)', '静候对手入局…', m.code, false);
+      netStatus('房间已建好。把上面的房间码发给朋友，静候他入局…');
+    } else {
+      updateNetLobby(true, '擂主 (房主)', (ACC && ACC.name) || '侠士 (应战)', m.code, true);
+      netStatus('入局成功，正在同步战局…');
+    }
+  } else if (m.sys === 'ready') {
+    NET.names = m.names || {}; NET.tiers = m.tiers || {}; NET.open = true;
+    NET.peerQuit = false; NET.forfeit = false; NET.forfeitResult = ''; NET.keepRoom = false;   // 好友房里新来的对手：上一个人走掉的记号清掉
+    updateNetLobby(true, (m.names && m.names.host) || '房主', (m.names && m.names.client) || '对手', NET.code, true);
+    if (NET.role === 'host') send({ sys: 'room_rule', rule: netRoomMode, mut: netTeamMutator() });
+    NET_MAPV.host = NET_MAPV.client = null; netMapVoteSend(); renderLobbyMaps();   // 新对手进房：两边重新互报自己的票
+    onNetOpen();
+  } else if (m.sys === 'map_vote') {
+    netMapVoteRecv(m.v);
+  } else if (m.sys === 'room_rule') {
+    if (NET.role !== 'client') return;
+    teamMutator = m.mut === 'mayhem' ? 'mayhem' : 'normal';
+    setRoomModeUI(m.rule);
+    toast(`擂主已设定切磋规则：${ROOM_RULE_NAMES[m.rule] || ROOM_RULE_NAMES.normal}`);
+  } else if (m.sys === 'rematch') {
+    if (NET.isRanked) return;   // 排位赛没有再战：打完各自回去重新匹配
+    if (m.action === 'ask') {
+      say('对手请求再战一局！', 1.2, 'go');
+      const again = $id('againBtn');
+      if (again) again.textContent = '接受再战 (BO3)';
+    } else if (m.action === 'repick') {
+      say('重新选人切磋', 1.0, 'go');
+      if (NET.role === 'host') bpStart('net');
+    } else if (m.action === 'start') {
+      if (NET.role === 'client') {
+        // 房主直接开启同阵容再战，收到后等 rstart 或 round 同步
+        say('再战开启！', 1.0, 'go');
+      }
+    }
+  }
+  else if (m.sys === 'result') {
+    if (m.me) setAcc(m.me);
+    const kind = m.ranked ? '排行榜' : '切磋战绩', pm = m.won ? '+1 胜' : '+1 负', pr = m.prog || {};
+    if (pr.profile) applyProfile(pr.profile);
+    let t = m.forfeit ? (m.won ? `对手中途离席，这场算你赢（${kind} ${pm}）` : `中途离席，判负（${kind} ${pm}）`) : `${kind} ${pm}`;
+    if (m.rk && pr.rank) {
+      const up = pr.promo ? (pr.before && pr.before.idx < 0 ? ' · 定级完成！' : ' · 晋级！') : '';
+      t = `排位赛 ${pr.delta >= 0 ? '+' : ''}${pr.delta} 分 · ${pr.rank.label}${up}`;
+      if (pr.promo) { say(pr.rank.tier || pr.rank.label, 1.4, 'super'); SFX.gong(); }
+    }
+    if (pr.gain) t += ` · +${pr.gain} 墨锭`;
+    $id('endRank').textContent = t; NET.lastResult = t;
+  }
+  else if (m.sys === 'match_finish') {
+    NET.consensus = NET.consensus || {};
+    const localW = NET.consensus.localWinner;
+    const duration = Date.now() - (NET.matchStartTime || Date.now());
+    const hits = NET.matchHits || 0;
+    const isQualifying = m.qualifying && (duration >= 15000 || hits >= 4);
+    const agreed = localW !== undefined ? (localW === m.winner) : true;
+    NET.consensus.agreed = agreed;
+    NET.consensus.qualifying = isQualifying;
+    NET.consensus.gotFinish = true;
+    send({ sys: 'match_ack', matchId: m.matchId, winner: m.winner, agreed, qualifying: isQualifying });
+    tryCommitNet(false);
+  }
+  else if (m.sys === 'match_ack') {
+    NET.consensus = NET.consensus || {};
+    NET.consensus.peerAgreed = !!m.agreed;
+    NET.consensus.qualifying = NET.consensus.qualifying && !!m.qualifying;
+    NET.consensus.gotAck = true;
+    tryCommitNet(false);
+  }
+  else if (m.sys === 'left') netLost();
+  else if (m.sys === 'full') { netStatus('这间房已经满员'); netReset(); }
+  else if (m.sys === 'version') { netStatus(`你的版本与房主不同（房主是 ${m.need}），刷新网页再试`); netReset(); }
+}
+function send(o) { p2pSend(o); }
+function onNetOpen() {
+  netStatus('已连接');
+  send({ pskin: mySkinMap() });
+  send({ pload: typeof armoryCombatLoadoutMap === 'function' ? armoryCombatLoadoutMap() : {} });
+  initAudio();
+  if (NET.role === 'host') bpStart('net');
+  else netStatus('已连接，即刻选人…');
+}
+// 2v2、3v3 车轮打到一半对方掉线（房主掉线也一样）：留下的这台接过对局，自己当房主，
+// 对方那边的人交给电脑，这一局接着打完。PvP 对手主动离开则直接判胜。
+function netSolo() {
+  if (!ROLL.on || ROLL.ended || M.mode !== 'net' || M.phase === 'end' || NET.isRanked) return false;
+  const def = roomDef();
+  if (def.raid || !(def.four || M.duo)) return false;
+  if (ROLL.pend < ROLL.F) rollResim();   // 先用已经收到的按键把猜错的帧改对
+  const mine = NET.role === 'client' ? 1 : 0, wasHost = mine === 0;
+  ROLL.slots[1 - mine].forEach(i => { fighterByIdx(i).ctrl = new AICtrl(M.level || 'god'); });
+  ROLL.slots[mine].forEach((i, k) => { fighterByIdx(i).ctrl = human[k]; });
+  human[0].rec = human[1].rec = null; NET.presses.length = 0; NET.presses2.length = 0;
+  ROLL.on = false; REC.bad = true; NET.solo = true;
+  NET.open = false; p2pClose();
+  netOverlay('');
+  const who = NET.peerQuit ? '离开了' : '掉线了';
+  const msg = wasHost ? `对手${who}，对面的人改由电脑接手，这局接着打（不计入战绩）` : `房主${who}，这局由你接管，对面的人改由电脑接手（不计入战绩）`;
+  toast(msg); netStatus(msg);
+  NET.consensus = { committed: true };   // 没法和对方核对结果，不上报
+  NET.lastResult = '';
+  return true;
+}
+// 好友房的房主：对手走了，房间（同一个房间码）接着开着，朋友用原来的码还能再进来，不用重新建房发码。
+// 只管自己建的好友房（P2P.friend）；匹配、排位的房间照旧关掉。
+function netKeepRoom() {
+  if (NET.role !== 'host' || NET.isRanked || !NET.code || typeof P2P === 'undefined' || !P2P.friend || !P2P.peer || !P2P.opened) return false;
+  const c = P2P.conn; P2P.conn = null; P2P.drop = null; P2P.graceUntil = 0;
+  if (c) { try { c.close(); } catch (e) {} }
+  NET.open = false; NET.keepRoom = true;
+  NET.out = []; NET.presses.length = 0; NET.remote.clear();
+  p2pState('wait'); P2P.roomAt = Date.now();
+  if (typeof updateNetLobby === 'function') updateNetLobby(true, (ACC && ACC.name) || '侠客 (房主)', '静候对手入局…', NET.code, false);
+  $id('roomCode').textContent = NET.code;
+  netStatus('对手已离开。房间还开着，朋友用同一个房间码就能再进来');
+  return true;
+}
+function netForfeitWin() {
+  if (M.mode !== 'net' || NET.isRanked || !NET.peerQuit || NET.forfeit) return false;
+  if (netRoomMode === 'pp_cc' || roomDef().raid) return false;
+  const winner = localTeam();
+  const needWins = isDuo() ? (M.duo[0].length || 3) : (is2v2() ? 2 : WINS_NEEDED);
+  M.wins[winner] = needWins;
+  M.koWinner = winner;
+  M.phase = 'end';
+  ROLL.on = false;
+  NET.open = false;
+  NET.forfeit = true;
+  NET.forfeitResult = '对手中途离席，这场算你赢';
+  if (!netKeepRoom()) p2pClose();
+  if (typeof mmStop === 'function') mmStop();
+  NET.consensus = { localWinner: winner, myTeam: winner, qualifying: true, committed: false };
+  commitNetProgress(winner, true, true);
+  showEnd(winner);
+  return true;
+}
+function netLost() {
+  if (NET.peerQuit && typeof statEv === 'function' && M.mode === 'net' && !(typeof STATQ !== 'undefined' && STATQ.disconnected)) {
+    statEv('disconnect'); if (typeof STATQ !== 'undefined') STATQ.disconnected = true;
+  }
+  // 对局已经打完、停在结算页时对方走了：留在结算页看结果（排位分、墨锭照常结算），只是不能再战了。
+  // 以前会被直接拉回联机大厅，还提示“对局已中断（未完成）”，打完的排位还可能被当成对手中途离开
+  if (M.mode === 'net' && $id('end').classList.contains('on')) {
+    const quit = NET.peerQuit;
+    netOverlay('');
+    const kept = netKeepRoom();
+    if (!kept) netReset();
+    $id('againBtn').style.display = 'none';
+    $id('netRepickBtn').classList.add('hidden');
+    if (!kept) $id('roomCode').textContent = '';
+    toast(kept ? '对手已离开，房间还开着，同一个房间码可以再进' : quit ? '对手已离开房间' : '和对手的连接断开了');
+    if (!kept) netStatus('对手已离开。可以重新建房或加入');
+    return;
+  }
+  if (netForfeitWin()) return;
+  if (netSolo()) return;
+  const was = M.mode === 'net' || bpMode === 'net';
+  // 排位赛打到一半对方走了：对方主动离开算你赢，网络断开不计分
+  let rkMsg = '';
+  if (NET.isRanked && !NET.rkDone && rkState().pending) {
+    NET.rkDone = true;
+    if (NET.peerQuit) { const r = rkFinish(true, 'forfeit'); if (r) rkMsg = `对手中途离开，这场排位算你赢（${rkResultText(r)}）`; }
+    else { rkClearPending(); rkMsg = '排位对局因网络中断，不计分'; }
+  }
+  netOverlay('');
+  netReset();
+  if (was) { toMenu(); selectMode('net'); }
+  $id('roomCode').textContent = '';
+  netStatus(rkMsg || '对局已中断（未完成，不扣分）。可重新建房或加入');
+  if (rkMsg) toast(rkMsg);
+  NET.lastResult = '';
+}
+// 状态快照：房主每帧发一次
+const FK = ['x', 'y', 'vx', 'vy', 'face', 'hp', 'meter', 'state', 't', 'invul', 'dashCD', 'jumps', 'airDash', 'stun', 'juggle', 'comboHits', 'stance', 'stanceUnlocked', 'stanceT', 'relicStance', 'relicStanceUnlocked', 'relicStanceT', 'relicStanceCd', 'badgeId', 'badgeTier', 'badgeDashT',
+  'spiked', 'bounced', 'sp', 'slashN', 'finalDone', 'spFace', 'dashDir', 'lunged', 'hitDone', 'hitConfirmed', 'chargeFull', 'moveName', 'rot', 'breakCD',
+  'skillCD', 'skPh', 'armorT', 'armorHits', 'parryT', 'thunderGuardT', 'buffT', 'skill', 'regenLeft', 'sinceHit', 'spN', 'spPose', 'rooted', 'flyT', 'flying', 'skill2CD', 'escInvul', 'escMode', 'escT', 'bbX', 'bbT', 'twinT', 'diveAir', 'diveChained', 'ink', 'notes', 'noteT', 'drunk', 'reflectT', 'hookedT', 'burnT', 'breath', 'slowT', 'defDebuffT', 'swapFreezeT', 'drinkT', 'jailT', 'jailX', 'avaFree', 'avaChain', 'fu', 'fuT', 'skAir', 'clones', 'cloneN', 'swapId', 'shadowMarks', 'shadowMarkT', 'shadowExecTarget', 'shadowExecT',
+  'badgeLinkT', 'badgePressureT', 'badgePressureSkill', 'badgeRiposteT', 'badgeBreakT', 'badgeAirSkillT', 'badgeExitT', 'badgeAirUsed', 'badgeAirSkillUsed', 'ballGuardBreakT', 'quickGetup', 'quickGetupPhase', 'knockdownDur'];
+// 同步数据用数组而不是对象，体积小一半多
+function snapF(f) { return FK.map(k => f[k] === undefined ? null : r2(f[k])); }
+// 被打的状态：这些一定听房主的
+const VICTIM = ['hitstun', 'launched', 'knockdown', 'getup', 'held', 'blockstun'];
+function applyF(f, arr, exact) {
+  const o = {}; FK.forEach((k, i) => { o[k] = arr[i]; });
+  const mine = !exact && f.idx === localIdx();
+  if (mine && !VICTIM.includes(o.state) && !VICTIM.includes(f.state) && Math.abs(o.x - f.x) < 90 && Math.abs(o.y - f.y) < 90) {
+    // 自己的角色：按键立刻生效，只同步血量、气和少量位置修正，不把自己拉回旧位置
+    f.hp = o.hp; f.meter = o.meter; f.comboHits = o.comboHits; f.juggle = o.juggle; f.breakCD = o.breakCD;
+    f.x += (o.x - f.x) * 0.08;
+    return;
+  }
+  const ox = f.x, oy = f.y;
+  for (const k of FK) f[k] = o[k];
+  // 平滑修正：位置按房主的来，但画面上从旧位置慢慢滑过去（不影响判定）
+  if (!exact && Math.abs(o.x - ox) < 90 && Math.abs(o.y - oy) < 90) { f.vox = (f.vox || 0) + ox - o.x; f.voy = (f.voy || 0) + oy - o.y; }
+  else { f.vox = 0; f.voy = 0; }
+  f.move = f.state === 'attack' && f.moveName ? f.moves[f.moveName] : null;
+}
+function snapshot() {
+  return { f: [snapF(A), snapF(B)], m: [M.phase, M.t, M.round, M.wins, M.timer, M.koWinner], g: [r2(superFreeze), superOwner ? superOwner.idx : -1], p: projs.map(q => { const o = {}; for (const k in q) o[k] = r2(q[k]); return o; }) };
+}
+function applySnapshot(sn, exact) {
+  applyF(A, sn.f[0], exact); applyF(B, sn.f[1], exact);
+  [M.phase, M.t, M.round, M.wins, M.timer, M.koWinner] = sn.m;
+  superFreeze = sn.g[0]; superOwner = sn.g[1] >= 0 ? [A, B][sn.g[1]] : null;
+  if (superFreeze > 0 && !superOwner) superFreeze = 0;
+  if (sn.p) { projs.length = 0; for (const q of sn.p) projs.push(q); }
+}
+function onNetMsg(msg) {
+  if (msg.mstart || msg.report) return;
+  if (msg.mbrief && NET.role === 'client' && MAPS[msg.mbrief.mapId]) { showMapBriefing(msg.mbrief.mapId, null, true); return; }
+  if (msg.prematch) {
+    if (msg.prematch.type === 'start' && NET.role === 'client' && msg.prematch.state) {
+      onlineCompetitiveDraft = { state: msg.prematch.state, onComplete: () => {}, remoteDeadline: 0, finishing: false };
+      competitiveDraftStart(msg.prematch.state, 'net', {}, () => {}, true);
+    } else competitiveDraftReceive(msg.prematch);
+    return;
+  }
+  if (msg.ru !== undefined) {
+    // 对方最多领先我们几十帧：离谱的帧号（改过的客户端）不认，不然会卡死，还会把之后的按键全丢掉
+    if (typeof msg.ru !== 'number' || !isFinite(msg.ru) || msg.ru < 0 || msg.ru > ROLL.F + ROLL.MAXP * 4) return;
+    rollRecv(msg); return;
+  }
+  if (msg.rstart) {
+    // 开局只由房主发起：加入方收到才照办，形状不对的直接扔掉（以前 {} 就能把对面打崩）
+    const r = msg.rstart;
+    if (NET.role === 'host' || !r || !Array.isArray(r.ch) || r.ch.length < 2 || typeof r.seed !== 'number' || !isFinite(r.seed)) return;
+    rollStart(r.ch, r.seed, r.duo, r.mv, r.map, r.mut, r.competitiveScrolls, r.loadouts); return;
+  }
+  if (msg.rsync) {
+    // 纠正状态只有房主会发：加入方收到才接受，而且状态要是 capState() 那个样子
+    const p = msg.rsync, st = p && p.st;
+    if (NET.role !== 'client' || !p || typeof p.f !== 'number' || !isFinite(p.f) || p.f < 0 || p.f > ROLL.F + ROLL.N) return;
+    if (!st || typeof st.clock !== 'number' || !Array.isArray(st.f) || !Array.isArray(st.c) || !Array.isArray(st.projs) || !st.M) return;
+    rollAdopt(p); return;
+  }
+  if (msg.rdesync) { if (NET.role === 'host' && rollMine(msg)) rollSendSync(); return; }
+  if (msg.pg !== undefined) { send({ po: msg.pg }); return; }
+  if (msg.po !== undefined) { const r = performance.now() - msg.po; NET.rtt = NET.rtt ? NET.rtt * 0.7 + r * 0.3 : r; return; }
+  if (msg.chat) { chatRecv(msg.chat); return; }
+  if (msg.i) {
+    const c = NET.remote, h = msg.i.h, wasAtk = c.held.atk;
+    c.held.left = !!(h & 1); c.held.right = !!(h & 2); c.held.down = !!(h & 4); c.held.atk = !!(h & 8); c.held.jump = !!(h & 16); c.held.aim = (h & 64) ? ((h & 32) ? -1 : 1) : 0;
+    if (c.held.atk && !wasAtk) c.atkT = clock;
+    for (const a of msg.i.p) c.press(a);
+  }
+  if (msg.ev) for (const ev of msg.ev) playEvent(ev);
+  if (msg.bps && NET.role === 'client') {
+    if (!BP || BP.step !== msg.bps.step) bpSel = -1; BP = msg.bps; bpMode = 'net'; ensurePortraits(); if (BP.step < bpSteps().length) showScreen('bp'); renderBP();
+    if (!BP.avail || !BP.avail[1]) send({ avail: availList() });
+  }
+  if (msg.avail && NET.role === 'host') { NET.peerAvail = msg.avail; if (BP && BP.avail) { BP.avail[1] = msg.avail; send({ bps: BP }); renderBP(); } }
+  if (msg.pskin) NET.peerSkins = msg.pskin;
+  if (msg.pload && typeof msg.pload === 'object') NET.peerLoadout = msg.pload;
+  if (msg.bp !== undefined && NET.role === 'host' && BP && BP.step < bpSteps().length && bpSteps()[BP.step][0] === 1) bpApply(msg.bp);
+  if (msg.s && NET.role === 'client' && M.mode === 'net') applySnapshot(msg.s);
+}
+function playEvent(ev) {
+  if (ev.e === 'hit') {
+    const now = performance.now();
+    while (predicted.length && now - predicted[0] > 400) predicted.shift();
+    if (ev.a === localIdx() && predicted.length && !ev.ko) { predicted.shift(); hitVisual(ev, true); }
+    else hitVisual(ev);
+  }
+  else if (ev.e === 'parry') parryVisual(ev);
+  else if (ev.e === 'thunder_counter') thunderCounterVisual(ev);
+  else if (ev.e === 'say') { say(ev.text, ev.dur, ev.style); if (ev.snd) SFX[ev.snd](); }
+  else if (ev.e === 'round') {
+    if (ev.ch) setChars(ev.ch[0], ev.ch[1]);
+    if (M.mode !== 'net') { setupNetMatch(); MSTAT.maxcombo = 0; MSTAT.ults = 0; }
+    applySkins();
+    if (ev.r === 1) { send({ mstart: 1 }); $id('endRank').textContent = ''; }
+    BP = null; showScreen(null);
+    M.round = ev.r; M.wins = ev.w; startRound();
+  } else if (ev.e === 'end') {
+    M.wins = ev.wins; M.phase = 'end'; showEnd(ev.w);
+  }
+}
+function netTick(dt) {
+  // 排队时每 4 秒告诉服务器“我还在”，不然等久了会被当成掉线清出队列
+  if (M.mode !== 'net' && bpMode !== 'net') return;
+  if (!NET.open) return;
+  NET.pingAcc = (NET.pingAcc || 0) + dt;
+  if (NET.pingAcc >= 1) { NET.pingAcc = 0; const now = performance.now(); send({ pg: now }); }   // 只量和对手之间的延迟：联机是点对点，没有服务器可量
+  if (M.mode !== 'net' || NET.hold || ROLL.on) return;
+  const h = human[0].held;
+  const hb = (h.left ? 1 : 0) | (h.right ? 2 : 0) | (h.down ? 4 : 0) | (h.atk ? 8 : 0) | (h.jump ? 16 : 0) | (h.aim < 0 ? 32 : 0) | (h.aim ? 64 : 0);
+  NET.snapAcc = (NET.snapAcc || 0) + dt; NET.keepAcc = (NET.keepAcc || 0) + dt;
+  const msg = {};
+  if (hb !== NET.lastH || NET.presses.length || NET.keepAcc > 0.5) { msg.i = { h: hb, p: NET.presses.splice(0) }; NET.lastH = hb; NET.keepAcc = 0; }
+  if (NET.role === 'host') {
+    if (NET.snapAcc >= 1 / 60) { NET.snapAcc = 0; msg.s = snapshot(); }
+    if (NET.out.length) msg.ev = NET.out.splice(0);
+  }
+  if (msg.i || msg.s || msg.ev) send(msg);
+}
+const r2 = v => typeof v === 'number' ? Math.round(v * 100) / 100 : v;
+function setupNetMatch() {
+  M.mode = 'net'; M.wins = [0, 0]; M.round = 1; M.carry = null; M.duo = null; M.map = null; A.meter = B.meter = 0; NET.solo = false;
+  M.teamSize = roomDef().teamSize || 0;
+  if (M.teamSize) {
+    M.level = 'normal';
+    M.watchAi = false;
+    const total = M.teamSize * 2;
+    for (let i = 0; i < MAX_FIGHTERS; i++) {
+      const f = FIGHTERS[i];
+      f.hidden = i >= total;
+      if (i >= 2 && i < total) {
+        const lead = i % 2 === 0 ? A : B;
+        f.setChar((lead.chIdx + 3 * Math.floor(i / 2)) % CHARS.length);
+        f.ctrl = new AICtrl(M.level);
+      }
+    }
+  }
+  human[0].clear(); human[1].clear(); human[2].clear(); human[3].clear();
+  NET.remote.clear(); NET.presses.length = 0; human[0].rec = NET.presses;
+  if (netRoomMode === 'pp_cc' || netRoomMode === 'raid') {
+    M.subMode = netRoomMode;
+    M.level = 'god';
+    M.watchAi = false;
+    if (netRoomMode === 'raid') { M.raidSquadSize = 3; C.hidden = D.hidden = B.hidden = false; }   // 魔首和开局秘卷要两边一样，在 rollStart 里按种子定（netRaidSetup）
+    if (NET.role === 'host') {
+      A.ctrl = human[0];
+      C.ctrl = NET.remote;
+    } else {
+      A.ctrl = NET.remote;
+      C.ctrl = human[0];
+    }
+    B.ctrl = new AICtrl('god');
+    D.ctrl = new AICtrl('god');
+    if (!B.ch) B.setChar(1);
+    if (!D.ch) D.setChar(3);
+  } else if (netRoomMode === 'pp_pp') {
+    M.subMode = 'pp_pp';
+    M.watchAi = false;
+    if (NET.role === 'host') {
+      A.ctrl = human[0];
+      C.ctrl = human[1] || new AICtrl('god');
+      B.ctrl = NET.remote;
+      D.ctrl = new AICtrl('god');
+    } else {
+      A.ctrl = NET.remote;
+      C.ctrl = new AICtrl('god');
+      B.ctrl = human[0];
+      D.ctrl = human[1] || new AICtrl('god');
+    }
+    if (!C.ch) C.setChar((A.chIdx + 2) % CHARS.length);
+    if (!D.ch) D.setChar((B.chIdx + 2) % CHARS.length);
+  } else {
+    M.subMode = null;
+    A.ctrl = NET.role === 'host' ? human[0] : NET.remote;
+    B.ctrl = NET.role === 'host' ? NET.remote : human[0];
+  }
+  NET.matchStartTime = Date.now();
+  NET.matchHits = 0;
+  NET.matchId = 'm_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+  NET.consensus = { agreed: false, peerAgreed: false, qualifying: true, committed: false, pendingReport: false };
+  rkBegin();
+}

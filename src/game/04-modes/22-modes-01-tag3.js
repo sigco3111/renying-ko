@@ -1,0 +1,63 @@
+// ======================= 3v3 门派车轮战 =======================
+// 本文件：3v3 车轮战的模式卡和开局（startTag3Match）：一方三人轮流上场，输一回合换下一位。
+// 车轮战设置页没有自己的设置了：电脑境界用单人页顶上共用的那一条（pickLevel），选人统一在点将台里做（各禁 1 选 3）
+function renderTag3() {}
+
+function tag3Rematch() {
+  if (M.mode !== 'tag3' || M.watchAi || !Array.isArray(M.teams) || M.teams.length !== 2 || M.teams.some(team => !Array.isArray(team) || team.length !== 3)) return false;
+  const teams = M.teams.map(team => team.slice());
+  teamMutator = M.teamMutator || 'normal';
+  startTag3Match(teams[0], teams[1], M.level || pickLevel);
+  return true;
+}
+function tag3Repick() {
+  if (M.mode !== 'tag3' || M.watchAi) return false;
+  initAudio(); paused = false;
+  bpStart('tag3', { level: M.level || pickLevel, quickRelay: true });
+  return true;
+}
+function startTag3Match(pTeam, eTeam, lv, isWatch = false) {
+  if (p2pActive()) netDropWaiting();
+  refocusGame();
+  human[0].rec = null;
+  REC.on = false;
+
+  M.mode = 'tag3'; M.teamMutator = teamMutator;
+  M.level = lv || pickLevel || 'normal';
+  M.teams = [[...pTeam], [...eTeam]];
+  M.teamIdx = [0, 0];
+  M.wins = [0, 0];
+  M.round = 1;
+  M.carry = null;
+  M.stage = null;
+  M.duo = null;
+  M.watchAi = !!isWatch;
+  if (!M.map) M.map = rollMap();
+
+  setChars(M.teams[0][0], M.teams[1][0]);
+  A.ctrl = isWatch ? new AICtrl(M.level || 'god') : human[0];
+  B.ctrl = new AICtrl(M.level || 'god');
+  A.meter = B.meter = 0;
+  human[0].clear(); human[1].clear();
+
+  showScreen(null);
+  if (!isWatch) rpRunBegin('tag3');
+  if (!isWatch) recBegin('loc');
+  startRound();
+  say(isWatch ? '3v3 门派车轮战 · AI 群英观战' : '3v3 门派车轮战', 1.4);
+}
+
+const tag3StartBtn = document.getElementById('tag3StartBtn');
+const tag3QuickBtn = document.getElementById('tag3QuickBtn');
+if (tag3QuickBtn) tag3QuickBtn.addEventListener('click', () => {
+  initAudio();
+  paused = false;
+  bpStart('tag3', { level: pickLevel, quickRelay: true });
+});
+if (tag3StartBtn) {
+  tag3StartBtn.addEventListener('click', () => {
+    initAudio();
+    paused = false;
+    bpStart('tag3', { level: pickLevel, isWatch: false });
+  });
+}
