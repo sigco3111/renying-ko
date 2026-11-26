@@ -28,6 +28,15 @@ function cvT(s) {
   if (r === undefined) { if (CVT_MEMO.size > 2000) CVT_MEMO.clear(); r = I18N.t(s); CVT_MEMO.set(s, r); }
   return r;
 }
+// 한글판: 캔버스에 직접 그리는 문장 중 cvT를 거치지 않은 것도 한국어로 바꿔 그린다 (한자가 들어간 문장만 조회)
+(function () {
+  const P = window.CanvasRenderingContext2D && CanvasRenderingContext2D.prototype; if (!P) return;
+  const CJK = /[\u4e00-\u9fff]/;
+  for (const k of ['fillText', 'strokeText']) {
+    const o = P[k];
+    P[k] = function (t, ...a) { if (typeof t === 'string' && CJK.test(t)) t = cvT(t); return o.call(this, t, ...a); };
+  }
+})();
 // 一行字放不下 maxW：先缩字号（不小于 12px，HUD 审计的下限），还放不下就按词折行。font(s) 给出字号 s 时的 ctx.font
 function cvFit(text, maxW, size, font) {
   for (let s = Math.round(size); s >= 12; s--) { ctx.font = font(s); if (ctx.measureText(text).width <= maxW) return { size: s, lines: [text] }; }
