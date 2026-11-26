@@ -262,7 +262,7 @@ function renderBP() {
       const pickedCnt = picks.filter(x => x >= 0).length;
       const bansStrip = sideBans.map((bIdx, bSlot) => {
         const bActive = !done && side === sd && type === 'ban' && sideBans.filter(x => x >= 0).length === bSlot;
-        return `<div class="bpl-ban-chip${bActive ? ' on' : ''}${bIdx >= 0 ? ' filled' : ''}">${bIdx >= 0 ? `<img src="${PORTRAITS[bIdx] || ''}" alt=""><span>禁 ${CHARS[bIdx].name}</span>` : `<span>禁位 ${bSlot + 1}</span>`}</div>`;
+        return `<div class="bpl-ban-chip${bActive ? ' on' : ''}${bIdx >= 0 ? ' filled' : ''}">${bIdx >= 0 ? `<img src="${PORTRAITS[bIdx] || ''}" alt=""><span>禁 ${CHARS[bIdx].name}</span>` : `<span>금지 슬롯 ${bSlot + 1}</span>`}</div>`;
       }).join('');
       const slotsHtml = picks.map((idx, slotIdx) => {
         const isActive = !done && side === sd && type === 'pick' && (pickedCnt === slotIdx);
