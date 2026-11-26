@@ -448,7 +448,7 @@ body.offline #mMatch { display: none !important; }
 .bd-card-desc { font-size: 12px; line-height: 1.45; color: #ccc; margin: 0; }
 .bd-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 14px; }
 .bd-status { font-size: 13px; color: var(--dim); }
-.bd-confirm-btn { padding: 8px 26px; font-size: 16px; min-width: 150px; }
+.bd-confirm-btn { padding: 8px 50px 8px 28px; font-size: 16px; min-width: 190px; }
 
 @media (max-width: 860px) {
   .mb-body { grid-template-columns: 1fr; }
