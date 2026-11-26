@@ -65427,7 +65427,7 @@ return `<div class="bpl-ban-chip${bActive ? ' on' : ''}${bIdx >= 0 ? ' filled' :
 }).join('');
 const slotsHtml = picks.map((idx, slotIdx) => {
 const isActive = !done && side === sd && type === 'pick' && (pickedCnt === slotIdx);
-const role = LARGE_ROLES[slotIdx] || `${slotIdx + 1}将`;
+const role = LARGE_ROLES[slotIdx] || `${slotIdx + 1}번`;
 return `<div class="slot2 pick bpl-slot${isActive ? ' on' : ''}${idx >= 0 ? ' filled' : ''}"><span class="bpl-role">${role}</span>${idx >= 0 ? `<img src="${PORTRAITS[idx] || ''}" alt=""><span class="lab">${CHARS[idx].name}</span>` : `<span class="bpl-empty">待选</span>`}</div>`;
 }).join('');
 const colCls = picks.length <= 5 ? 'cols-5' : picks.length > 8 ? 'cols-8' : 'cols-4';
