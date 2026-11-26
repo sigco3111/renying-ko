@@ -858,7 +858,7 @@
     document.documentElement.lang = koMode ? 'ko' : currentLang === 'en' ? 'en' : 'zh-CN';
     document.body.classList.toggle('lang-en', currentLang === 'en');
     document.body.classList.toggle('lang-ko', koMode);
-    if (koMode && typeof EMO_ICON === 'object' && !EMO_ICON.__ko) {
+    if (koMode && (() => { try { return typeof EMO_ICON === 'object' && !EMO_ICON.__ko; } catch (e) { return false; } })()) {
       const m = {'战':'전','烈':'열','关':'관','练':'연','初':'초','疾':'질','绝':'절','谋':'모','存':'저','云':'클','卷':'권','取':'받','传':'전','匣':'함','礼':'선','墨':'먹','胜':'승','签':'서','警':'경','成':'완','否':'아','锁':'잠','贺':'축','破':'파','风':'풍','月':'월','守':'수','羽':'깃','霜':'서','震':'진','龙':'용','刃':'인','灵':'영','遁':'둔'};
       Object.keys(EMO_ICON).forEach(k => { if (m[EMO_ICON[k]]) EMO_ICON[k] = m[EMO_ICON[k]]; });
       Object.defineProperty(EMO_ICON, '__ko', { value: 1, enumerable: false });
