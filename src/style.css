@@ -570,4 +570,6 @@ body.lang-ko {
   --badge-font: "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
   --num-font: "Noto Sans KR", "Fira Code", "Malgun Gothic", monospace;
   --seal-font: "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --v-cond: "Oswald", "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", "DIN Condensed", "Arial Narrow", sans-serif;
 }
+body.lang-ko, body.lang-ko button, body.lang-ko input, body.lang-ko select, body.lang-ko textarea { font-synthesis: none; }

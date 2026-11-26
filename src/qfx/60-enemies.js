@@ -4,39 +4,39 @@
 const skinA = 0xc49a78;
 const ET = {
   bandit: {
-    name: '山贼', hp: 84, spd: 3.6, r: .45, xp: 8, gold: [2, 5], poise: 1.2, mass: 1, reach: 2.1,
+    name: '산적', hp: 84, spd: 3.6, r: .45, xp: 8, gold: [2, 5], poise: 1.2, mass: 1, reach: 2.1,
     rig: () => makeHumanoid({ colors: { robe: 0x6b4e38, trim: 0x3d3028, sash: 0x8a2a20, skin: skinA, hair: 0x1a1614, pants: 0x2e2a28, boots: 0x1c1a18 }, head: 'band', vest: true, bracer: true, skirt: .3, fur: true, strap: true, weapon: 'saber', stance: [-.34, 1.2, .18, -.22, .88, .36] }),
     atks: [{ kind: 'melee', anim: 'chop', max: 2.4, wind: .58, act: .16, rec: .6, dmg: 10, shape: { t: 'arc', r: 2.7, arc: 1.7 }, lunge: 1.3, cd: 1.6 },
     { kind: 'melee', anim: 'sweepRL', max: 2.4, wind: .66, act: .18, rec: .65, dmg: 11, shape: { t: 'arc', r: 2.8, arc: 2.8 }, lunge: .9, cd: 2.6 }]
   },
   spear: {
-    name: '枪兵', hp: 120, spd: 3.1, r: .45, xp: 12, gold: [3, 7], poise: 2, mass: 1.2, reach: 3.3,
+    name: '창병', hp: 120, spd: 3.1, r: .45, xp: 12, gold: [3, 7], poise: 2, mass: 1.2, reach: 3.3,
     rig: () => makeHumanoid({ colors: { robe: 0x46586e, trim: 0x2c333c, sash: 0x6b6f76, skin: skinA, hair: 0x1a1614, pants: 0x2a2e33, boots: 0x18191b }, head: 'helmet', sleeves: true, bracer: true, skirt: .46, armor: true, weapon: 'spear', pauldron: 0x70767c, stance: [-.32, 1.02, .1, 0, .16, 1] }),
     atks: [{ kind: 'melee', anim: 'thrust', max: 3.7, wind: .72, act: .16, rec: .7, dmg: 14, shape: { t: 'line', len: 4.3, w: 1.3 }, lunge: 2.2, cd: 2.0, tele: true }]
   },
   archer: {
-    name: '弓手', hp: 52, spd: 3.3, r: .42, xp: 10, gold: [3, 6], poise: .8, mass: .9, keep: [10, 17], ranged: true,
+    name: '궁수', hp: 52, spd: 3.3, r: .42, xp: 10, gold: [3, 6], poise: .8, mass: .9, keep: [10, 17], ranged: true,
     rig: () => makeHumanoid({ colors: { robe: 0x505a3a, trim: 0x2c3220, sash: 0x2c3220, skin: skinA, hair: 0x1a1614, pants: 0x3a3a30, boots: 0x1c1a18 }, head: 'hat', sleeves: true, skirt: .42, weapon: 'bow', quiver: true, stance: [-.28, .9, .08, 0, -1, 0] }),
     atks: [{ kind: 'shoot', anim: 'shoot', min: 5, max: 24, wind: 1.3, act: .1, rec: .9, dmg: 9, cd: 3.8 }]
   },
   wolf: {
-    name: '妖狼', hp: 56, spd: 6.4, r: .5, xp: 7, gold: [1, 4], poise: .8, mass: .8, reach: 5.2, hitY: .7,
+    name: '요랑', hp: 56, spd: 6.4, r: .5, xp: 7, gold: [1, 4], poise: .8, mass: .8, reach: 5.2, hitY: .7,
     rig: () => makeWolf({}),
     atks: [{ kind: 'pounce', min: 2.6, max: 6.5, wind: .46, act: .4, rec: .55, dmg: 9, speed: 17, cd: 2.2 }, { kind: 'melee', anim: 'bite', max: 1.9, wind: .34, act: .14, rec: .5, dmg: 7, shape: { t: 'arc', r: 2.0, arc: 1.8 }, lunge: .8, cd: 1.3 }]
   },
   brute: {
-    name: '石甲力士', hp: 400, spd: 2.3, r: .8, xp: 30, gold: [10, 18], poise: 9, mass: 3.5, reach: 2.9,
+    name: '석갑역사', hp: 400, spd: 2.3, r: .8, xp: 30, gold: [10, 18], poise: 9, mass: 3.5, reach: 2.9,
     rig: () => makeHumanoid({ colors: { robe: 0x3a2e2a, trim: 0x2a2624, sash: 0x5a4a3a, skin: 0x7d7f86, hair: 0x2a2826, pants: 0x2e2a28, boots: 0x1c1a18 }, head: 'mask', bulk: 1.45, scale: 1.65, skirt: .4, bare: true, beads: true, jaw: .9, headSize: 1.22, bracer: true, weapon: 'club', pauldron: 0x55524e, wrap: true, stance: [-.3, 1.3, .05, -.2, .6, -.7] }),
     atks: [{ kind: 'melee', anim: 'slam', max: 3.6, wind: 1.1, act: .18, rec: 1.0, dmg: 24, shape: { t: 'circle', r: 3.5, off: 2.3 }, lunge: .8, cd: 2.4, tele: true, quake: true },
     { kind: 'melee', anim: 'sweepRL', max: 3.4, wind: .85, act: .2, rec: .8, dmg: 18, shape: { t: 'arc', r: 4.0, arc: 3.0 }, lunge: .6, cd: 3.6, tele: true }]
   },
   wraith: {
-    name: '幽魂', hp: 96, spd: 2.7, r: .45, xp: 16, gold: [5, 10], poise: 1.5, mass: .8, keep: [8, 14], ranged: true, ghost: true, float: .45,
+    name: '유혼', hp: 96, spd: 2.7, r: .45, xp: 16, gold: [5, 10], poise: 1.5, mass: .8, keep: [8, 14], ranged: true, ghost: true, float: .45,
     rig: () => makeHumanoid({ colors: { robe: 0x4a3878, trim: 0x7a52b0, sash: 0x7a52b0, skin: 0x8a86a0, hair: 0x0a0a0c, pants: 0x1a1426, boots: 0x1a1426, eye: 0xb46cff }, head: 'hood', sleeves: 'long', skirt: 1.15, ghost: true, weapon: 'none' }),
     atks: [{ kind: 'cast', anim: 'cast', min: 4, max: 20, wind: .9, act: .12, rec: .8, dmg: 11, n: 3, cd: 3.4 }, { kind: 'blink', anim: 'cast', max: 4.2, wind: .32, act: .05, rec: .3, dmg: 0, cd: 5 }]
   },
   boss1: {
-    name: '黑风寨主 · 屠千山', hp: 2700, spd: 3.5, r: .95, xp: 150, gold: [90, 110], poise: 34, mass: 8, reach: 3.3, boss: true,
+    name: '흑풍채주 · 도천산', hp: 2700, spd: 3.5, r: .95, xp: 150, gold: [90, 110], poise: 34, mass: 8, reach: 3.3, boss: true,
     rig: () => makeHumanoid({ colors: { robe: 0x5a1f1a, trim: 0x2a2a2e, sash: 0xc59a3a, skin: 0xb88a66, hair: 0x14100e, pants: 0x221c1a, boots: 0x141210 }, head: 'warlord', bulk: 1.4, scale: 1.85, sleeves: true, bracer: true, skirt: .5, armor: true, jaw: .7, headSize: 1.12, fur: true, weapon: 'guandao', cape: 0x7a1a14, pauldron: 0x4a4d52, wrap: true, stance: [-.42, 1.12, .1, -.1, .96, .2] }),
     atks: [{ kind: 'melee', anim: 'chop', max: 4.4, wind: .62, act: .18, rec: .25, dmg: 20, shape: { t: 'arc', r: 5.0, arc: 1.5 }, lunge: 1.8, cd: 2.5, tele: true, chain: 1 },
     { kind: 'melee', anim: 'sweepRL', max: 0, wind: .46, act: .2, rec: .9, dmg: 22, shape: { t: 'arc', r: 5.2, arc: 3.2 }, lunge: 1.6, cd: 0, tele: true, only: 'chain' },
@@ -45,7 +45,7 @@ const ET = {
     { kind: 'summon', anim: 'roar', max: 99, wind: .9, act: .1, rec: .6, dmg: 0, cd: 999, only: 'script' }]
   },
   boss2: {
-    name: '剑魔 · 独孤夜', hp: 6200, dmgB: .2, spd: 4.6, r: .65, xp: 400, gold: [200, 240], poise: 30, mass: 5, reach: 2.9, boss: true,
+    name: '검마 · 독고야', hp: 6200, dmgB: .2, spd: 4.6, r: .65, xp: 400, gold: [200, 240], poise: 30, mass: 5, reach: 2.9, boss: true,
     rig: () => makeHumanoid({ colors: { robe: 0x151217, trim: 0x7a1a1a, sash: 0x7a1a1a, skin: 0xcfc4c0, hair: 0xe8e6e0, pants: 0x121013, boots: 0x0c0a0c, eye: 0xff2a1a }, head: 'demon', scale: 1.32, sleeves: 'long', skirt: .82, weapon: 'dark', cape: 0x1a1418, capeRag: true, stance: [-.42, .9, -.04, -.3, -.7, -.6] }),
     atks: [{ kind: 'melee', anim: 'sweepRL', max: 3.8, wind: .42, act: .16, rec: .16, dmg: 20, shape: { t: 'arc', r: 4.2, arc: 2.9 }, lunge: 2.2, cd: 2.2, tele: true, chain: 1 },
     { kind: 'melee', anim: 'sweepLR', max: 0, wind: .34, act: .16, rec: .16, dmg: 20, shape: { t: 'arc', r: 4.2, arc: 2.9 }, lunge: 2.2, cd: 0, tele: true, only: 'chain', chain: 2 },
@@ -69,7 +69,7 @@ function spawnEnemy(type, x, z, o = {}) {
   e.hp = e.maxHp; const sc = rig.root.scale.x * (elite ? 1.18 : 1); rig.root.scale.setScalar(sc); e.radius = cfg.r * (elite ? 1.15 : 1); e.hitY = (cfg.hitY || 1.15) * sc + (cfg.float || 0);
   rig.root.position.copy(e.pos); rig.root.rotation.y = e.yaw; GFX.scene.add(rig.root);
   if (rig.bladeLen) e.trail = new Trail(cfg.boss ? 0xff4a2a : 0xff8a5a, .16, cfg.boss ? 1.3 : .8);
-  if (elite) e.name = '精锐 · ' + cfg.name;
+  if (elite) e.name = '정예 · ' + cfg.name;
   FX.smoke(e.pos, cfg.boss ? 22 : 10, cfg.boss ? 1.5 : .9); if (cfg.boss) { G.boss = e; FX.ring(e.pos, 1, 9, 0xff3a22, .7); Cam.shake = .5; Snd.gong(); }
   G.enemies.push(e); return e;
 }
@@ -101,7 +101,7 @@ function damageEnemy(e, dmg, o = {}) {
 }
 function breakPoise(e) {
   e.poiseD = 0; cancelAttack(e); e.state = 'stagger'; e.st = 0; e.stagger = e.stun = e.boss ? 2.6 : e.cfg.poise > 4 ? 1.8 : 1.3;
-  FX.num({ x: e.pos.x, y: e.hitY + 1.3, z: e.pos.z }, '破绽', 'word', 1.2); Snd.clang(); FX.ring(e.pos, .5, 4, 0xffd060, .4);
+  FX.num({ x: e.pos.x, y: e.hitY + 1.3, z: e.pos.z }, '빈틈', 'word', 1.2); Snd.clang(); FX.ring(e.pos, .5, 4, 0xffd060, .4);
 }
 /* 被弹反：小卒当场露出破绽，力士与头领吃一大截架势 */
 function parriedBy(e) {
@@ -153,7 +153,7 @@ function startAttack_E(e, i, chained) {
   e.wind = a.wind * (chained ? 1 : rand(.95, 1.1)) / (e.phase > 1 ? 1.15 : 1) * (e.windK || 1); e.teleMade = false; e.lockYaw = false; e.glinted = false;
   if (a.kind === 'leap') { e.tele = null; }
   if (a.kind === 'dash') { e.tele = FX.telegraph({ type: 'line', x: e.pos.x, z: e.pos.z, yaw: e.yaw, len: a.speed * a.act, w: 2.2, dur: e.wind, color: 0xff3a22 }); }
-  if (a.kind === 'summon') { UI.banner('喽啰何在', '', 'red'); Snd.gong(); }
+  if (a.kind === 'summon') { UI.banner('졸개들은 어디 있느냐', '', 'red'); Snd.gong(); }
 }
 function execAttack(e) {
   const a = e.atk, fx = Math.sin(e.yaw), fz = Math.cos(e.yaw), dmg = a.dmg * e.dmgK;

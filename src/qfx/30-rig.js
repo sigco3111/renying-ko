@@ -5,11 +5,11 @@ const DOWN = new V3(0, -1, 0), UP = new V3(0, 1, 0);
 const POSE0 = { hipY: 0, hipRX: 0, hipRY: 0, hipRZ: 0, torRX: 0, torRY: 0, torRZ: 0, headRX: 0, headRY: 0, LaX: 0, LaZ: .14, LfX: -.2, RaX: 0, RaZ: -.14, RfX: -.2, LlX: 0, LlZ: .04, LsX: 0, RlX: 0, RlZ: -.04, RsX: 0, hx: -.34, hy: .95, hz: .1, dx: -.2, dy: -.6, dz: .75 };
 const PKEYS = Object.keys(POSE0);
 const SWORD_TIERS = [
-  { name: '凡铁剑', blade: 0xcfd6da, glow: 0x000000, ei: 0, trail: 0xc8dcea },
-  { name: '青锋剑', blade: 0xbfe9e2, glow: 0x2fd0b8, ei: .6, trail: 0x62e6cf },
-  { name: '寒霜剑', blade: 0xd6ecff, glow: 0x58a8ff, ei: .85, trail: 0x7cc0ff },
-  { name: '赤霄剑', blade: 0xffd9c2, glow: 0xff5a22, ei: 1.05, trail: 0xff8a4a },
-  { name: '轩辕剑', blade: 0xfff0c0, glow: 0xffb822, ei: 1.35, trail: 0xffd060 },
+  { name: '범철검', blade: 0xcfd6da, glow: 0x000000, ei: 0, trail: 0xc8dcea },
+  { name: '청봉검', blade: 0xbfe9e2, glow: 0x2fd0b8, ei: .6, trail: 0x62e6cf },
+  { name: '한상검', blade: 0xd6ecff, glow: 0x58a8ff, ei: .85, trail: 0x7cc0ff },
+  { name: '적소검', blade: 0xffd9c2, glow: 0xff5a22, ei: 1.05, trail: 0xff8a4a },
+  { name: '헌원검', blade: 0xfff0c0, glow: 0xffb822, ei: 1.35, trail: 0xffd060 },
 ];
 const _ik = { S: new V3(), T: new V3(), E: new V3(), d: new V3(), pole: new V3(), v: new V3(), W: new V3(), p: new V3(), sc: new V3(), qi: new T.Quaternion(), qt: new T.Quaternion(), q1: new T.Quaternion(), q2: new T.Quaternion() };
 const _mv = new V3(), _f1 = new V3(), _f2 = new V3(), _f3 = new V3();

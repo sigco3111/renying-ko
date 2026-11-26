@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>青锋行</title>
+<title>청봉행</title>
 <!--
   青锋行的页面骨架：上面是样式（布局、HUD、菜单、卡片），下面是 HTML 结构（画布、HUD、各个界面层），
   最后两个占位标记由 tools/build.py 换成三维引擎和 src/qfx/*.js 拼好的游戏代码（打包后在 assets/qingfengxing.html）。
   找 bug 提示：界面元素的 id 和 src/qfx/80-ui.js、90-main.js 里 $('id') 一一对应，改 id 要两边一起改。
 -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;900&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;900&display=swap" media="print" onload="this.media='all'">
 <style>
 /* 布局：全屏 3D 画布 + 四角水墨 HUD；菜单为左侧竖排题字 + 宣纸卷轴卡片 */
 :root{
@@ -20,8 +20,8 @@
   --cinnabar:#c63b2e; --cinnabar2:#7d1f18;
   --jade:#62cdb9; --jade2:#1f6f66;
   --gold:#dcae55; --straw:#b9a26a;
-  --f-brush:'Ma Shan Zheng','STKaiti','Kaiti SC','KaiTi',serif;
-  --f-text:'Noto Serif SC','Songti SC','STSong','SimSun',serif;
+  --f-brush:'Black Han Sans','Noto Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+  --f-text:'Noto Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
 }
 html,body{height:100%;background:var(--ink);color:var(--paper);overflow:hidden}
 body{font-family:var(--f-text);font-size:14px;-webkit-user-select:none;user-select:none;touch-action:none}
@@ -316,184 +316,184 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   <div id="hud" hidden>
     <div class="coop-hud" id="coopHud" hidden></div>
     <div class="vitals">
-      <div class="lv"><b id="lvNum">一</b><small>境界</small></div>
+      <div class="lv"><b id="lvNum">일</b><small>경지</small></div>
       <div class="bars">
         <div class="bar hp" id="hpBar"><i class="lag" id="hpLag"></i><i class="fill" id="hpFill"></i><b id="hpTxt"></b></div>
         <div class="bar mp"><i class="fill" id="mpFill"></i></div>
         <div class="bar sta"><i class="fill" id="staFill"></i></div>
-        <div class="meta"><span>铜钱 <b id="gold">0</b></span><span class="sw" id="swName">凡铁剑</span><span id="buffs"></span></div>
+        <div class="meta"><span>동전 <b id="gold">0</b></span><span class="sw" id="swName">범철검</span><span id="buffs"></span></div>
       </div>
     </div>
-    <div class="wave"><div class="w1" id="waveT">第一波</div><div class="w2" id="waveS"></div></div>
+    <div class="wave"><div class="w1" id="waveT">제1파</div><div class="w2" id="waveS"></div></div>
     <div class="boss" id="bossBox" hidden><div class="bn" id="bossName"></div><div class="bb"><i class="lag" id="bossLag"></i><i class="fill" id="bossFill"></i></div><div class="bp"><i id="bossPoise"></i></div></div>
     <canvas id="mini" width="264" height="264"></canvas>
-    <div class="combo" id="combo" hidden><b id="comboN">0</b><span>连</span><em id="comboR"></em></div>
+    <div class="combo" id="combo" hidden><b id="comboN">0</b><span>연타</span><em id="comboR"></em></div>
     <div class="skills" id="skills">
-      <button class="sk pot" id="sk4" type="button"><span class="g">丹</span><span class="cd"></span><span class="c" id="pots">3</span><span class="k">C</span><span class="n">回春丹</span></button>
-      <button class="sk" id="sk0" type="button"><span class="g">气</span><span class="cd"></span><span class="k">Q</span><span class="n">剑气纵横</span></button>
-      <button class="sk" id="sk1" type="button"><span class="g">空</span><span class="cd"></span><span class="k">E</span><span class="n">空槽</span></button>
-      <button class="sk" id="sk2" type="button"><span class="g">空</span><span class="cd"></span><span class="k">R</span><span class="n">空槽</span></button>
-      <button class="sk ult" id="sk3" type="button"><span class="ring"></span><span class="g">绝</span><span class="cd"></span><span class="k">V</span><span class="n">绝学</span></button>
+      <button class="sk pot" id="sk4" type="button"><span class="g">단</span><span class="cd"></span><span class="c" id="pots">3</span><span class="k">C</span><span class="n">회춘단</span></button>
+      <button class="sk" id="sk0" type="button"><span class="g">기</span><span class="cd"></span><span class="k">Q</span><span class="n">검기종횡</span></button>
+      <button class="sk" id="sk1" type="button"><span class="g">공</span><span class="cd"></span><span class="k">E</span><span class="n">빈 슬롯</span></button>
+      <button class="sk" id="sk2" type="button"><span class="g">공</span><span class="cd"></span><span class="k">R</span><span class="n">빈 슬롯</span></button>
+      <button class="sk ult" id="sk3" type="button"><span class="ring"></span><span class="g">절</span><span class="cd"></span><span class="k">V</span><span class="n">절학</span></button>
     </div>
     <div class="xp"><i id="xpFill"></i></div>
     <div class="hint" id="hint">
-      <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>移动　<kbd>Shift</kbd>疾行<br>
-      <kbd>左键</kbd>/<kbd>J</kbd>轻剑　<kbd>右键</kbd>/<kbd>K</kbd>重剑<br>
-      <kbd>空格</kbd>闪避　<kbd>F</kbd>弹反·处决　<kbd>按住K</kbd>蓄力<br>
-      <kbd>Tab</kbd>锁定　<kbd>P</kbd>暂停
+      <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>이동　<kbd>Shift</kbd>질주<br>
+      <kbd>좌클릭</kbd>/<kbd>J</kbd>경검　<kbd>우클릭</kbd>/<kbd>K</kbd>중검<br>
+      <kbd>스페이스</kbd>회피　<kbd>F</kbd>패리·처형　<kbd>K 길게</kbd>충전<br>
+      <kbd>Tab</kbd>고정　<kbd>P</kbd>일시정지
     </div>
     <div class="banner" id="banner"><div class="t" id="banT"></div><div class="s" id="banS"></div></div>
     <div class="toast" id="toast"></div>
     <div class="lockm" id="lockm" hidden></div>
     <div class="lockinfo" id="lockInfo" hidden><span class="lb"><i id="lockHp"></i></span><span class="lb"><i id="lockPo"></i></span></div>
-    <div class="execm" id="execm" hidden><kbd>F</kbd>处决</div>
-    <div class="tut" id="tut" hidden><div class="tn" id="tutN"></div><div class="tt" id="tutT"></div><button class="btn sm" id="btnTutSkip" type="button">跳过试剑</button></div>
+    <div class="execm" id="execm" hidden><kbd>F</kbd>처형</div>
+    <div class="tut" id="tut" hidden><div class="tn" id="tutN"></div><div class="tt" id="tutT"></div><button class="btn sm" id="btnTutSkip" type="button">시검 건너뛰기</button></div>
   </div>
 
   <div id="touch" hidden>
     <div id="stick"><i id="knob"></i></div>
-    <button class="tb" id="tAtk" type="button">斩</button>
-    <button class="tb" id="tDodge" type="button">闪</button>
-    <button class="tb" id="tHeavy" type="button">旋</button>
-    <button class="tb" id="tParry" type="button">格</button>
-    <button class="tb" id="tLock" type="button">锁</button>
+    <button class="tb" id="tAtk" type="button">참</button>
+    <button class="tb" id="tDodge" type="button">회피</button>
+    <button class="tb" id="tHeavy" type="button">회전</button>
+    <button class="tb" id="tParry" type="button">막기</button>
+    <button class="tb" id="tLock" type="button">고정</button>
     <button class="tb" id="tPause" type="button">‖</button>
   </div>
 
   <div id="title" class="screen">
-    <div class="tname"><span>青</span><span>锋</span><span>行</span><i class="seal"><b>暮</b><b>山</b><b>试</b><b>剑</b></i></div>
+    <div class="tname"><span>청</span><span>봉</span><span>행</span><i class="seal"><b>모</b><b>산</b><b>시</b><b>검</b></i></div>
     <div class="tbody">
-      <p>青云山一夜劫火，师门星散。你自山门醒来，一人一剑，要从山门杀过竹林，直上剑冢。</p>
-      <p>每一章一张路线图：遭遇、精锐、奇遇、剑庐、歇脚、藏宝，岔路自己挑，尽头是本章首领。身死这一局就结束，剑魄带回藏经阁，下一局更强。</p>
-      <div class="btns"><button class="btn pri" id="btnCont" type="button" hidden>续行</button><button class="btn pri" id="btnStart" type="button" disabled>开一局</button><button class="btn sm" id="btnFull" type="button">全屏</button></div>
+      <p>청운산에 하룻밤 겁화가 일어 사문은 흩어졌다. 당신은 산문에서 깨어나, 홀로 검 한 자루를 쥐고 산문에서 죽림을 뚫고 검총까지 올라야 한다.</p>
+      <p>장마다 지도 한 장: 조우, 정예, 기우, 검려, 쉬어 가기, 보물. 갈림길은 직접 고르고 끝에는 그 장의 두목이 있다. 죽으면 이 판은 끝나고, 검백은 장경각으로 가져가 다음 판이 더 강해진다.</p>
+      <div class="btns"><button class="btn pri" id="btnCont" type="button" hidden>이어가기</button><button class="btn pri" id="btnStart" type="button" disabled>한 판 시작</button><button class="btn sm" id="btnFull" type="button">전체 화면</button></div>
       <div class="asc-row"><div class="seg" id="ascSeg" hidden></div><div class="asc-d" id="ascD" hidden></div></div>
-      <div class="btns"><button class="btn sm" id="btnCoop" type="button">同袍肉鸽 · 联机</button><button class="btn sm" id="btnMeta" type="button">藏经阁</button><button class="btn sm" id="btnSet" type="button">设置</button></div>
-      <div class="loading" id="loading">山色渐起……</div>
+      <div class="btns"><button class="btn sm" id="btnCoop" type="button">동료 로그라이크 · 멀티</button><button class="btn sm" id="btnMeta" type="button">장경각</button><button class="btn sm" id="btnSet" type="button">설정</button></div>
+      <div class="loading" id="loading">산색이 밝아 온다……</div>
       <div class="best" id="best"></div>
       <div class="keys">
-        <kbd>W A S D</kbd><span>移动</span><kbd>鼠标</kbd><span>转动视角</span>
-        <kbd>左键 / J</kbd><span>轻剑四连</span><kbd>右键 / K</kbd><span>重剑·旋风斩</span>
-        <kbd>F</kbd><span>弹反 · 处决</span><kbd>按住 K</kbd><span>蓄满 · 破山</span>
-        <kbd>空格 / L</kbd><span>闪避 · 踏雪</span><kbd>Shift</kbd><span>疾行</span>
-        <kbd>Q E R</kbd><span>三槽剑技</span><kbd>V</kbd><span>绝学</span>
-        <kbd>C</kbd><span>回春丹</span><kbd>Tab</kbd><span>锁定 · ← → 换人</span>
-        <kbd>1 2 3</kbd><span>路线图上选路</span><kbd>Enter</kbd><span>只有一条路时直接走</span>
-        <kbd>P</kbd><span>暂停</span><kbd>N</kbd><span>静音</span>
+        <kbd>W A S D</kbd><span>이동</span><kbd>마우스</kbd><span>시점 회전</span>
+        <kbd>좌클릭 / J</kbd><span>경검 4연타</span><kbd>우클릭 / K</kbd><span>중검 · 선풍참</span>
+        <kbd>F</kbd><span>패리 · 처형</span><kbd>K 길게</kbd><span>충전 · 파산</span>
+        <kbd>스페이스 / L</kbd><span>회피 · 답설</span><kbd>Shift</kbd><span>질주</span>
+        <kbd>Q E R</kbd><span>검기술 3슬롯</span><kbd>V</kbd><span>절학</span>
+        <kbd>C</kbd><span>회춘단</span><kbd>Tab</kbd><span>고정 · ← → 대상 변경</span>
+        <kbd>1 2 3</kbd><span>지도에서 길 선택</span><kbd>Enter</kbd><span>길이 하나면 바로 이동</span>
+        <kbd>P</kbd><span>일시정지</span><kbd>N</kbd><span>음소거</span>
       </div>
     </div>
   </div>
 
   <div id="levelup" class="screen veil" hidden>
-    <h2 id="luT">破境<small id="luSub">机缘一道，择之</small></h2>
+    <h2 id="luT">경지 돌파<small id="luSub">기연 하나를 고르세요</small></h2>
     <div class="cards" id="cards"></div>
-    <div class="btns"><button class="btn sm" id="btnReroll" type="button" hidden>重掷</button></div>
-    <div class="note">按 1 / 2 / 3 或点击卷轴</div>
+    <div class="btns"><button class="btn sm" id="btnReroll" type="button" hidden>다시 뽑기</button></div>
+    <div class="note">1 / 2 / 3 또는 두루마리를 클릭</div>
   </div>
 
   <div id="shop" class="screen veil" hidden>
-    <h2>剑庐<small>炉火未熄，锻剑淬体</small></h2>
-    <div class="purse">囊中铜钱 <b id="shopGold">0</b></div>
+    <h2>검려<small>화로 불이 꺼지지 않았다. 검과 몸을 단련하세요</small></h2>
+    <div class="purse">주머니 속 동전 <b id="shopGold">0</b></div>
     <div class="shopgrid" id="shopGrid"></div>
-    <div class="btns"><button class="btn" id="btnShopClose" type="button">出庐</button></div>
-    <div class="note">按 B 或 Esc 返回</div>
+    <div class="btns"><button class="btn" id="btnShopClose" type="button">나가기</button></div>
+    <div class="note">B 또는 Esc로 돌아가기</div>
   </div>
 
   <div id="pause" class="screen veil" hidden>
-    <h2>暂歇</h2>
+    <h2>잠시 쉬기</h2>
     <div class="perklist" id="pausePerks"></div>
     <div class="btns">
-      <button class="btn pri" id="btnResume" type="button">继续</button>
-      <button class="btn" id="btnRestart" type="button">放弃此局</button>
+      <button class="btn pri" id="btnResume" type="button">계속</button>
+      <button class="btn" id="btnRestart" type="button">이 판 포기</button>
     </div>
     <div class="btns">
-      <button class="btn sm" id="btnMute" type="button">声音：开</button>
-      <button class="btn sm" id="btnSet2" type="button">设置</button>
-      <button class="btn sm" id="btnFull2" type="button">全屏</button>
+      <button class="btn sm" id="btnMute" type="button">소리: 켜짐</button>
+      <button class="btn sm" id="btnSet2" type="button">설정</button>
+      <button class="btn sm" id="btnFull2" type="button">전체 화면</button>
     </div>
   </div>
 
   <div id="over" class="screen veil" hidden>
-    <h2 id="overT">剑折人亡<small id="overS"></small></h2>
+    <h2 id="overT">검이 부러지고 사람이 죽다<small id="overS"></small></h2>
     <div class="stats" id="overStats"></div>
     <div class="soulgain" id="overSoul"></div>
     <div class="perklist" id="overPerks"></div>
-    <div class="btns"><button class="btn pri" id="btnAgain" type="button">再来一局</button><button class="btn sm" id="btnHome" type="button">回山门</button></div>
+    <div class="btns"><button class="btn pri" id="btnAgain" type="button">한 판 더</button><button class="btn sm" id="btnHome" type="button">산문으로</button></div>
   </div>
 
   <div id="meta" class="screen veil" hidden>
-    <h2>藏经阁<small>剑魄不灭，修为长存</small></h2>
-    <div class="purse">剑魄 <b id="metaSoul">0</b></div>
+    <h2>장경각<small>검백은 사라지지 않고 수련은 남는다</small></h2>
+    <div class="purse">검백 <b id="metaSoul">0</b></div>
     <div class="shopgrid" id="metaGrid"></div>
     <div class="recs" id="recs"></div>
-    <div class="btns"><button class="btn" id="btnMetaClose" type="button">下山</button></div>
-    <div class="note">每打完一处、每斩一敌都得剑魄；身死也不散</div>
+    <div class="btns"><button class="btn" id="btnMetaClose" type="button">하산</button></div>
+    <div class="note">한 곳을 끝낼 때마다, 적을 벨 때마다 검백을 얻고, 죽어도 사라지지 않습니다</div>
   </div>
 
   <div id="coop" class="screen veil" hidden>
-    <h2>同袍肉鸽<small>二到四人，同走一张路线图</small></h2>
-    <label class="coop-name">你的名号 <input id="coopName" maxlength="8" placeholder="无名侠客" autocomplete="off"></label>
+    <h2>동료 로그라이크<small>2~4명이 같은 지도를 함께 간다</small></h2>
+    <label class="coop-name">당신의 별호 <input id="coopName" maxlength="8" placeholder="무명 협객" autocomplete="off"></label>
     <div class="coop-pre" id="coopPre">
-      <button class="btn pri" id="btnHost" type="button">建房</button>
-      <span class="coop-or">或者</span>
-      <input id="coopCode" inputmode="numeric" maxlength="4" placeholder="四位房间码" autocomplete="off" aria-label="房间码">
-      <button class="btn sm" id="btnJoin" type="button">加入</button>
+      <button class="btn pri" id="btnHost" type="button">방 만들기</button>
+      <span class="coop-or">또는</span>
+      <input id="coopCode" inputmode="numeric" maxlength="4" placeholder="네 자리 방 코드" autocomplete="off" aria-label="방 코드">
+      <button class="btn sm" id="btnJoin" type="button">참가</button>
     </div>
     <div class="coop-room" id="coopRoom" hidden>
-      <div class="coop-code">房间码 <b id="coopCodeT">----</b></div>
+      <div class="coop-code">방 코드 <b id="coopCodeT">----</b></div>
       <div class="coop-list" id="coopList"></div>
     </div>
     <div class="coop-msg" id="coopMsg" role="status"></div>
-    <div class="btns"><button class="btn pri" id="btnCoopGo" type="button" hidden>开局</button><button class="btn sm" id="btnCoopBack" type="button">回山门</button></div>
-    <div class="note">每多一位同袍，敌人气血多三成半、伤害略涨、来得也多些 · 由房主择路<br>倒下了别慌，同袍站到身边两秒半就能扶你起来 · 房主的网页要留在前台</div>
+    <div class="btns"><button class="btn pri" id="btnCoopGo" type="button" hidden>시작</button><button class="btn sm" id="btnCoopBack" type="button">산문으로</button></div>
+    <div class="note">동료가 한 명 늘 때마다 적 체력이 35% 늘고 피해가 약간 오르며 수도 늘어납니다 · 방장이 길을 고릅니다<br>쓰러져도 당황하지 마세요. 동료가 곁에 2.5초 서 있으면 일으켜 줍니다 · 방장의 페이지는 앞 화면에 두어야 합니다</div>
   </div>
 
   <div id="settings" class="screen veil" hidden>
-    <h2>设置</h2>
+    <h2>설정</h2>
     <div class="setgrid">
-      <span>画质</span><div class="seg" id="setQ"></div>
-      <span>视角灵敏</span><input type="range" id="setSens" min="0.4" max="2.2" step="0.1">
-      <span>震屏</span><div class="seg" id="setShake"></div>
-      <span>伤害数字</span><div class="seg" id="setNums"></div>
-      <span>音量</span><input type="range" id="setVol" min="0" max="1" step="0.05">
+      <span>화질</span><div class="seg" id="setQ"></div>
+      <span>시점 감도</span><input type="range" id="setSens" min="0.4" max="2.2" step="0.1">
+      <span>화면 흔들림</span><div class="seg" id="setShake"></div>
+      <span>피해 숫자</span><div class="seg" id="setNums"></div>
+      <span>음량</span><input type="range" id="setVol" min="0" max="1" step="0.05">
     </div>
-    <div class="btns"><button class="btn" id="btnSetClose" type="button">返回</button></div>
+    <div class="btns"><button class="btn" id="btnSetClose" type="button">돌아가기</button></div>
   </div>
 
   <div id="interlude" class="screen veil" hidden>
-    <h2 id="ilT">已破<small id="ilS"></small></h2>
+    <h2 id="ilT">돌파 완료<small id="ilS"></small></h2>
     <div class="stats" id="ilStats"></div>
     <p class="il-next" id="ilNext"></p>
-    <div class="btns"><button class="btn" id="btnIlShop" type="button">入剑庐</button><button class="btn pri" id="btnIlGo" type="button">启程</button></div>
-    <div class="note">启程即入下一章的路线图</div>
+    <div class="btns"><button class="btn" id="btnIlShop" type="button">검려로</button><button class="btn pri" id="btnIlGo" type="button">출발</button></div>
+    <div class="note">출발하면 다음 장의 지도로 갑니다</div>
   </div>
 
   <div id="rlmap" class="screen veil" hidden>
-    <h2 id="rmT">山门<small id="rmS"></small></h2>
+    <h2 id="rmT">산문<small id="rmS"></small></h2>
     <div class="rm-stat" id="rmStat"></div>
     <div class="rm-body">
-      <svg id="rmSvg" viewBox="0 0 400 600" role="group" aria-label="路线图"></svg>
+      <svg id="rmSvg" viewBox="0 0 400 600" role="group" aria-label="지도"></svg>
       <div class="rm-side">
         <div class="rm-tip" id="rmTip"></div>
         <div class="rm-legend">
-          <i style="color:#c9b48a">战</i><span>遭遇</span><i style="color:#ef6a55">精</i><span>精锐 · 必得珍品机缘</span>
-          <i style="color:#9fc7e8">奇</i><span>奇遇</span><i style="color:#dcae55">市</i><span>剑庐</span>
-          <i style="color:#62cdb9">憩</i><span>歇脚</span><i style="color:#e8c46a">宝</i><span>藏宝</span>
-          <i style="color:#ff3a22">首</i><span>首领</span>
+          <i style="color:#c9b48a">전</i><span>조우</span><i style="color:#ef6a55">정</i><span>정예 · 진품 기연 필득</span>
+          <i style="color:#9fc7e8">기</i><span>기우</span><i style="color:#dcae55">시</i><span>검려</span>
+          <i style="color:#62cdb9">휴</i><span>쉬어 가기</span><i style="color:#e8c46a">보</i><span>보물</span>
+          <i style="color:#ff3a22">수</i><span>두목</span>
         </div>
         <div class="rm-coop" id="rmCoop" hidden></div>
         <div class="perklist" id="rmPerks"></div>
-        <div class="btns"><button class="btn sm" id="btnRmLeave" type="button">暂离 · 已存档</button></div>
+        <div class="btns"><button class="btn sm" id="btnRmLeave" type="button">잠시 이탈 · 저장됨</button></div>
       </div>
     </div>
-    <div class="note">点亮的地方才走得到 · 按 1 / 2 / 3 从左到右选路</div>
+    <div class="note">밝아진 곳으로만 갈 수 있습니다 · 1 / 2 / 3으로 왼쪽부터 길 선택</div>
   </div>
 
   <div id="event" class="screen veil" hidden>
-    <h2 id="evT">奇遇<small id="evS"></small></h2>
+    <h2 id="evT">기우<small id="evS"></small></h2>
     <p class="ev-d" id="evD"></p>
     <div class="shopgrid" id="evOpts"></div>
     <p class="ev-r" id="evR" hidden></p>
-    <div class="btns"><button class="btn pri" id="evGo" type="button" hidden>上路</button></div>
+    <div class="btns"><button class="btn pri" id="evGo" type="button" hidden>출발</button></div>
   </div>
 
   <div id="travel" class="travel" hidden>

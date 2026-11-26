@@ -21,7 +21,7 @@ function makeSpirit(o) {
 
 Object.assign(ET, {
   assassin: {
-    name: '刺客', hp: 92, spd: 4.6, r: .42, xp: 14, gold: [4, 8], poise: 1.3, mass: .9, reach: 2.4,
+    name: '자객', hp: 92, spd: 4.6, r: .42, xp: 14, gold: [4, 8], poise: 1.3, mass: .9, reach: 2.4,
     rig: () => makeHumanoid({ colors: { robe: 0x1c1f26, trim: 0x34283a, sash: 0x6a1a22, skin: skinA, hair: 0x0c0c0e, pants: 0x16181c, boots: 0x0e0f11 }, head: 'hood', face: { glow: '#ff5a3a' }, sleeves: true, bracer: true, skirt: .5, weapon: 'sword', stance: [-.3, 1.0, .2, -.4, .5, .7] }),
     atks: [{ kind: 'melee', anim: 'sweepRL', max: 2.6, wind: .4, act: .14, rec: .2, dmg: 9, shape: { t: 'arc', r: 2.8, arc: 2.4 }, lunge: 1.6, cd: 2.2, chain: 1 },
     { kind: 'melee', anim: 'sweepLR', max: 0, wind: .28, act: .14, rec: .6, dmg: 9, shape: { t: 'arc', r: 2.8, arc: 2.4 }, lunge: 1.2, cd: 0, only: 'chain' },
@@ -30,7 +30,7 @@ Object.assign(ET, {
     { kind: 'blink', anim: 'cast', min: 5, max: 20, wind: .3, act: .05, rec: .05, dmg: 0, cd: 7, behind: true, chain: 0 }]
   },
   slave: {
-    name: '剑奴', hp: 150, spd: 2.9, r: .45, xp: 16, gold: [4, 9], poise: 2.6, mass: 1.3, reach: 2.6, revive: true,
+    name: '검노', hp: 150, spd: 2.9, r: .45, xp: 16, gold: [4, 9], poise: 2.6, mass: 1.3, reach: 2.6, revive: true,
     rig: () => makeHumanoid({ colors: { robe: 0x3c4240, trim: 0x22272a, sash: 0x4a2a24, skin: 0x8a948e, hair: 0x2a2c2c, pants: 0x262a2a, boots: 0x161818, eye: 0x5affc8 }, head: 'hood', face: { glow: '#5affc8' }, sleeves: true, skirt: .6, armor: true, weapon: 'saber', pauldron: 0x4a4c4a, stance: [-.36, 1.1, .12, -.2, .8, .3] }),
     atks: [{ kind: 'melee', anim: 'chop', max: 2.8, wind: .62, act: .16, rec: .25, dmg: 13, shape: { t: 'arc', r: 2.9, arc: 1.6 }, lunge: 1.2, cd: 2.4, tele: true, chain: 1 },
     { kind: 'melee', anim: 'sweepLR', max: 0, wind: .42, act: .16, rec: .25, dmg: 12, shape: { t: 'arc', r: 3, arc: 2.6 }, lunge: 1, cd: 0, only: 'chain', chain: 2 },
@@ -38,12 +38,12 @@ Object.assign(ET, {
     { kind: 'dash', anim: 'dash', min: 4, max: 11, wind: .8, act: .26, rec: .9, dmg: 16, speed: 26, cd: 6 }]
   },
   spirit: {
-    name: '剑灵', hp: 42, spd: 4.2, xp: 6, gold: [1, 3], poise: .6, mass: .5, keep: [4.5, 8], hitY: 1.25, r: .45, ghost: true, flier: true,
+    name: '검령', hp: 42, spd: 4.2, xp: 6, gold: [1, 3], poise: .6, mass: .5, keep: [4.5, 8], hitY: 1.25, r: .45, ghost: true, flier: true,
     rig: () => makeSpirit({}),
     atks: [{ kind: 'pounce', anim: 'thrust', min: 2.4, max: 8.5, wind: .7, act: .38, rec: .6, dmg: 9, speed: 22, cd: 2.6 }]
   },
   boss3: {
-    name: '竹影 · 无相', hp: 4200, spd: 5.2, r: .55, xp: 260, gold: [140, 170], poise: 26, mass: 4, reach: 2.8, boss: true,
+    name: '죽영 · 무상', hp: 4200, spd: 5.2, r: .55, xp: 260, gold: [140, 170], poise: 26, mass: 4, reach: 2.8, boss: true,
     rig: () => makeHumanoid({ colors: { robe: 0x24332f, trim: 0xd6d0c0, sash: 0x8a1a1a, skin: 0xcfc4b8, hair: 0x0e0e0e, pants: 0x18211f, boots: 0x0e1312 }, head: 'hat', face: { void: 1, glow: '#9ff0e0' }, scale: 1.2, sleeves: 'long', skirt: .9, weapon: 'sword', cape: 0x1c2826, capeRag: true, stance: [-.36, .95, .05, -.3, -.4, -.7] }),
     atks: [{ kind: 'melee', anim: 'sweepRL', max: 3.4, wind: .4, act: .14, rec: .14, dmg: 18, shape: { t: 'arc', r: 3.8, arc: 2.8 }, lunge: 2, cd: 2, tele: true, chain: 1 },
     { kind: 'melee', anim: 'sweepLR', max: 0, wind: .3, act: .14, rec: .14, dmg: 18, shape: { t: 'arc', r: 3.8, arc: 2.8 }, lunge: 2, cd: 0, tele: true, only: 'chain', chain: 2 },
@@ -54,7 +54,7 @@ Object.assign(ET, {
     { kind: 'spikes', anim: 'cast', min: 3, max: 26, wind: .7, act: .2, rec: .7, dmg: 22, cd: 7, phase2: true }]
   },
   clone: {
-    name: '无相 · 影', hp: 1, spd: 5, r: .55, xp: 0, gold: [0, 0], poise: 1, mass: 2, reach: 2.8, ghost: true,
+    name: '무상 · 영', hp: 1, spd: 5, r: .55, xp: 0, gold: [0, 0], poise: 1, mass: 2, reach: 2.8, ghost: true,
     rig: () => { const r = ET.boss3.rig(); r.setOpacity(.55); return r; },
     atks: [{ kind: 'melee', anim: 'sweepRL', max: 3.4, wind: .5, act: .14, rec: .6, dmg: 10, shape: { t: 'arc', r: 3.6, arc: 2.6 }, lunge: 1.8, cd: 2.6, tele: true },
     { kind: 'shoot', anim: 'cast', min: 5, max: 20, wind: .7, act: .08, rec: .6, dmg: 7, n: 3, dart: true, cd: 5.5 }]
@@ -66,9 +66,9 @@ ET.boss2.atks[6].cd = 9;
 
 /* 首领分阶段：血线跌破 at 时换阶段，播横幅、喘一口气，可能接一招剧本招式 */
 const PHASES = {
-  boss1: [{ at: .66, script: 4 }, { at: .45, up: true, banner: ['屠千山 · 狂怒', '火油罐，连环跳劈'] }, { at: .2, script: 4 }],
-  boss2: [{ at: .5, up: true, banner: ['剑魔入魔', '剑雨倾城'], cd: 6 }, { at: .22, up: true, banner: ['万剑同悲', '巨剑自天而落'], cd: 7 }],
-  boss3: [{ at: .5, up: true, banner: ['无相 · 分影', '真身只有一个'], script: 5 }, { at: .22, up: true, banner: ['无相 · 竹海', '竹刺破土'], script: 5 }],
+  boss1: [{ at: .66, script: 4 }, { at: .45, up: true, banner: ['도천산 · 광노', '기름 항아리, 연속 점프 내려치기'] }, { at: .2, script: 4 }],
+  boss2: [{ at: .5, up: true, banner: ['검마 입마', '검우경성'], cd: 6 }, { at: .22, up: true, banner: ['만검동비', '거검이 하늘에서 떨어짐'], cd: 7 }],
+  boss3: [{ at: .5, up: true, banner: ['무상 · 분영', '진짜 몸은 하나뿐'], script: 5 }, { at: .22, up: true, banner: ['무상 · 죽해', '죽순이 땅을 뚫음'], script: 5 }],
 };
 function bossPhase(e) {
   const P = PHASES[e.type]; if (!P) return; e.pi = e.pi || 0; const ph = P[e.pi];
@@ -98,7 +98,7 @@ const FOE_ATK = {
   giants(e, a, dmg) {
     const n = 8, R = 6.5; G.hazards.push({ x: Pl.pos.x, z: Pl.pos.z, r: 3.2, delay: 0, t: 0, dur: 1.2, dmg, tele: null, kind: 'giant' });
     for (let i = 0; i < n; i++) { const an = i / n * TAU; G.hazards.push({ x: Pl.pos.x + Math.cos(an) * R, z: Pl.pos.z + Math.sin(an) * R, r: 3, delay: .5 + i * .12, t: 0, dur: 1.1, dmg, tele: null, kind: 'giant' }); }
-    UI.toast('万剑落 · 看准空隙', 2); Snd.gong();
+    UI.toast('만검낙 · 빈틈을 노려라', 2); Snd.gong();
   },
 };
 /* 落地特效：竹刺、火油、巨剑各不相同 */
@@ -126,7 +126,7 @@ function updateEFire(z, dt) {
 /* 剑奴倒地后会再爬起来，除非被处决或趁倒地再补一剑 */
 function slaveDown(e) {
   e.revived = true; cancelAttack(e); e.state = 'down'; e.st = 0; e.hp = Math.round(e.maxHp * .4); e.stun = 2.4; e.stagger = 2.4; e.poiseD = 0; e.kx *= .3; e.kz *= .3;
-  FX.num({ x: e.pos.x, y: e.hitY + 1.2, z: e.pos.z }, '未死', 'word', 1); FX.wisp({ x: e.pos.x, y: e.hitY, z: e.pos.z }, 0x5affc8, 10, 1.5); Snd.clang();
+  FX.num({ x: e.pos.x, y: e.hitY + 1.2, z: e.pos.z }, '죽지 않음', 'word', 1); FX.wisp({ x: e.pos.x, y: e.hitY, z: e.pos.z }, 0x5affc8, 10, 1.5); Snd.clang();
 }
 /* 每帧额外的敌人表现 */
 function foeTick(e, dt) {

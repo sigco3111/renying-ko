@@ -1,19 +1,19 @@
 /* ---------------- 流程与主循环 ---------------- */
 // 本文件：流程和主循环：画质（applyQuality）、开新局 / 清场、Game（菜单 → 路线图 → 战斗 → 结算的流程）、按键、每帧 frame、绑定界面、boot 启动。
 const canvas = $('c'), root = $('game');
-const QN = ['流畅', '均衡', '精美', '极致'];
+const QN = ['유창', '균형', '정미', '극치'];
 function showBest() {
   const d = Save.load(), r = d.rec, run = Save.rl(), parts = [];
-  if (r.clears) parts.push(`已通关 ${r.clears} 次`); else if (r.bestCh) parts.push(`最远破至${CHAPTERS[Math.min(r.bestCh, CHAPTERS.length) - 1].n}`);
-  if (r.bestTime) parts.push(`最快 ${fmtTime(r.bestTime)}`); if (r.maxCombo) parts.push(`最高 ${r.maxCombo} 连`);
-  $('best').textContent = parts.length ? '旧日战绩：' + parts.join(' · ') : '';
-  $('btnMeta').textContent = d.soul ? `藏经阁 · 剑魄 ${d.soul}` : '藏经阁';
-  const c = $('btnCont'); c.hidden = !run; if (run) c.textContent = `续行 · ${CHAPTERS[run.ch].n}${run.asc ? ' · ' + ASC[run.asc].n : ''}`;
-  $('btnStart').textContent = run ? '重开一局' : '开一局'; $('btnStart').classList.toggle('pri', !run);
+  if (r.clears) parts.push(`${r.clears}회 클리어`); else if (r.bestCh) parts.push(`최고 ${CHAPTERS[Math.min(r.bestCh, CHAPTERS.length) - 1].n}까지 돌파`);
+  if (r.bestTime) parts.push(`최단 ${fmtTime(r.bestTime)}`); if (r.maxCombo) parts.push(`최고 ${r.maxCombo}연`);
+  $('best').textContent = parts.length ? '지난 전적: ' + parts.join(' · ') : '';
+  $('btnMeta').textContent = d.soul ? `장경각 · 검백 ${d.soul}` : '장경각';
+  const c = $('btnCont'); c.hidden = !run; if (run) c.textContent = `이어가기 · ${CHAPTERS[run.ch].n}${run.asc ? ' · ' + ASC[run.asc].n : ''}`;
+  $('btnStart').textContent = run ? '다시 시작' : '한 판 시작'; $('btnStart').classList.toggle('pri', !run);
   // 劫数：通关一次解锁下一劫
   const m = ascMax(), seg = $('ascSeg'), cur = Math.min(d.ascPick || 0, m); seg.hidden = m <= 0; $('ascD').hidden = m <= 0; seg.innerHTML = '';
   for (let i = 0; i <= m; i++) { const b = document.createElement('button'); b.type = 'button'; b.textContent = ASC[i].n; b.className = i === cur ? 'on' : ''; b.onclick = () => { Save.load().ascPick = i; Save.write(); showBest(); }; seg.appendChild(b); }
-  $('ascD').textContent = cur ? ASC.slice(1, cur + 1).map(a => a.d).join(' · ') : '寻常江湖 · 通关一次解锁下一劫';
+  $('ascD').textContent = cur ? ASC.slice(1, cur + 1).map(a => a.d).join(' · ') : '평범한 강호 · 한 번 클리어하면 다음 겁 해금';
 }
 function applyQuality() {
   const q = GFX.quality, pr = Math.min(window.devicePixelRatio || 1, [1, 1.25, 1.5, 2][q]); GFX.resize(root.clientWidth || innerWidth, root.clientHeight || innerHeight, pr);
@@ -82,9 +82,9 @@ const Game = {
   /* 一章打完：结算 + 剑庐 + 启程 */
   chapterClear() {
     G.state = 'interlude'; unlock(); clearField(); const ch = CHAPTERS[G.chapter], nx = CHAPTERS[G.chapter + 1];
-    $('ilT').firstChild.textContent = ch.n + ' · 已破'; $('ilS').textContent = ch.idx + ' · ' + ch.sub;
-    $('ilStats').innerHTML = `<div><b>${cnNum(Pl.lv)}</b>境界</div><div><b>${G.kills}</b>斩敌</div><div><b>${G.maxCombo}</b>最高连击</div><div><b>${fmtTime(G.playT)}</b>历时</div>`;
-    $('ilNext').textContent = nx ? `前路：${nx.idx} · ${nx.n}。${nx.story}` : '';
+    $('ilT').firstChild.textContent = ch.n + ' · 돌파 완료'; $('ilS').textContent = ch.idx + ' · ' + ch.sub;
+    $('ilStats').innerHTML = `<div><b>${cnNum(Pl.lv)}</b>경지</div><div><b>${G.kills}</b>처치</div><div><b>${G.maxCombo}</b>최고 연타</div><div><b>${fmtTime(G.playT)}</b>소요 시간</div>`;
+    $('ilNext').textContent = nx ? `앞길: ${nx.idx} · ${nx.n}. ${nx.story}` : '';
     $('interlude').hidden = false; healPlayer(Pl.maxHp, true); Pl.mp = Pl.maxMp;
   },
   nextChapter() { if (G.state !== 'interlude') return; Run.nextChapter(); },
@@ -92,15 +92,15 @@ const Game = {
     // 联机这一局不动单人存档；房主收摊就告诉大家，同袍自己退出就断开
     const co = Net.on, keep = co && Save.load().rl; if (co) { if (Net.host) Net.bcast({ t: 'over' }); coopLeave(); }
     G.state = 'over'; unlock(); Save.runEnd(win); if (keep) { Save.load().rl = keep; Save.write(); } const ch = CHAPTERS[G.chapter];
-    $('btnAgain').textContent = co ? '回大厅' : '再来一局'; G.coopOver = co;
-    $('overT').firstChild.textContent = win ? '万剑归寂' : '剑折人亡';
-    $('overS').textContent = win ? `三章尽破，青锋入鞘${G.asc ? ' · ' + ASC[G.asc].n : ''}` : `剑锋折于${ch.n} · 第${cnNum(Math.max(1, Run.step))}程`;
-    $('overStats').innerHTML = `<div><b>${cnNum(win ? CHAPTERS.length : G.chapter + 1)}</b>章</div><div><b>${cnNum(Math.max(1, Run.step))}</b>程</div><div><b>${cnNum(Pl.lv)}</b>境界</div><div><b>${G.kills}</b>斩敌</div><div><b>${G.maxCombo}</b>最高连击</div><div><b>${fmtTime(G.playT)}</b>历时</div><div><b>${Math.round(G.dmgDone)}</b>总伤害</div><div><b>${swordTier().name[0]}${swordTier().name[1]}</b>佩剑</div>`;
+    $('btnAgain').textContent = co ? '로비로' : '한 판 더'; G.coopOver = co;
+    $('overT').firstChild.textContent = win ? '만검귀적' : '검이 부러지고 사람이 죽다';
+    $('overS').textContent = win ? `세 장을 모두 깨고, 청봉이 칼집에 든다${G.asc ? ' · ' + ASC[G.asc].n : ''}` : `검끝이 ${ch.n} · 제${cnNum(Math.max(1, Run.step))}단계에서 꺾였다`;
+    $('overStats').innerHTML = `<div><b>${cnNum(win ? CHAPTERS.length : G.chapter + 1)}</b>장</div><div><b>${cnNum(Math.max(1, Run.step))}</b>단계</div><div><b>${cnNum(Pl.lv)}</b>경지</div><div><b>${G.kills}</b>처치</div><div><b>${G.maxCombo}</b>최고 연타</div><div><b>${fmtTime(G.playT)}</b>소요 시간</div><div><b>${Math.round(G.dmgDone)}</b>총 피해</div><div><b>${swordTier().name[0]}${swordTier().name[1]}</b>패검</div>`;
     UI.perkList('overPerks'); const sg = addSoul(win ? 60 + 20 * (G.asc || 0) : 0) + (G.soulRun || 0);
-    $('overSoul').textContent = `此行共得剑魄 ${sg} · 藏经阁中现有 ${Save.load().soul}` + (G.ascUnlocked ? ` · 解锁「${ASC[G.ascUnlocked].n}」` : '');
+    $('overSoul').textContent = `이번 여정 검백 ${sg} 획득 · 장경각 보유 ${Save.load().soul}` + (G.ascUnlocked ? ` · 「${ASC[G.ascUnlocked].n}」 해금` : '');
     $('over').hidden = false;
   },
-  victory() { UI.banner('万剑归寂', '', 'gold'); Snd.level(); Game.over(true); },
+  victory() { UI.banner('만검귀적', '', 'gold'); Snd.level(); Game.over(true); },
   home() { coopLeave(); hideAll(); $('hud').hidden = true; $('touch').hidden = true; clearField(); resetGame(); placePlayer(); G.state = 'title'; $('title').hidden = false; showBest(); },
 };
 Input.onLock = locked => { if (!locked && G.state === 'playing') Game.pause(); };
@@ -109,7 +109,7 @@ Input.onLock = locked => { if (!locked && G.state === 'playing') Game.pause(); }
 function eatKeys() { for (const k in Input.hits) delete Input.hits[k]; }
 function handleKeys() {
   const s = G.state;
-  if (Input.hit('KeyN')) { Snd.setMute(!Snd.muted); $('btnMute').textContent = '声音：' + (Snd.muted ? '关' : '开'); }
+  if (Input.hit('KeyN')) { Snd.setMute(!Snd.muted); $('btnMute').textContent = '소리: ' + (Snd.muted ? '관' : '열기'); }
   if (s === 'playing') { if (Input.hit('KeyP') || Input.hit('Escape')) Game.pause(); }
   else if (s === 'rlmap') {
     const r = Run.reach().sort((a, b) => Run.map.nodes[a].x - Run.map.nodes[b].x);
@@ -155,19 +155,19 @@ function frame(now) {
   FX.updateNums(G.state === 'playing' ? rdt : 0, GFX.camera, root.clientWidth, root.clientHeight);
   if (!dbg('noRender') && G.state !== 'travel') GFX.render(); Input.endFrame();
   // 自适应画质
-  fN++; fT += rdt; if (fT >= 1) { const fps = fN / fT; fN = 0; fT = 0; if (G.state === 'playing' && fps < 38) { if (++slowAcc >= 3 && GFX.quality > 0) { GFX.quality--; applyQuality(); slowAcc = 0; UI.toast('画面已自动调低，可在暂停菜单更改', 3); } } else slowAcc = 0; }
+  fN++; fT += rdt; if (fT >= 1) { const fps = fN / fT; fN = 0; fT = 0; if (G.state === 'playing' && fps < 38) { if (++slowAcc >= 3 && GFX.quality > 0) { GFX.quality--; applyQuality(); slowAcc = 0; UI.toast('화질을 자동으로 낮췄습니다. 일시정지 메뉴에서 바꿀 수 있습니다', 3); } } else slowAcc = 0; }
 }
 
 function bindUI() {
-  $('btnStart').onclick = () => { if (Save.rl() && !dbg('instant') && !confirm('重开会放弃存着的那一局（剑魄和藏经阁不受影响），确定吗？')) return; Game.start(); }; $('btnCont').onclick = () => Game.cont();
-  $('btnResume').onclick = () => Game.resume(); $('btnRestart').onclick = () => { if (!dbg('instant') && !confirm('放弃这一局？剑魄照样留着。')) return; $('pause').hidden = true; Game.over(false); };
-  $('btnRmLeave').onclick = () => { if (Net.on && !dbg('instant') && !confirm('退出联机？这一局就和同袍分开了。')) return; Game.home(); };
+  $('btnStart').onclick = () => { if (Save.rl() && !dbg('instant') && !confirm('다시 시작하면 저장된 판이 사라집니다(검백과 장경각은 영향 없음). 계속할까요?')) return; Game.start(); }; $('btnCont').onclick = () => Game.cont();
+  $('btnResume').onclick = () => Game.resume(); $('btnRestart').onclick = () => { if (!dbg('instant') && !confirm('이 판을 포기할까요? 검백은 그대로 남습니다.')) return; $('pause').hidden = true; Game.over(false); };
+  $('btnRmLeave').onclick = () => { if (Net.on && !dbg('instant') && !confirm('멀티플레이에서 나갈까요? 이 판은 동료와 떨어지게 됩니다.')) return; Game.home(); };
   $('btnCoop').onclick = () => coopShow(); $('btnHost').onclick = () => coopHost(); $('btnJoin').onclick = () => coopJoin($('coopCode').value);
   $('coopCode').onkeydown = e => { if (e.key === 'Enter') coopJoin($('coopCode').value); };
   $('btnCoopGo').onclick = () => coopGoAll(); $('btnCoopBack').onclick = () => Game.home(); $('evGo').onclick = () => Run.closeEvent();
   $('btnAgain').onclick = () => { if (G.coopOver) { Game.home(); coopShow(); } else Game.start(); }; $('btnHome').onclick = () => Game.home(); $('btnShopClose').onclick = () => Game.closeShop();
   $('btnIlShop').onclick = () => Game.openShop(); $('btnIlGo').onclick = () => Game.nextChapter();
-  $('btnMute').onclick = () => { Snd.setMute(!Snd.muted); $('btnMute').textContent = '声音：' + (Snd.muted ? '关' : '开'); };
+  $('btnMute').onclick = () => { Snd.setMute(!Snd.muted); $('btnMute').textContent = '소리: ' + (Snd.muted ? '관' : '열기'); };
   $('btnMeta').onclick = () => UI.showMeta(); $('btnMetaClose').onclick = () => { $('meta').hidden = true; $('title').hidden = false; showBest(); };
   $('btnSet').onclick = () => UI.showSettings('title'); $('btnSet2').onclick = () => UI.showSettings('pause'); $('btnSetClose').onclick = () => UI.closeSettings();
   $('btnReroll').onclick = () => Game.reroll(); $('btnTutSkip').onclick = () => { Tut.end(false); canvas.focus(); };
@@ -182,7 +182,7 @@ function bindUI() {
 async function boot() {
   const q0 = setting('q'); if (typeof dbg('quality') !== 'number') GFX.quality = q0 >= 0 ? q0 : (matchMedia('(pointer:coarse)').matches || Math.min(innerWidth, innerHeight) < 500 ? 1 : 2);
   bindUI(); showBest();
-  try { if (document.fonts && document.fonts.load) await Promise.race([Promise.all([document.fonts.load('80px "Ma Shan Zheng"', '青云剑宗试坪'), document.fonts.load('900 20px "Noto Serif SC"', '0123456789')]), new Promise(r => setTimeout(r, 2500))]); } catch (_) {}
+  try { if (document.fonts && document.fonts.load) await Promise.race([Promise.all([document.fonts.load('80px "Ma Shan Zheng"', '청운검종 시험장'), document.fonts.load('900 20px "Noto Serif SC"', '0123456789')]), new Promise(r => setTimeout(r, 2500))]); } catch (_) {}
   await new Promise(r => setTimeout(r, 30));
   try {
     initGfx(canvas); FX.init(GFX.scene); World.build('gate'); initPlayer(GFX.scene); initOrbs(GFX.scene); placePlayer(); applyQuality();
@@ -190,6 +190,6 @@ async function boot() {
     last = performance.now(); requestAnimationFrame(frame);
     $('btnStart').disabled = false; $('loading').hidden = true;
     if (DBG) DBG.game = { G, Pl, Game, Input, GFX, Cam, spawnEnemy, UI, ET, frame, FX, gainXp, Orbs, setSwordTier, World, Save, CHAPTERS, MAPS, killEnemy, damageEnemy, hurtPlayer, SK, ULT, PERKS, SCHOOLS, reso, learnSkill, offerCards, findExec, startExec, parriedBy, breakPoise, Tut, TERR, gH, Run, NODE, EVENTS, genMap, genWaves, rareCards, ascApply, ASC, Net };
-  } catch (err) { console.error(err && err.stack || err); $('loading').textContent = '无法启动 3D 画面：' + (err && err.message ? err.message : err) + '。请换用支持 WebGL 的桌面浏览器。'; }
+  } catch (err) { console.error(err && err.stack || err); $('loading').textContent = '3D 화면을 시작할 수 없습니다: ' + (err && err.message ? err.message : err) + '. WebGL을 지원하는 데스크톱 브라우저를 사용하세요.'; }
 }
 boot();

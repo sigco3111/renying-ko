@@ -92,7 +92,7 @@ function texAltar(S) {
   for (let i = 0; i < 8; i++) both((x, col) => { x.save(); x.rotate(i / 8 * TAU); x.fillStyle = col; x.beginPath(); x.moveTo(-9, -R * .9); x.lineTo(9, -R * .9); x.lineTo(7, -R * .34); x.lineTo(0, -R * .27); x.lineTo(-7, -R * .34); x.closePath(); x.fill(); x.fillRect(-26, -R * .9 - 6, 52, 10); x.fillRect(-5, -R * .97, 10, R * .07); x.restore(); });
   // 符文
   for (let i = 0; i < 32; i++) both((x, col) => { x.save(); x.rotate(i / 32 * TAU + .1); x.translate(0, -R * .78); x.strokeStyle = col; x.lineWidth = 3; const r2 = mulberry(i + 5); x.beginPath(); for (let k = 0; k < 4; k++) { x.moveTo((r2() - .5) * 26, (r2() - .5) * 26); x.lineTo((r2() - .5) * 26, (r2() - .5) * 26); } x.stroke(); x.restore(); });
-  both((x, col) => { x.fillStyle = col; x.font = `${R * .3}px "Ma Shan Zheng","STKaiti","KaiTi",serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('冢', 0, 6); });
+  both((x, col) => { x.fillStyle = col; x.font = `${R * .3}px "Ma Shan Zheng","STKaiti","KaiTi",serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('총', 0, 6); });
   for (let i = 0; i < 9000; i++) { const a = rng() * TAU, r = Math.sqrt(rng()) * R; g.fillStyle = rng() < .5 ? 'rgba(0,0,0,.12)' : 'rgba(255,240,230,.06)'; g.fillRect(Math.cos(a) * r, Math.sin(a) * r, 1 + rng() * 2.5, 1 + rng() * 2.5); }
   g.restore(); ge.restore(); return { c, e };
 }
@@ -168,7 +168,7 @@ function buildTomb(scene) {
 
   /* 巨剑：插在台地外缘的断崖上，北面一柄最大；剑面朝向台心，两面刻着发光的符 */
   const giantMat = stdMat(0xffffff, { vc: true, metal: .35, rough: .55, flat: true }), gGeo = giantSwordGeo();
-  const runeG = new T.PlaneGeometry(.045, .72), runeMats = ['一剑霜寒十四州', '万剑同悲'].map(t => { const m = stdMat(0x18181a, { metal: .35, rough: .55, emissive: 0xff3a14, ei: 2.2 }); m.emissiveMap = canvasTex(texRunes(t)); World.runes.push({ m, k: 2.2 }); return m; });
+  const runeG = new T.PlaneGeometry(.045, .72), runeMats = ['일검상한십사주', '만검동비'].map(t => { const m = stdMat(0x18181a, { metal: .35, rough: .55, emissive: 0xff3a14, ei: 2.2 }); m.emissiveMap = canvasTex(texRunes(t)); World.runes.push({ m, k: 2.2 }); return m; });
   // [x, z, 尺寸, 护手高, 扭转, 侧倾, 前倾（负值压向台地）]
   const giants = [[0, -57, 52, 24, 0, .05, -.1], [-40, -40, 34, 16, .3, -.14, .05], [44, -34, 36, 17, -.25, .16, -.06], [-56, 12, 30, 14, .4, .2, .08], [54, 19, 34, 16, -.35, -.15, -.12], [-26, 51, 28, 13, .2, .12, .1], [29, 50, 30, 14, -.3, -.18, -.05]];
   World.giants = []; const feet = [], guards = [], tip = new V3();
@@ -193,7 +193,7 @@ function buildTomb(scene) {
     for (const b of links) b.build(scene); }
 
   /* 墓碑 */
-  const names = ['无名剑客之墓', '断水剑主', '青霜埋骨', '葬剑于此', '天涯孤客', '三尺青锋', '剑痴', '孤鸿'];
+  const names = ['무명 검객의 묘', '단수검주', '청상매골', '이곳에 검을 묻다', '천애고객', '삼척청봉', '검에 미친 자', '고홍'];
   const tabGeo = new T.BoxGeometry(.8, 1.5, .18); tabGeo.translate(0, .6, 0);
   const tabs = names.slice(0, 4).map((n, i) => new Batch(tabGeo, stdMat(0xffffff, { map: canvasTex(texTablet(n, i + 1)), rough: .92 })));
   const tablet = (x, z, ry, y0 = 0) => { e.set(R2(-.18, .18), ry, R2(-.18, .18)); const s = R2(.85, 1.25); tabs[(rng() * 4) | 0].add(new V3(x, y0, z), new T.Quaternion().setFromEuler(e), new V3(s, s, s), null); };

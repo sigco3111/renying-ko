@@ -29,8 +29,8 @@ function noise2(x, y) {
   return lerp(lerp(hash2(xi, yi), hash2(xi + 1, yi), u), lerp(hash2(xi, yi + 1), hash2(xi + 1, yi + 1), u), v);
 }
 function fbm(x, y, o = 4) { let s = 0, a = .5, f = 1; for (let i = 0; i < o; i++) { s += a * noise2(x * f, y * f); f *= 2.03; a *= .5; } return s; }
-const CN = '零一二三四五六七八九';
-function cnNum(n) { n = Math.floor(n); if (n <= 10) return n === 10 ? '十' : CN[n]; if (n < 20) return '十' + CN[n % 10]; if (n < 100) return CN[Math.floor(n / 10)] + '十' + (n % 10 ? CN[n % 10] : ''); return '' + n; }
+const CN = '영일이삼사오육칠팔구';
+function cnNum(n) { n = Math.floor(n); if (n <= 10) return n === 10 ? '십' : CN[n]; if (n < 20) return '십' + CN[n % 10]; if (n < 100) return CN[Math.floor(n / 10)] + '십' + (n % 10 ? CN[n % 10] : ''); return '' + n; }
 
 /* ---------------- 输入 ---------------- */
 const Input = {

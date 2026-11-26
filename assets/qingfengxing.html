@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>青锋行</title>
+<title>청봉행</title>
 <!--
   青锋行的页面骨架：上面是样式（布局、HUD、菜单、卡片），下面是 HTML 结构（画布、HUD、各个界面层），
   最后两个占位标记由 tools/build.py 换成三维引擎和 src/qfx/*.js 拼好的游戏代码（打包后在 assets/qingfengxing.html）。
   找 bug 提示：界面元素的 id 和 src/qfx/80-ui.js、90-main.js 里 $('id') 一一对应，改 id 要两边一起改。
 -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;900&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;600;900&display=swap" media="print" onload="this.media='all'">
 <style>
 /* 布局：全屏 3D 画布 + 四角水墨 HUD；菜单为左侧竖排题字 + 宣纸卷轴卡片 */
 :root{
@@ -20,8 +20,8 @@
   --cinnabar:#c63b2e; --cinnabar2:#7d1f18;
   --jade:#62cdb9; --jade2:#1f6f66;
   --gold:#dcae55; --straw:#b9a26a;
-  --f-brush:'Ma Shan Zheng','STKaiti','Kaiti SC','KaiTi',serif;
-  --f-text:'Noto Serif SC','Songti SC','STSong','SimSun',serif;
+  --f-brush:'Black Han Sans','Noto Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
+  --f-text:'Noto Sans KR','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
 }
 html,body{height:100%;background:var(--ink);color:var(--paper);overflow:hidden}
 body{font-family:var(--f-text);font-size:14px;-webkit-user-select:none;user-select:none;touch-action:none}
@@ -316,184 +316,184 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   <div id="hud" hidden>
     <div class="coop-hud" id="coopHud" hidden></div>
     <div class="vitals">
-      <div class="lv"><b id="lvNum">一</b><small>境界</small></div>
+      <div class="lv"><b id="lvNum">일</b><small>경지</small></div>
       <div class="bars">
         <div class="bar hp" id="hpBar"><i class="lag" id="hpLag"></i><i class="fill" id="hpFill"></i><b id="hpTxt"></b></div>
         <div class="bar mp"><i class="fill" id="mpFill"></i></div>
         <div class="bar sta"><i class="fill" id="staFill"></i></div>
-        <div class="meta"><span>铜钱 <b id="gold">0</b></span><span class="sw" id="swName">凡铁剑</span><span id="buffs"></span></div>
+        <div class="meta"><span>동전 <b id="gold">0</b></span><span class="sw" id="swName">범철검</span><span id="buffs"></span></div>
       </div>
     </div>
-    <div class="wave"><div class="w1" id="waveT">第一波</div><div class="w2" id="waveS"></div></div>
+    <div class="wave"><div class="w1" id="waveT">제1파</div><div class="w2" id="waveS"></div></div>
     <div class="boss" id="bossBox" hidden><div class="bn" id="bossName"></div><div class="bb"><i class="lag" id="bossLag"></i><i class="fill" id="bossFill"></i></div><div class="bp"><i id="bossPoise"></i></div></div>
     <canvas id="mini" width="264" height="264"></canvas>
-    <div class="combo" id="combo" hidden><b id="comboN">0</b><span>连</span><em id="comboR"></em></div>
+    <div class="combo" id="combo" hidden><b id="comboN">0</b><span>연타</span><em id="comboR"></em></div>
     <div class="skills" id="skills">
-      <button class="sk pot" id="sk4" type="button"><span class="g">丹</span><span class="cd"></span><span class="c" id="pots">3</span><span class="k">C</span><span class="n">回春丹</span></button>
-      <button class="sk" id="sk0" type="button"><span class="g">气</span><span class="cd"></span><span class="k">Q</span><span class="n">剑气纵横</span></button>
-      <button class="sk" id="sk1" type="button"><span class="g">空</span><span class="cd"></span><span class="k">E</span><span class="n">空槽</span></button>
-      <button class="sk" id="sk2" type="button"><span class="g">空</span><span class="cd"></span><span class="k">R</span><span class="n">空槽</span></button>
-      <button class="sk ult" id="sk3" type="button"><span class="ring"></span><span class="g">绝</span><span class="cd"></span><span class="k">V</span><span class="n">绝学</span></button>
+      <button class="sk pot" id="sk4" type="button"><span class="g">단</span><span class="cd"></span><span class="c" id="pots">3</span><span class="k">C</span><span class="n">회춘단</span></button>
+      <button class="sk" id="sk0" type="button"><span class="g">기</span><span class="cd"></span><span class="k">Q</span><span class="n">검기종횡</span></button>
+      <button class="sk" id="sk1" type="button"><span class="g">공</span><span class="cd"></span><span class="k">E</span><span class="n">빈 슬롯</span></button>
+      <button class="sk" id="sk2" type="button"><span class="g">공</span><span class="cd"></span><span class="k">R</span><span class="n">빈 슬롯</span></button>
+      <button class="sk ult" id="sk3" type="button"><span class="ring"></span><span class="g">절</span><span class="cd"></span><span class="k">V</span><span class="n">절학</span></button>
     </div>
     <div class="xp"><i id="xpFill"></i></div>
     <div class="hint" id="hint">
-      <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>移动　<kbd>Shift</kbd>疾行<br>
-      <kbd>左键</kbd>/<kbd>J</kbd>轻剑　<kbd>右键</kbd>/<kbd>K</kbd>重剑<br>
-      <kbd>空格</kbd>闪避　<kbd>F</kbd>弹反·处决　<kbd>按住K</kbd>蓄力<br>
-      <kbd>Tab</kbd>锁定　<kbd>P</kbd>暂停
+      <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>이동　<kbd>Shift</kbd>질주<br>
+      <kbd>좌클릭</kbd>/<kbd>J</kbd>경검　<kbd>우클릭</kbd>/<kbd>K</kbd>중검<br>
+      <kbd>스페이스</kbd>회피　<kbd>F</kbd>패리·처형　<kbd>K 길게</kbd>충전<br>
+      <kbd>Tab</kbd>고정　<kbd>P</kbd>일시정지
     </div>
     <div class="banner" id="banner"><div class="t" id="banT"></div><div class="s" id="banS"></div></div>
     <div class="toast" id="toast"></div>
     <div class="lockm" id="lockm" hidden></div>
     <div class="lockinfo" id="lockInfo" hidden><span class="lb"><i id="lockHp"></i></span><span class="lb"><i id="lockPo"></i></span></div>
-    <div class="execm" id="execm" hidden><kbd>F</kbd>处决</div>
-    <div class="tut" id="tut" hidden><div class="tn" id="tutN"></div><div class="tt" id="tutT"></div><button class="btn sm" id="btnTutSkip" type="button">跳过试剑</button></div>
+    <div class="execm" id="execm" hidden><kbd>F</kbd>처형</div>
+    <div class="tut" id="tut" hidden><div class="tn" id="tutN"></div><div class="tt" id="tutT"></div><button class="btn sm" id="btnTutSkip" type="button">시검 건너뛰기</button></div>
   </div>
 
   <div id="touch" hidden>
     <div id="stick"><i id="knob"></i></div>
-    <button class="tb" id="tAtk" type="button">斩</button>
-    <button class="tb" id="tDodge" type="button">闪</button>
-    <button class="tb" id="tHeavy" type="button">旋</button>
-    <button class="tb" id="tParry" type="button">格</button>
-    <button class="tb" id="tLock" type="button">锁</button>
+    <button class="tb" id="tAtk" type="button">참</button>
+    <button class="tb" id="tDodge" type="button">회피</button>
+    <button class="tb" id="tHeavy" type="button">회전</button>
+    <button class="tb" id="tParry" type="button">막기</button>
+    <button class="tb" id="tLock" type="button">고정</button>
     <button class="tb" id="tPause" type="button">‖</button>
   </div>
 
   <div id="title" class="screen">
-    <div class="tname"><span>青</span><span>锋</span><span>行</span><i class="seal"><b>暮</b><b>山</b><b>试</b><b>剑</b></i></div>
+    <div class="tname"><span>청</span><span>봉</span><span>행</span><i class="seal"><b>모</b><b>산</b><b>시</b><b>검</b></i></div>
     <div class="tbody">
-      <p>青云山一夜劫火，师门星散。你自山门醒来，一人一剑，要从山门杀过竹林，直上剑冢。</p>
-      <p>每一章一张路线图：遭遇、精锐、奇遇、剑庐、歇脚、藏宝，岔路自己挑，尽头是本章首领。身死这一局就结束，剑魄带回藏经阁，下一局更强。</p>
-      <div class="btns"><button class="btn pri" id="btnCont" type="button" hidden>续行</button><button class="btn pri" id="btnStart" type="button" disabled>开一局</button><button class="btn sm" id="btnFull" type="button">全屏</button></div>
+      <p>청운산에 하룻밤 겁화가 일어 사문은 흩어졌다. 당신은 산문에서 깨어나, 홀로 검 한 자루를 쥐고 산문에서 죽림을 뚫고 검총까지 올라야 한다.</p>
+      <p>장마다 지도 한 장: 조우, 정예, 기우, 검려, 쉬어 가기, 보물. 갈림길은 직접 고르고 끝에는 그 장의 두목이 있다. 죽으면 이 판은 끝나고, 검백은 장경각으로 가져가 다음 판이 더 강해진다.</p>
+      <div class="btns"><button class="btn pri" id="btnCont" type="button" hidden>이어가기</button><button class="btn pri" id="btnStart" type="button" disabled>한 판 시작</button><button class="btn sm" id="btnFull" type="button">전체 화면</button></div>
       <div class="asc-row"><div class="seg" id="ascSeg" hidden></div><div class="asc-d" id="ascD" hidden></div></div>
-      <div class="btns"><button class="btn sm" id="btnCoop" type="button">同袍肉鸽 · 联机</button><button class="btn sm" id="btnMeta" type="button">藏经阁</button><button class="btn sm" id="btnSet" type="button">设置</button></div>
-      <div class="loading" id="loading">山色渐起……</div>
+      <div class="btns"><button class="btn sm" id="btnCoop" type="button">동료 로그라이크 · 멀티</button><button class="btn sm" id="btnMeta" type="button">장경각</button><button class="btn sm" id="btnSet" type="button">설정</button></div>
+      <div class="loading" id="loading">산색이 밝아 온다……</div>
       <div class="best" id="best"></div>
       <div class="keys">
-        <kbd>W A S D</kbd><span>移动</span><kbd>鼠标</kbd><span>转动视角</span>
-        <kbd>左键 / J</kbd><span>轻剑四连</span><kbd>右键 / K</kbd><span>重剑·旋风斩</span>
-        <kbd>F</kbd><span>弹反 · 处决</span><kbd>按住 K</kbd><span>蓄满 · 破山</span>
-        <kbd>空格 / L</kbd><span>闪避 · 踏雪</span><kbd>Shift</kbd><span>疾行</span>
-        <kbd>Q E R</kbd><span>三槽剑技</span><kbd>V</kbd><span>绝学</span>
-        <kbd>C</kbd><span>回春丹</span><kbd>Tab</kbd><span>锁定 · ← → 换人</span>
-        <kbd>1 2 3</kbd><span>路线图上选路</span><kbd>Enter</kbd><span>只有一条路时直接走</span>
-        <kbd>P</kbd><span>暂停</span><kbd>N</kbd><span>静音</span>
+        <kbd>W A S D</kbd><span>이동</span><kbd>마우스</kbd><span>시점 회전</span>
+        <kbd>좌클릭 / J</kbd><span>경검 4연타</span><kbd>우클릭 / K</kbd><span>중검 · 선풍참</span>
+        <kbd>F</kbd><span>패리 · 처형</span><kbd>K 길게</kbd><span>충전 · 파산</span>
+        <kbd>스페이스 / L</kbd><span>회피 · 답설</span><kbd>Shift</kbd><span>질주</span>
+        <kbd>Q E R</kbd><span>검기술 3슬롯</span><kbd>V</kbd><span>절학</span>
+        <kbd>C</kbd><span>회춘단</span><kbd>Tab</kbd><span>고정 · ← → 대상 변경</span>
+        <kbd>1 2 3</kbd><span>지도에서 길 선택</span><kbd>Enter</kbd><span>길이 하나면 바로 이동</span>
+        <kbd>P</kbd><span>일시정지</span><kbd>N</kbd><span>음소거</span>
       </div>
     </div>
   </div>
 
   <div id="levelup" class="screen veil" hidden>
-    <h2 id="luT">破境<small id="luSub">机缘一道，择之</small></h2>
+    <h2 id="luT">경지 돌파<small id="luSub">기연 하나를 고르세요</small></h2>
     <div class="cards" id="cards"></div>
-    <div class="btns"><button class="btn sm" id="btnReroll" type="button" hidden>重掷</button></div>
-    <div class="note">按 1 / 2 / 3 或点击卷轴</div>
+    <div class="btns"><button class="btn sm" id="btnReroll" type="button" hidden>다시 뽑기</button></div>
+    <div class="note">1 / 2 / 3 또는 두루마리를 클릭</div>
   </div>
 
   <div id="shop" class="screen veil" hidden>
-    <h2>剑庐<small>炉火未熄，锻剑淬体</small></h2>
-    <div class="purse">囊中铜钱 <b id="shopGold">0</b></div>
+    <h2>검려<small>화로 불이 꺼지지 않았다. 검과 몸을 단련하세요</small></h2>
+    <div class="purse">주머니 속 동전 <b id="shopGold">0</b></div>
     <div class="shopgrid" id="shopGrid"></div>
-    <div class="btns"><button class="btn" id="btnShopClose" type="button">出庐</button></div>
-    <div class="note">按 B 或 Esc 返回</div>
+    <div class="btns"><button class="btn" id="btnShopClose" type="button">나가기</button></div>
+    <div class="note">B 또는 Esc로 돌아가기</div>
   </div>
 
   <div id="pause" class="screen veil" hidden>
-    <h2>暂歇</h2>
+    <h2>잠시 쉬기</h2>
     <div class="perklist" id="pausePerks"></div>
     <div class="btns">
-      <button class="btn pri" id="btnResume" type="button">继续</button>
-      <button class="btn" id="btnRestart" type="button">放弃此局</button>
+      <button class="btn pri" id="btnResume" type="button">계속</button>
+      <button class="btn" id="btnRestart" type="button">이 판 포기</button>
     </div>
     <div class="btns">
-      <button class="btn sm" id="btnMute" type="button">声音：开</button>
-      <button class="btn sm" id="btnSet2" type="button">设置</button>
-      <button class="btn sm" id="btnFull2" type="button">全屏</button>
+      <button class="btn sm" id="btnMute" type="button">소리: 켜짐</button>
+      <button class="btn sm" id="btnSet2" type="button">설정</button>
+      <button class="btn sm" id="btnFull2" type="button">전체 화면</button>
     </div>
   </div>
 
   <div id="over" class="screen veil" hidden>
-    <h2 id="overT">剑折人亡<small id="overS"></small></h2>
+    <h2 id="overT">검이 부러지고 사람이 죽다<small id="overS"></small></h2>
     <div class="stats" id="overStats"></div>
     <div class="soulgain" id="overSoul"></div>
     <div class="perklist" id="overPerks"></div>
-    <div class="btns"><button class="btn pri" id="btnAgain" type="button">再来一局</button><button class="btn sm" id="btnHome" type="button">回山门</button></div>
+    <div class="btns"><button class="btn pri" id="btnAgain" type="button">한 판 더</button><button class="btn sm" id="btnHome" type="button">산문으로</button></div>
   </div>
 
   <div id="meta" class="screen veil" hidden>
-    <h2>藏经阁<small>剑魄不灭，修为长存</small></h2>
-    <div class="purse">剑魄 <b id="metaSoul">0</b></div>
+    <h2>장경각<small>검백은 사라지지 않고 수련은 남는다</small></h2>
+    <div class="purse">검백 <b id="metaSoul">0</b></div>
     <div class="shopgrid" id="metaGrid"></div>
     <div class="recs" id="recs"></div>
-    <div class="btns"><button class="btn" id="btnMetaClose" type="button">下山</button></div>
-    <div class="note">每打完一处、每斩一敌都得剑魄；身死也不散</div>
+    <div class="btns"><button class="btn" id="btnMetaClose" type="button">하산</button></div>
+    <div class="note">한 곳을 끝낼 때마다, 적을 벨 때마다 검백을 얻고, 죽어도 사라지지 않습니다</div>
   </div>
 
   <div id="coop" class="screen veil" hidden>
-    <h2>同袍肉鸽<small>二到四人，同走一张路线图</small></h2>
-    <label class="coop-name">你的名号 <input id="coopName" maxlength="8" placeholder="无名侠客" autocomplete="off"></label>
+    <h2>동료 로그라이크<small>2~4명이 같은 지도를 함께 간다</small></h2>
+    <label class="coop-name">당신의 별호 <input id="coopName" maxlength="8" placeholder="무명 협객" autocomplete="off"></label>
     <div class="coop-pre" id="coopPre">
-      <button class="btn pri" id="btnHost" type="button">建房</button>
-      <span class="coop-or">或者</span>
-      <input id="coopCode" inputmode="numeric" maxlength="4" placeholder="四位房间码" autocomplete="off" aria-label="房间码">
-      <button class="btn sm" id="btnJoin" type="button">加入</button>
+      <button class="btn pri" id="btnHost" type="button">방 만들기</button>
+      <span class="coop-or">또는</span>
+      <input id="coopCode" inputmode="numeric" maxlength="4" placeholder="네 자리 방 코드" autocomplete="off" aria-label="방 코드">
+      <button class="btn sm" id="btnJoin" type="button">참가</button>
     </div>
     <div class="coop-room" id="coopRoom" hidden>
-      <div class="coop-code">房间码 <b id="coopCodeT">----</b></div>
+      <div class="coop-code">방 코드 <b id="coopCodeT">----</b></div>
       <div class="coop-list" id="coopList"></div>
     </div>
     <div class="coop-msg" id="coopMsg" role="status"></div>
-    <div class="btns"><button class="btn pri" id="btnCoopGo" type="button" hidden>开局</button><button class="btn sm" id="btnCoopBack" type="button">回山门</button></div>
-    <div class="note">每多一位同袍，敌人气血多三成半、伤害略涨、来得也多些 · 由房主择路<br>倒下了别慌，同袍站到身边两秒半就能扶你起来 · 房主的网页要留在前台</div>
+    <div class="btns"><button class="btn pri" id="btnCoopGo" type="button" hidden>시작</button><button class="btn sm" id="btnCoopBack" type="button">산문으로</button></div>
+    <div class="note">동료가 한 명 늘 때마다 적 체력이 35% 늘고 피해가 약간 오르며 수도 늘어납니다 · 방장이 길을 고릅니다<br>쓰러져도 당황하지 마세요. 동료가 곁에 2.5초 서 있으면 일으켜 줍니다 · 방장의 페이지는 앞 화면에 두어야 합니다</div>
   </div>
 
   <div id="settings" class="screen veil" hidden>
-    <h2>设置</h2>
+    <h2>설정</h2>
     <div class="setgrid">
-      <span>画质</span><div class="seg" id="setQ"></div>
-      <span>视角灵敏</span><input type="range" id="setSens" min="0.4" max="2.2" step="0.1">
-      <span>震屏</span><div class="seg" id="setShake"></div>
-      <span>伤害数字</span><div class="seg" id="setNums"></div>
-      <span>音量</span><input type="range" id="setVol" min="0" max="1" step="0.05">
+      <span>화질</span><div class="seg" id="setQ"></div>
+      <span>시점 감도</span><input type="range" id="setSens" min="0.4" max="2.2" step="0.1">
+      <span>화면 흔들림</span><div class="seg" id="setShake"></div>
+      <span>피해 숫자</span><div class="seg" id="setNums"></div>
+      <span>음량</span><input type="range" id="setVol" min="0" max="1" step="0.05">
     </div>
-    <div class="btns"><button class="btn" id="btnSetClose" type="button">返回</button></div>
+    <div class="btns"><button class="btn" id="btnSetClose" type="button">돌아가기</button></div>
   </div>
 
   <div id="interlude" class="screen veil" hidden>
-    <h2 id="ilT">已破<small id="ilS"></small></h2>
+    <h2 id="ilT">돌파 완료<small id="ilS"></small></h2>
     <div class="stats" id="ilStats"></div>
     <p class="il-next" id="ilNext"></p>
-    <div class="btns"><button class="btn" id="btnIlShop" type="button">入剑庐</button><button class="btn pri" id="btnIlGo" type="button">启程</button></div>
-    <div class="note">启程即入下一章的路线图</div>
+    <div class="btns"><button class="btn" id="btnIlShop" type="button">검려로</button><button class="btn pri" id="btnIlGo" type="button">출발</button></div>
+    <div class="note">출발하면 다음 장의 지도로 갑니다</div>
   </div>
 
   <div id="rlmap" class="screen veil" hidden>
-    <h2 id="rmT">山门<small id="rmS"></small></h2>
+    <h2 id="rmT">산문<small id="rmS"></small></h2>
     <div class="rm-stat" id="rmStat"></div>
     <div class="rm-body">
-      <svg id="rmSvg" viewBox="0 0 400 600" role="group" aria-label="路线图"></svg>
+      <svg id="rmSvg" viewBox="0 0 400 600" role="group" aria-label="지도"></svg>
       <div class="rm-side">
         <div class="rm-tip" id="rmTip"></div>
         <div class="rm-legend">
-          <i style="color:#c9b48a">战</i><span>遭遇</span><i style="color:#ef6a55">精</i><span>精锐 · 必得珍品机缘</span>
-          <i style="color:#9fc7e8">奇</i><span>奇遇</span><i style="color:#dcae55">市</i><span>剑庐</span>
-          <i style="color:#62cdb9">憩</i><span>歇脚</span><i style="color:#e8c46a">宝</i><span>藏宝</span>
-          <i style="color:#ff3a22">首</i><span>首领</span>
+          <i style="color:#c9b48a">전</i><span>조우</span><i style="color:#ef6a55">정</i><span>정예 · 진품 기연 필득</span>
+          <i style="color:#9fc7e8">기</i><span>기우</span><i style="color:#dcae55">시</i><span>검려</span>
+          <i style="color:#62cdb9">휴</i><span>쉬어 가기</span><i style="color:#e8c46a">보</i><span>보물</span>
+          <i style="color:#ff3a22">수</i><span>두목</span>
         </div>
         <div class="rm-coop" id="rmCoop" hidden></div>
         <div class="perklist" id="rmPerks"></div>
-        <div class="btns"><button class="btn sm" id="btnRmLeave" type="button">暂离 · 已存档</button></div>
+        <div class="btns"><button class="btn sm" id="btnRmLeave" type="button">잠시 이탈 · 저장됨</button></div>
       </div>
     </div>
-    <div class="note">点亮的地方才走得到 · 按 1 / 2 / 3 从左到右选路</div>
+    <div class="note">밝아진 곳으로만 갈 수 있습니다 · 1 / 2 / 3으로 왼쪽부터 길 선택</div>
   </div>
 
   <div id="event" class="screen veil" hidden>
-    <h2 id="evT">奇遇<small id="evS"></small></h2>
+    <h2 id="evT">기우<small id="evS"></small></h2>
     <p class="ev-d" id="evD"></p>
     <div class="shopgrid" id="evOpts"></div>
     <p class="ev-r" id="evR" hidden></p>
-    <div class="btns"><button class="btn pri" id="evGo" type="button" hidden>上路</button></div>
+    <div class="btns"><button class="btn pri" id="evGo" type="button" hidden>출발</button></div>
   </div>
 
   <div id="travel" class="travel" hidden>
@@ -546,8 +546,8 @@ function noise2(x, y) {
   return lerp(lerp(hash2(xi, yi), hash2(xi + 1, yi), u), lerp(hash2(xi, yi + 1), hash2(xi + 1, yi + 1), u), v);
 }
 function fbm(x, y, o = 4) { let s = 0, a = .5, f = 1; for (let i = 0; i < o; i++) { s += a * noise2(x * f, y * f); f *= 2.03; a *= .5; } return s; }
-const CN = '零一二三四五六七八九';
-function cnNum(n) { n = Math.floor(n); if (n <= 10) return n === 10 ? '十' : CN[n]; if (n < 20) return '十' + CN[n % 10]; if (n < 100) return CN[Math.floor(n / 10)] + '十' + (n % 10 ? CN[n % 10] : ''); return '' + n; }
+const CN = '영일이삼사오육칠팔구';
+function cnNum(n) { n = Math.floor(n); if (n <= 10) return n === 10 ? '십' : CN[n]; if (n < 20) return '십' + CN[n % 10]; if (n < 100) return CN[Math.floor(n / 10)] + '십' + (n % 10 ? CN[n % 10] : ''); return '' + n; }
 
 /* ---------------- 输入 ---------------- */
 const Input = {
@@ -1291,7 +1291,7 @@ function buildGate(scene) {
   mesh(boxG(18, 2.6, 8), redD, 0, 15.6, -64.5, tmp); mesh(boxG(19, .5, 9), teal, 0, 16.9, -64.5, tmp);
   const r2 = roofMesh(27, 15, 4.6, tile); r2.position.set(0, 17.1, -64.5); tmp.add(r2);
   mesh(boxG(8.4, .7, .7), goldM, 0, 21.9, -64.5, tmp); for (const sx of [-1, 1]) { const o = mesh(coneG(.5, 1.8, 5), goldM, sx * 4.3, 22.5, -64.5, tmp); o.rotation.z = -sx * .5; }
-  const plq = new T.Mesh(new T.PlaneGeometry(6.4, 2.2), new T.MeshStandardMaterial({ map: canvasTex(texPlaque('青云剑宗')), roughness: .6, emissive: 0x3a2a10, emissiveIntensity: .5 })); plq.position.set(0, 12.6, -57.2); plq.rotation.x = .2; tmp.add(plq);
+  const plq = new T.Mesh(new T.PlaneGeometry(6.4, 2.2), new T.MeshStandardMaterial({ map: canvasTex(texPlaque('청운검종')), roughness: .6, emissive: 0x3a2a10, emissiveIntensity: .5 })); plq.position.set(0, 12.6, -57.2); plq.rotation.x = .2; tmp.add(plq);
   const lanternMat = stdMat(0xff5a2a, { emissive: 0xff4a1e, ei: 1.9, rough: .6 });
   for (let i = 0; i < 4; i++) { const x = -8.1 + i * 5.4; const l = mesh(sphG(.5, 12, 8), lanternMat, x, 9.1, -57.6, tmp); l.scale.set(1, 1.2, 1); mesh(cylG(.02, .02, 1.6, 4), dark, x, 10.3, -57.6, tmp); mesh(cylG(.22, .22, .12, 8), goldM, x, 9.72, -57.6, tmp); World.lamps.push(l); }
   for (const sx of [-1, 1]) { const x = sx * 8.2, z = -57.4; mesh(cylG(.25, .4, 1.3, 8), dark, x, 3.85, z, tmp); mesh(cylG(.75, .4, .5, 10), dark, x, 4.7, z, tmp); mesh(cylG(.62, .62, .1, 10), stdMat(0xff7a2a, { emissive: 0xff6a1a, ei: 2.6 }), x, 4.93, z, tmp); World.fires.push(new V3(x, 5.1, z)); }
@@ -1305,7 +1305,7 @@ function buildGate(scene) {
   mesh(boxG(8.2, .8, .7), teal, 0, 7.2, 0, gate); mesh(boxG(8.2, .6, .6), red, 0, 5.9, 0, gate);
   for (const sx of [-1, 1]) { mesh(boxG(5.2, .7, .6), teal, sx * 5.8, 5.3, 0, gate); const rf = roofMesh(6.6, 2.6, 1.1, tile); rf.position.set(sx * 5.8, 5.7, 0); gate.add(rf); }
   const gr = roofMesh(10.4, 3.2, 1.5, tile); gr.position.set(0, 7.6, 0); gate.add(gr);
-  const gp = new T.Mesh(new T.PlaneGeometry(3.4, 1.25), new T.MeshStandardMaterial({ map: canvasTex(texPlaque('试剑坪', 400, 150)), roughness: .6, emissive: 0x3a2a10, emissiveIntensity: .5 })); gp.position.set(0, 6.55, -.4); gp.rotation.y = PI; gate.add(gp);
+  const gp = new T.Mesh(new T.PlaneGeometry(3.4, 1.25), new T.MeshStandardMaterial({ map: canvasTex(texPlaque('시검평', 400, 150)), roughness: .6, emissive: 0x3a2a10, emissiveIntensity: .5 })); gp.position.set(0, 6.55, -.4); gp.rotation.y = PI; gate.add(gp);
   shadowAll(gate); gp.castShadow = false;
 
   /* 石灯 */
@@ -1538,7 +1538,7 @@ function buildBamboo(scene) {
   for (const sx of [-2.5, 2.5]) for (const sz of [-1.6, 1.7]) mesh(cylG(.17, .19, 2.7, 10), redF, sx, 1.85, sz, sh);
   mesh(boxG(5.4, 2.6, .25), stoneD, 0, 1.8, -1.8, sh); for (const sx of [-2.6, 2.6]) mesh(boxG(.25, 2.6, 3.4), stoneD, sx, 1.8, -.1, sh);
   mesh(boxG(6.2, .35, 4.4), redF, 0, 3.3, 0, sh); const rf = roofMesh(7.8, 6.2, 1.7, tile); rf.position.set(0, 3.45, 0); sh.add(rf); mesh(boxG(3.2, .3, .3), tile, 0, 5.1, 0, sh);
-  const plq = new T.Mesh(new T.PlaneGeometry(2.1, .75), new T.MeshStandardMaterial({ map: canvasTex(texPlaque('土地祠', 420, 150)), roughness: .6, emissive: 0x2a1a08, emissiveIntensity: .6 })); plq.position.set(0, 3.08, 2.42); sh.add(plq);
+  const plq = new T.Mesh(new T.PlaneGeometry(2.1, .75), new T.MeshStandardMaterial({ map: canvasTex(texPlaque('토지사', 420, 150)), roughness: .6, emissive: 0x2a1a08, emissiveIntensity: .6 })); plq.position.set(0, 3.08, 2.42); sh.add(plq);
   mesh(boxG(2.2, .9, 1), wood, 0, .95, -.9, sh); const statM = stdMat(0x3c3d3a, { rough: .9 }); mesh(sphG(.17, 10, 8), statM, 0, 2.1, -1.3, sh); mesh(coneG(.36, 1.0, 10), statM, 0, 1.55, -1.3, sh); mesh(boxG(.9, .12, .5), statM, 0, 1.05, -1.3, sh);
   mesh(cylG(.22, .18, .26, 10), stdMat(0x6a5a3a, { metal: .6, rough: .5 }), 0, 1.53, -.6, sh);
   for (let i = -1; i <= 1; i++) { mesh(cylG(.012, .012, .5, 4), wood, i * .07, 1.85, -.6, sh); mesh(sphG(.025, 6, 4), glowM, i * .07, 2.1, -.6, sh); }
@@ -1560,7 +1560,7 @@ function buildBamboo(scene) {
   }
   /* 石碑：竹海听涛 */
   { const sg = group(-16, 0, -19, scene); sg.rotation.y = .5; mesh(boxG(1.9, .5, 1.1), stone, 0, .25, 0, sg); mesh(boxG(1.3, 2.9, .34), stoneD, 0, 1.95, 0, sg);
-    const face = new T.Mesh(new T.PlaneGeometry(1.2, 2.5), stdMat(0xffffff, { map: canvasTex(texStele('竹海听涛')), rough: .9 })); face.position.set(0, 1.98, .175); sg.add(face);
+    const face = new T.Mesh(new T.PlaneGeometry(1.2, 2.5), stdMat(0xffffff, { map: canvasTex(texStele('죽해청도')), rough: .9 })); face.position.set(0, 1.98, .175); sg.add(face);
     const cap = mesh(boxG(1.5, .22, .5), stone, 0, 3.5, 0, sg); cap.rotation.z = 0; shadowAll(sg); addCol(-16, -19, 1.1); }
 
   /* 萤火、落叶、地雾 */
@@ -1684,7 +1684,7 @@ function texAltar(S) {
   for (let i = 0; i < 8; i++) both((x, col) => { x.save(); x.rotate(i / 8 * TAU); x.fillStyle = col; x.beginPath(); x.moveTo(-9, -R * .9); x.lineTo(9, -R * .9); x.lineTo(7, -R * .34); x.lineTo(0, -R * .27); x.lineTo(-7, -R * .34); x.closePath(); x.fill(); x.fillRect(-26, -R * .9 - 6, 52, 10); x.fillRect(-5, -R * .97, 10, R * .07); x.restore(); });
   // 符文
   for (let i = 0; i < 32; i++) both((x, col) => { x.save(); x.rotate(i / 32 * TAU + .1); x.translate(0, -R * .78); x.strokeStyle = col; x.lineWidth = 3; const r2 = mulberry(i + 5); x.beginPath(); for (let k = 0; k < 4; k++) { x.moveTo((r2() - .5) * 26, (r2() - .5) * 26); x.lineTo((r2() - .5) * 26, (r2() - .5) * 26); } x.stroke(); x.restore(); });
-  both((x, col) => { x.fillStyle = col; x.font = `${R * .3}px "Ma Shan Zheng","STKaiti","KaiTi",serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('冢', 0, 6); });
+  both((x, col) => { x.fillStyle = col; x.font = `${R * .3}px "Ma Shan Zheng","STKaiti","KaiTi",serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('총', 0, 6); });
   for (let i = 0; i < 9000; i++) { const a = rng() * TAU, r = Math.sqrt(rng()) * R; g.fillStyle = rng() < .5 ? 'rgba(0,0,0,.12)' : 'rgba(255,240,230,.06)'; g.fillRect(Math.cos(a) * r, Math.sin(a) * r, 1 + rng() * 2.5, 1 + rng() * 2.5); }
   g.restore(); ge.restore(); return { c, e };
 }
@@ -1760,7 +1760,7 @@ function buildTomb(scene) {
 
   /* 巨剑：插在台地外缘的断崖上，北面一柄最大；剑面朝向台心，两面刻着发光的符 */
   const giantMat = stdMat(0xffffff, { vc: true, metal: .35, rough: .55, flat: true }), gGeo = giantSwordGeo();
-  const runeG = new T.PlaneGeometry(.045, .72), runeMats = ['一剑霜寒十四州', '万剑同悲'].map(t => { const m = stdMat(0x18181a, { metal: .35, rough: .55, emissive: 0xff3a14, ei: 2.2 }); m.emissiveMap = canvasTex(texRunes(t)); World.runes.push({ m, k: 2.2 }); return m; });
+  const runeG = new T.PlaneGeometry(.045, .72), runeMats = ['일검상한십사주', '만검동비'].map(t => { const m = stdMat(0x18181a, { metal: .35, rough: .55, emissive: 0xff3a14, ei: 2.2 }); m.emissiveMap = canvasTex(texRunes(t)); World.runes.push({ m, k: 2.2 }); return m; });
   // [x, z, 尺寸, 护手高, 扭转, 侧倾, 前倾（负值压向台地）]
   const giants = [[0, -57, 52, 24, 0, .05, -.1], [-40, -40, 34, 16, .3, -.14, .05], [44, -34, 36, 17, -.25, .16, -.06], [-56, 12, 30, 14, .4, .2, .08], [54, 19, 34, 16, -.35, -.15, -.12], [-26, 51, 28, 13, .2, .12, .1], [29, 50, 30, 14, -.3, -.18, -.05]];
   World.giants = []; const feet = [], guards = [], tip = new V3();
@@ -1785,7 +1785,7 @@ function buildTomb(scene) {
     for (const b of links) b.build(scene); }
 
   /* 墓碑 */
-  const names = ['无名剑客之墓', '断水剑主', '青霜埋骨', '葬剑于此', '天涯孤客', '三尺青锋', '剑痴', '孤鸿'];
+  const names = ['무명 검객의 묘', '단수검주', '청상매골', '이곳에 검을 묻다', '천애고객', '삼척청봉', '검에 미친 자', '고홍'];
   const tabGeo = new T.BoxGeometry(.8, 1.5, .18); tabGeo.translate(0, .6, 0);
   const tabs = names.slice(0, 4).map((n, i) => new Batch(tabGeo, stdMat(0xffffff, { map: canvasTex(texTablet(n, i + 1)), rough: .92 })));
   const tablet = (x, z, ry, y0 = 0) => { e.set(R2(-.18, .18), ry, R2(-.18, .18)); const s = R2(.85, 1.25); tabs[(rng() * 4) | 0].add(new V3(x, y0, z), new T.Quaternion().setFromEuler(e), new V3(s, s, s), null); };
@@ -1859,11 +1859,11 @@ const DOWN = new V3(0, -1, 0), UP = new V3(0, 1, 0);
 const POSE0 = { hipY: 0, hipRX: 0, hipRY: 0, hipRZ: 0, torRX: 0, torRY: 0, torRZ: 0, headRX: 0, headRY: 0, LaX: 0, LaZ: .14, LfX: -.2, RaX: 0, RaZ: -.14, RfX: -.2, LlX: 0, LlZ: .04, LsX: 0, RlX: 0, RlZ: -.04, RsX: 0, hx: -.34, hy: .95, hz: .1, dx: -.2, dy: -.6, dz: .75 };
 const PKEYS = Object.keys(POSE0);
 const SWORD_TIERS = [
-  { name: '凡铁剑', blade: 0xcfd6da, glow: 0x000000, ei: 0, trail: 0xc8dcea },
-  { name: '青锋剑', blade: 0xbfe9e2, glow: 0x2fd0b8, ei: .6, trail: 0x62e6cf },
-  { name: '寒霜剑', blade: 0xd6ecff, glow: 0x58a8ff, ei: .85, trail: 0x7cc0ff },
-  { name: '赤霄剑', blade: 0xffd9c2, glow: 0xff5a22, ei: 1.05, trail: 0xff8a4a },
-  { name: '轩辕剑', blade: 0xfff0c0, glow: 0xffb822, ei: 1.35, trail: 0xffd060 },
+  { name: '범철검', blade: 0xcfd6da, glow: 0x000000, ei: 0, trail: 0xc8dcea },
+  { name: '청봉검', blade: 0xbfe9e2, glow: 0x2fd0b8, ei: .6, trail: 0x62e6cf },
+  { name: '한상검', blade: 0xd6ecff, glow: 0x58a8ff, ei: .85, trail: 0x7cc0ff },
+  { name: '적소검', blade: 0xffd9c2, glow: 0xff5a22, ei: 1.05, trail: 0xff8a4a },
+  { name: '헌원검', blade: 0xfff0c0, glow: 0xffb822, ei: 1.35, trail: 0xffd060 },
 ];
 const _ik = { S: new V3(), T: new V3(), E: new V3(), d: new V3(), pole: new V3(), v: new V3(), W: new V3(), p: new V3(), sc: new V3(), qi: new T.Quaternion(), qt: new T.Quaternion(), q1: new T.Quaternion(), q2: new T.Quaternion() };
 const _mv = new V3(), _f1 = new V3(), _f2 = new V3(), _f3 = new V3();
@@ -3004,14 +3004,14 @@ FX.clear = () => { for (const f of FX.list) { if (f.mesh) f.dead = true; } };
 const G = { state: 'title', t: 0, hitstop: 0, enemyTS: 1, slowT: 0, enemies: [], projs: [], hazards: [], wave: 0, kills: 0, inter: 0, queue: [], spawnT: 0, tokens: 0, boss: null, endless: false, dmgDone: 0, maxCombo: 0, playT: 0 };
 const Cam = { yaw: PI, pitch: .34, dist: 7.4, distT: 7.4, shake: 0, pos: new V3(0, 4, 14), look: new V3(), fov: 52, tOrbit: 0 };
 const ATK = [
-  { name: '横斩', dur: .40, w: .26, a: .52, cancel: .6, mult: 1.0, range: 3.1, arc: 2.9, lunge: 1.7, anim: 'sweepRL', roll: .14, dir: 1, knock: 2.2, stop: .04, shake: .1, poise: 1 },
-  { name: '反撩', dur: .40, w: .24, a: .52, cancel: .6, mult: 1.08, range: 3.1, arc: 2.9, lunge: 1.5, anim: 'sweepLR', roll: -.42, dir: -1, knock: 2.2, stop: .04, shake: .1, poise: 1 },
-  { name: '突刺', dur: .44, w: .3, a: .56, cancel: .66, mult: 1.35, range: 4.0, arc: 1.0, lunge: 2.8, anim: 'thrust', knock: 4, stop: .06, shake: .16, poise: 1.4 },
-  { name: '跃斩', dur: .7, w: .4, a: .6, cancel: .82, mult: 2.3, range: 3.4, arc: TAU, lunge: 2.4, anim: 'jumpChop', knock: 6.5, stop: .11, shake: .42, poise: 3, slam: true },
+  { name: '횡참', dur: .40, w: .26, a: .52, cancel: .6, mult: 1.0, range: 3.1, arc: 2.9, lunge: 1.7, anim: 'sweepRL', roll: .14, dir: 1, knock: 2.2, stop: .04, shake: .1, poise: 1 },
+  { name: '반격', dur: .40, w: .24, a: .52, cancel: .6, mult: 1.08, range: 3.1, arc: 2.9, lunge: 1.5, anim: 'sweepLR', roll: -.42, dir: -1, knock: 2.2, stop: .04, shake: .1, poise: 1 },
+  { name: '돌자', dur: .44, w: .3, a: .56, cancel: .66, mult: 1.35, range: 4.0, arc: 1.0, lunge: 2.8, anim: 'thrust', knock: 4, stop: .06, shake: .16, poise: 1.4 },
+  { name: '도약참', dur: .7, w: .4, a: .6, cancel: .82, mult: 2.3, range: 3.4, arc: TAU, lunge: 2.4, anim: 'jumpChop', knock: 6.5, stop: .11, shake: .42, poise: 3, slam: true },
 ];
-const HEAVY = { name: '旋风斩', dur: .72, w: .28, a: .64, cancel: .82, mult: 1.9, range: 3.7, arc: TAU, lunge: .6, anim: 'spin', knock: 5.5, stop: .08, shake: .3, poise: 2.5, sta: 16, spin: true };
+const HEAVY = { name: '선풍참', dur: .72, w: .28, a: .64, cancel: .82, mult: 1.9, range: 3.7, arc: TAU, lunge: .6, anim: 'spin', knock: 5.5, stop: .08, shake: .3, poise: 2.5, sta: 16, spin: true };
 /* 按住重剑蓄满：破山，一记力劈带出地裂剑气 */
-const PISHAN = { name: '破山', dur: .7, w: .36, a: .58, cancel: .86, mult: 3.4, range: 2.7, off: 2.2, arc: TAU, lunge: 1.9, anim: 'chop', knock: 7.5, stop: .15, shake: .55, poise: 6, sta: 24, slam: true, pishan: true };
+const PISHAN = { name: '파산', dur: .7, w: .36, a: .58, cancel: .86, mult: 3.4, range: 2.7, off: 2.2, arc: TAU, lunge: 1.9, anim: 'chop', knock: 7.5, stop: .15, shake: .55, poise: 6, sta: 24, slam: true, pishan: true };
 /* 弹反：起手 win 秒内卸开来招；win 到 guard 之间只算格挡；落空后还要 rec 秒收势 */
 const PARRY = { win: .22, guard: .45, rec: .3, sta: 8 };
 const Pl = { pos: new V3(0, 0, 9), vel: new V3(), yaw: PI, kx: 0, kz: 0 };
@@ -3053,12 +3053,12 @@ function startAttack(def) {
   Pl.yawT = want; Snd.swing(def.slam || def.spin ? 1 : 0);
 }
 function tryDodge() {
-  const cost = 22 * (1 - .2 * pk('mspd')) * (reso('shen') >= 3 ? .7 : 1); if (Pl.sta < cost) { UI.toast('体力不济'); return false; }
+  const cost = 22 * (1 - .2 * pk('mspd')) * (reso('shen') >= 3 ? .7 : 1); if (Pl.sta < cost) { UI.toast('체력 부족'); return false; }
   Pl.sta -= cost; Pl.staDelay = .7; Pl.state = 'dodge'; Tut.dodged = true; Pl.st = 0; Pl.iframe = .36; Pl.perfect = false;
   Pl.dodgeYaw = Pl.moveMag > .3 ? Pl.moveYaw : Pl.yaw + PI; Pl.yawT = Pl.moveMag > .3 ? Pl.moveYaw : Pl.yaw; Snd.dodge(); FX.dust(Pl.pos, 5, .5); return true;
 }
 function startParry() {
-  if (Pl.sta < PARRY.sta) { UI.toast('体力不济'); return; }
+  if (Pl.sta < PARRY.sta) { UI.toast('체력 부족'); return; }
   Pl.sta -= PARRY.sta; Pl.staDelay = .5; Pl.state = 'parry'; Pl.st = 0; Pl.combatT = 3; Pl.buf = 0; Pl.bufH = 0;
   const tg = Pl.lock && Pl.lock.state !== 'dead' ? Pl.lock : pickTarget(Pl.moveMag > .3 ? Pl.moveYaw : Pl.yaw, 6, PI);
   Pl.yawT = tg ? Math.atan2(tg.pos.x - Pl.pos.x, tg.pos.z - Pl.pos.z) : Pl.yaw; Snd.guard();
@@ -3073,7 +3073,7 @@ function onDeflect(src, sx, sz, o) {
   const p = { x: Pl.pos.x + ax / d * .75, y: 1.3, z: Pl.pos.z + az / d * .75 };
   FX.sparks(p, 24, 0xfff2c8, 11, 2.5); FX.glint(p, 0xfff6e0, 2.2, .28); FX.ring(p, .3, 2.4, 0xfff0c8, .25, 1.3); GFX.flashAt(p, 0xfff0d0, 4);
   G.hitstop = Math.max(G.hitstop, .1); Cam.shake = Math.max(Cam.shake, .22); Snd.parry();
-  if (!(src && !o.proj && parriedBy(src))) FX.num({ x: Pl.pos.x, y: 2.3, z: Pl.pos.z }, '卸', 'word parry', .7);
+  if (!(src && !o.proj && parriedBy(src))) FX.num({ x: Pl.pos.x, y: 2.3, z: Pl.pos.z }, '벗기', 'word parry', .7);
 }
 /* 眼前露出破绽、够得着的敌人；锁定的优先 */
 function findExec() {
@@ -3097,7 +3097,7 @@ function execImpact(e) {
   FX.inkBurst(p, 16, 1.1); FX.sparks(p, 30, 0xff5a3a, 12, 3); FX.glow(p, 0xffffff, 4, .2); FX.decal(e.pos, 3.4);
   FX.slash({ x: Pl.pos.x, y: e.hitY, z: Pl.pos.z, yaw: Pl.yaw, roll: PI / 2, r: 3.2, arc: .45, inner: .05, color: 0xffe6c0, dur: .22, inten: 2 });
   G.hitstop = .18; Cam.shake = Math.max(Cam.shake, .55); GFX.final.uniforms.uFlash.value = .22; GFX.flashAt(p, 0xffe0c0, 6);
-  FX.num({ x: e.pos.x, y: e.hitY + .5, z: e.pos.z }, '斩', 'exec', 1.4); Snd.exec(); Pl.mp = Math.min(Pl.maxMp, Pl.mp + 15); healPlayer(Pl.maxHp * (.04 + .04 * pk('duanyue'))); gainRage(18);
+  FX.num({ x: e.pos.x, y: e.hitY + .5, z: e.pos.z }, '참', 'exec', 1.4); Snd.exec(); Pl.mp = Math.min(Pl.maxMp, Pl.mp + 15); healPlayer(Pl.maxHp * (.04 + .04 * pk('duanyue'))); gainRage(18);
 }
 /* 踏雪之后趁势出剑：瞬身至出手者背后一斩 */
 function startFlash(e) {
@@ -3113,10 +3113,10 @@ function switchLock(dir) {
   if (best) { Pl.lock = best; Snd.pick(); }
 }
 function trySkill(i) {
-  const s = slotDef(i); if (!s) { if (i < 3) UI.toast('此槽尚空 · 破境时择剑谱'); else UI.toast('尚未悟得绝学'); return; }
+  const s = slotDef(i); if (!s) { if (i < 3) UI.toast('이 슬롯은 비어 있음 · 경지 돌파 때 검보 선택'); else UI.toast('아직 절학을 깨닫지 못함'); return; }
   if (Pl.cds[i] > 0) return;
-  if (i === 3) { if (Pl.rage < 100) { UI.toast('剑意未满'); return; } Pl.rage = 0; }
-  else if (Pl.mp < s.mp) { UI.toast('内力不继'); return; }
+  if (i === 3) { if (Pl.rage < 100) { UI.toast('검의 부족'); return; } Pl.rage = 0; }
+  else if (Pl.mp < s.mp) { UI.toast('내공 부족'); return; }
   else { Pl.mp -= s.mp; Pl.cds[i] = s.cd * Pl.cdr; Pl.cdMax[i] = Pl.cds[i]; }
   Pl.combatT = 3; Pl.st = 0; Pl.tick = 0; Pl.fired = false; Pl.hitSet.clear(); Snd.skill();
   const tg = Pl.lock && Pl.lock.state !== 'dead' ? Pl.lock : pickTarget(Pl.yaw, 22, 1.2); if (tg && s.st !== 'whirl') Pl.yawT = Pl.yaw = Math.atan2(tg.pos.x - Pl.pos.x, tg.pos.z - Pl.pos.z);
@@ -3126,7 +3126,7 @@ function trySkill(i) {
   FX.ring(Pl.pos, .4, 3.2, swordTier().trail, .4); FX.wisp({ x: Pl.pos.x, y: 1, z: Pl.pos.z }, swordTier().trail, 14, 2.4);
 }
 function usePotion() {
-  if (Pl.potCd > 0 || Pl.state === 'dead') return; if (Pl.pots <= 0) { UI.toast('回春丹已尽'); return; } if (Pl.hp >= Pl.maxHp) { UI.toast('气血充盈'); return; }
+  if (Pl.potCd > 0 || Pl.state === 'dead') return; if (Pl.pots <= 0) { UI.toast('회춘단이 다 떨어졌다'); return; } if (Pl.hp >= Pl.maxHp) { UI.toast('체력 충만'); return; }
   Pl.pots--; Pl.potCd = 1.5; const h = Math.round(Pl.maxHp * .45); healPlayer(h); Snd.level(); FX.pillar(Pl.pos, 0x8be0a0, 3);
 }
 function healPlayer(h, quiet) { const b = Pl.hp; Pl.hp = Math.min(Pl.maxHp, Pl.hp + h); const d = Math.round(Pl.hp - b); if (d >= 1 && !quiet) FX.num({ x: Pl.pos.x, y: 2, z: Pl.pos.z }, '+' + d, 'heal'); }
@@ -3163,21 +3163,21 @@ function hurtPlayer(dmg, sx, sz, o = {}) {
   if (Pl.iframe > 0) {
     if (Pl.state === 'dodge' && Pl.st < .3 && !Pl.perfect) {
       Pl.perfect = true; G.enemyTS = .22; G.slowT = 1.1; Pl.mp = Math.min(Pl.maxMp, Pl.mp + 14); gainRage(10); Pl.sta = Math.min(Pl.maxSta, Pl.sta + 22); if (pk('snow')) Pl.buffT = 3 + pk('snow');
-      FX.num({ x: Pl.pos.x, y: 2.2, z: Pl.pos.z }, '踏雪', 'word', 1.1); Snd.perfect(); FX.ring(Pl.pos, .5, 4, 0x9ff0e0, .5); GFX.final.uniforms.uFlash.value = .12;
-      if (o.src && !o.proj && o.src.state !== 'dead') { Pl.perfectSrc = o.src; Pl.perfectT = 1.2; UI.toast('趁势出剑 · 瞬斩', 1.2); }
+      FX.num({ x: Pl.pos.x, y: 2.2, z: Pl.pos.z }, '답설', 'word', 1.1); Snd.perfect(); FX.ring(Pl.pos, .5, 4, 0x9ff0e0, .5); GFX.final.uniforms.uFlash.value = .12;
+      if (o.src && !o.proj && o.src.state !== 'dead') { Pl.perfectSrc = o.src; Pl.perfectT = 1.2; UI.toast('기세를 타 검 휘두르기 · 순참', 1.2); }
       if (reso('shen') >= 6) afterImage();
     }
     return false;
   }
-  if (Pl.shield > 0) { Pl.shield--; Pl.shieldT = 12; Pl.iframe = .5; FX.num({ x: Pl.pos.x, y: 2.1, z: Pl.pos.z }, '真气护体', 'word', .9); FX.ring(Pl.pos, .6, 2.6, 0x62cdb9, .35); Snd.clang(); return false; }
+  if (Pl.shield > 0) { Pl.shield--; Pl.shieldT = 12; Pl.iframe = .5; FX.num({ x: Pl.pos.x, y: 2.1, z: Pl.pos.z }, '호체진기', 'word', .9); FX.ring(Pl.pos, .6, 2.6, 0x62cdb9, .35); Snd.clang(); return false; }
   const armor = Pl.state === 'whirl' || Pl.bellT > 0; if (armor) dmg *= .5; if (guard) dmg *= reso('yi') >= 3 ? 0 : .3;
   dmg = Math.round(dmg); if (dmg < 1 && !guard) { Pl.iframe = .3; return false; } Pl.hp -= dmg; Pl.iframe = .5; Pl.hurtV = guard ? .35 : 1; Pl.hits = 0; UI.combo(0); Cam.shake = Math.max(Cam.shake, (guard ? .18 : .35) + dmg * .008);
   FX.num({ x: Pl.pos.x, y: 2.1, z: Pl.pos.z }, '-' + dmg, 'hurt');
-  if (guard) { Pl.sta = Math.max(0, Pl.sta - 14); Pl.staDelay = .8; Snd.block(); FX.sparks({ x: Pl.pos.x, y: 1.3, z: Pl.pos.z }, 10, 0xffd8a0, 7); FX.num({ x: Pl.pos.x, y: 2.5, z: Pl.pos.z }, '格', 'word', .7); }
+  if (guard) { Pl.sta = Math.max(0, Pl.sta - 14); Pl.staDelay = .8; Snd.block(); FX.sparks({ x: Pl.pos.x, y: 1.3, z: Pl.pos.z }, 10, 0xffd8a0, 7); FX.num({ x: Pl.pos.x, y: 2.5, z: Pl.pos.z }, '막기', 'word', .7); }
   else { Snd.hurt(); FX.inkBurst({ x: Pl.pos.x, y: 1.1, z: Pl.pos.z }, 6, .7); }
   const dx = Pl.pos.x - sx, dz = Pl.pos.z - sz, d = Math.hypot(dx, dz) || 1, kb = (o.knock === undefined ? 5 : o.knock) * (guard ? .5 : 1); Pl.kx += dx / d * kb; Pl.kz += dz / d * kb;
-  if (Pl.hp <= 0 && reso('gen') >= 6 && !Pl.reviveUsed) { Pl.reviveUsed = true; Pl.hp = Math.round(Pl.maxHp * .4); Pl.iframe = 2; FX.pillar(Pl.pos, 0x8be0a0, 8); FX.ring(Pl.pos, .5, 6, 0x8be0a0, .6); UI.banner('回魂', '根基深厚，一口气续上', 'gold'); Snd.level(); G.enemyTS = .2; G.slowT = 1.2; }
-  if (Pl.hp <= 0 && Pl.metaRevive) { Pl.metaRevive = false; Pl.hp = Math.round(Pl.maxHp * .3); Pl.iframe = 2; FX.pillar(Pl.pos, 0x8be0a0, 8); FX.ring(Pl.pos, .5, 6, 0x8be0a0, .6); UI.banner('回魂', '藏经阁所授，续一口气', 'gold'); Snd.level(); G.enemyTS = .2; G.slowT = 1.2; }
+  if (Pl.hp <= 0 && reso('gen') >= 6 && !Pl.reviveUsed) { Pl.reviveUsed = true; Pl.hp = Math.round(Pl.maxHp * .4); Pl.iframe = 2; FX.pillar(Pl.pos, 0x8be0a0, 8); FX.ring(Pl.pos, .5, 6, 0x8be0a0, .6); UI.banner('회혼', '근기가 깊어 숨이 단숨에 이어진다', 'gold'); Snd.level(); G.enemyTS = .2; G.slowT = 1.2; }
+  if (Pl.hp <= 0 && Pl.metaRevive) { Pl.metaRevive = false; Pl.hp = Math.round(Pl.maxHp * .3); Pl.iframe = 2; FX.pillar(Pl.pos, 0x8be0a0, 8); FX.ring(Pl.pos, .5, 6, 0x8be0a0, .6); UI.banner('회혼', '장경각의 가르침, 숨을 한 번 더 잇는다', 'gold'); Snd.level(); G.enemyTS = .2; G.slowT = 1.2; }
   if (Pl.hp <= 0) { Pl.hp = 0; Pl.state = 'dead'; Pl.st = 0; G.enemyTS = .25; G.slowT = 99; Game.onDeath(); return true; }
   if (!armor && !guard && Pl.state !== 'ult') { Pl.state = 'hurt'; Pl.st = 0; }
   return true;
@@ -3204,7 +3204,7 @@ function updatePlayer(dt) {
   Pl.perfectT -= dt; Pl.flickCd -= dt; Pl.execT = alive && !busy ? findExec() : null;
   if (alive && !busy) {
     if (Input.hit('KeyC')) usePotion();
-    if (Input.hit('Tab')) { if (Pl.lock) Pl.lock = null; else { Pl.lock = pickTarget(Cam.yaw, 30, 1.0) || nearestEnemy(Pl.pos.x, Pl.pos.z, 30); if (!Pl.lock) UI.toast('四下无敌可锁'); } }
+    if (Input.hit('Tab')) { if (Pl.lock) Pl.lock = null; else { Pl.lock = pickTarget(Cam.yaw, 30, 1.0) || nearestEnemy(Pl.pos.x, Pl.pos.z, 30); if (!Pl.lock) UI.toast('주변에 고정할 적이 없다'); } }
     if (Pl.lock && Pl.lock.state === 'dead') Pl.lock = nearestEnemy(Pl.pos.x, Pl.pos.z, 22);
     // 锁定时 ← → 或甩一下鼠标换目标
     if (Pl.lock) { Pl.flickAcc = Pl.flickAcc * Math.exp(-dt * 10) + Input.mdx; if (Input.hit('ArrowRight')) switchLock(1); else if (Input.hit('ArrowLeft')) switchLock(-1); else if (Math.abs(Pl.flickAcc) > 90 && Pl.flickCd <= 0) { switchLock(Math.sign(Pl.flickAcc)); Pl.flickCd = .4; Pl.flickAcc = 0; } }
@@ -3217,7 +3217,7 @@ function updatePlayer(dt) {
       else if (Input.hit('KeyR') || Input.hit('Digit3') || Input.hit('Sk2')) trySkill(2); else if (Input.hit('KeyV') || Input.hit('Digit4') || Input.hit('Sk3')) trySkill(3);
     }
     if (canAct && (Pl.state === 'free' || Pl.state === 'attack' || Pl.state === 'deflect')) {
-      if (Pl.bufH > 0) { if (Pl.sta >= HEAVY.sta) { Pl.state = 'charge'; Pl.st = 0; Pl.charged = false; Pl.bufH = 0; Pl.buf = 0; Pl.combatT = 3; } else { Pl.bufH = 0; UI.toast('体力不济'); } }
+      if (Pl.bufH > 0) { if (Pl.sta >= HEAVY.sta) { Pl.state = 'charge'; Pl.st = 0; Pl.charged = false; Pl.bufH = 0; Pl.buf = 0; Pl.combatT = 3; } else { Pl.bufH = 0; UI.toast('체력 부족'); } }
       else if (Pl.buf > 0) { const i = Pl.state === 'attack' || Pl.comboT > 0 ? Pl.combo : 0; startAttack(ATK[i]); Pl.combo = (i + 1) % ATK.length; }
     }
   }
@@ -3301,7 +3301,7 @@ function updatePlayer(dt) {
     if (Pl.lock) Pl.yaw = dampAng(Pl.yaw, Math.atan2(Pl.lock.pos.x - Pl.pos.x, Pl.lock.pos.z - Pl.pos.z), 8, dt); else if (mag > .1) Pl.yaw = dampAng(Pl.yaw, Pl.moveYaw, 6, dt);
     if (Pl.st >= .5 && !Pl.charged) { Pl.charged = true; rig.bladePts(_b, _t); FX.glint(_t, tier.trail, 1.6); FX.ring(Pl.pos, .3, 2.4, tier.trail, .3); Snd.charged(); }
     if (Pl.st > .12 && Math.random() < (Pl.charged ? .8 : .45)) { rig.bladePts(_b, _t); _c.set(tier.trail); const a = rand(TAU), r = rand(.8, 1.6); _v1.lerpVectors(_b, _t, rand()); FX.add.emit({ x: _v1.x + Math.cos(a) * r, y: _v1.y + rand(-.4, .6), z: _v1.z + Math.sin(a) * r, vx: -Math.cos(a) * r * 3, vy: 0, vz: -Math.sin(a) * r * 3, life: .3, s0: .14, s1: .02, r: _c.r, g: _c.g, b: _c.b, grav: 0 }); }
-    if (!held || Pl.st > 2.4) { const def = Pl.charged ? PISHAN : HEAVY; if (Pl.sta >= def.sta) { Pl.sta -= def.sta; Pl.staDelay = .6; Pl.combo = 0; startAttack(def); } else { Pl.state = 'free'; UI.toast('体力不济'); } Pl.charged = false; }
+    if (!held || Pl.st > 2.4) { const def = Pl.charged ? PISHAN : HEAVY; if (Pl.sta >= def.sta) { Pl.sta -= def.sta; Pl.staDelay = .6; Pl.combo = 0; startAttack(def); } else { Pl.state = 'free'; UI.toast('체력 부족'); } Pl.charged = false; }
   } else if (Pl.state === 'flash') {
     const e = Pl.flashE, u = Pl.st / .46; action = { name: 'sweepRL', u: Math.min(1, u), w: .18, a: .5 }; rate = 40; Pl.vel.x = Pl.vel.z = 0; trailOn = u > .1 && u < .62;
     if (e.state !== 'dead') Pl.yaw = dampAng(Pl.yaw, Math.atan2(e.pos.x - Pl.pos.x, e.pos.z - Pl.pos.z), 20, dt);
@@ -3366,26 +3366,26 @@ function updateCamera(dt, rdt) {
 // 本文件：剑谱：SK（Q / E / R 三个槽能学的剑技）和 ULT（V 绝学），地面区域效果（Zones）、冰冻、连锁雷，以及各招的具体做法 SKST。
 /* 剑技从破境的三选一里得来：槽没满就学新的，满了只出已学的升重（最多三重） */
 const SK = {
-  qi: { n: '剑气纵横', g: '气', mp: 20, cd: 4, st: 'castQ', d: l => `横扫出 ${1 + 2 * (l - 1)} 道剑气，穿身而过。` },
-  whirl: { n: '回风落雁', g: '风', mp: 30, cd: 9, st: 'whirl', d: l => `旋身成风 ${(1.3 + .3 * (l - 1)).toFixed(1)} 息，可走动、减伤一半，收势一震。` },
-  fly: { n: '御剑术', g: '御', mp: 28, cd: 8, st: 'castR', d: l => `召出 ${5 + 2 * (l - 1)} 柄飞剑环身，片刻后各寻敌人。` },
-  thunder: { n: '惊雷剑', g: '雷', mp: 26, cd: 7, st: 'skThunder', d: l => `引天雷劈向眼前之敌，再跳向近旁 ${2 + l} 人。` },
-  fire: { n: '焚天', g: '焚', mp: 30, cd: 8, st: 'skFire', d: l => `向前斩出一道 ${9 + 2 * l} 步长的火痕，烧 ${3 + l} 息，踏入即燃。` },
-  shadow: { n: '流影', g: '影', mp: 22, cd: 6, st: 'skShadow', d: l => `化作残影连闪 ${2 + l} 下，每闪一斩，期间刀枪不入。` },
-  frost: { n: '寒江雪', g: '寒', mp: 32, cd: 11, st: 'skFrost', d: l => `寒气炸开，近身敌人冻住 ${(1.4 + .4 * l).toFixed(1)} 息，冻住即露破绽可处决。` },
-  bell: { n: '金钟罩', g: '钟', mp: 24, cd: 14, st: 'skBell', d: l => `${3 + l} 息之内，接得住的招式全数自动弹开，接不住的减半。` },
+  qi: { n: '검기종횡', g: '기', mp: 20, cd: 4, st: 'castQ', d: l => `검기 ${1 + 2 * (l - 1)}줄기를 가로로 휘둘러 몸을 관통합니다.` },
+  whirl: { n: '회풍낙안', g: '풍', mp: 30, cd: 9, st: 'whirl', d: l => `${(1.3 + .3 * (l - 1)).toFixed(1)}초 동안 바람처럼 회전하며 이동 가능, 피해 절반 감소, 마지막에 진동.` },
+  fly: { n: '어검술', g: '어', mp: 28, cd: 8, st: 'castR', d: l => `비검 ${5 + 2 * (l - 1)}자루를 몸 주위에 불러내고, 잠시 후 각자 적을 찾아갑니다.` },
+  thunder: { n: '경뢰검', g: '뇌', mp: 26, cd: 7, st: 'skThunder', d: l => `천둥을 불러 눈앞의 적을 치고, 근처의 ${2 + l}명에게 튑니다.` },
+  fire: { n: '분천', g: '분', mp: 30, cd: 8, st: 'skFire', d: l => `앞으로 ${9 + 2 * l}보 길이의 불길을 베어 내고 ${3 + l}초 동안 태웁니다. 들어서면 불붙습니다.` },
+  shadow: { n: '유영', g: '영', mp: 22, cd: 6, st: 'skShadow', d: l => `잔영으로 ${2 + l}번 연달아 번쩍이며 번쩍일 때마다 베고, 그동안 공격을 받지 않습니다.` },
+  frost: { n: '한강설', g: '한', mp: 32, cd: 11, st: 'skFrost', d: l => `한기가 터져 근처 적이 ${(1.4 + .4 * l).toFixed(1)}초 동안 얼어붙고, 얼면 빈틈이 드러나 처형할 수 있습니다.` },
+  bell: { n: '금종조', g: '종', mp: 24, cd: 14, st: 'skBell', d: l => `${3 + l} 초 동안 받을 수 있는 공격은 모두 자동으로 튕겨내고, 못 받는 공격은 절반으로 줄입니다.` },
 };
 const ULT = {
-  wanjian: { n: '万剑归宗', g: '万', st: 'ult', d: '万剑自天而降，追着敌人落，最后一震荡开四周。' },
-  leiting: { n: '雷霆万钧', g: '霆', st: 'ultL', d: '三息之内天雷连落，专劈敌人，头领也躲不开。' },
-  wuying: { n: '无影', g: '影', st: 'ultW', d: '天地一静：四息半之内敌人几近停滞，你的每一剑伤害 +50%。' },
+  wanjian: { n: '만검귀종', g: '만', st: 'ult', d: '수많은 검이 하늘에서 내려 적을 쫓아 떨어지고, 마지막에 사방을 진동시킵니다.' },
+  leiting: { n: '뇌정만균', g: '정', st: 'ultL', d: '3초 안에 천둥이 연달아 내려 적만 가르고, 우두머리도 피하지 못합니다.' },
+  wuying: { n: '무영', g: '영', st: 'ultW', d: '천지가 고요해집니다: 4.5초 동안 적이 거의 멈추고, 당신의 모든 검 피해 +50%.' },
 };
 const skLv = id => (Pl.skLv && Pl.skLv[id]) || 0;
 const slotDef = i => i === 3 ? (Pl.ult ? ULT[Pl.ult] : null) : (Pl.slots[i] ? SK[Pl.slots[i]] : null);
 function learnSkill(id) {
-  if (ULT[id]) { Pl.ult = id; UI.toast(`悟得绝学「${ULT[id].n}」· V 施展`, 3); return; }
+  if (ULT[id]) { Pl.ult = id; UI.toast(`절학 「${ULT[id].n}」 획득 · V 사용`, 3); return; }
   if (skLv(id)) { Pl.skLv[id]++; return; }
-  const i = Pl.slots.indexOf(null); if (i < 0) return; Pl.slots[i] = id; Pl.skLv[id] = 1; Pl.cds[i] = 0; UI.toast(`悟得剑技「${SK[id].n}」· ${'QER'[i]} 施展`, 3);
+  const i = Pl.slots.indexOf(null); if (i < 0) return; Pl.slots[i] = id; Pl.skLv[id] = 1; Pl.cds[i] = 0; UI.toast(`검기술 「${SK[id].n}」 획득 · ${'QER'[i]} 사용`, 3);
 }
 
 /* 技能区域：焚天火痕等留在地上的东西 */
@@ -3506,7 +3506,7 @@ const SKST = {
 const rig0 = () => Pl.rig;
 
 /* 剑意：命中、弹反、处决、踏雪都长，满了可放绝学 */
-function gainRage(v) { if (!Pl.ult) return; const b = Pl.rage; Pl.rage = Math.min(100, Pl.rage + v); if (b < 100 && Pl.rage >= 100) { UI.toast(`剑意已满 · V「${ULT[Pl.ult].n}」`, 2); Snd.charged(); } }
+function gainRage(v) { if (!Pl.ult) return; const b = Pl.rage; Pl.rage = Math.min(100, Pl.rage + v); if (b < 100 && Pl.rage >= 100) { UI.toast(`검의 충만 · V「${ULT[Pl.ult].n}」`, 2); Snd.charged(); } }
 
 /* 身法六重：踏雪时原地留一道残影，一息后炸开 */
 function afterImage() {
@@ -3524,39 +3524,39 @@ function afterImage() {
 const skinA = 0xc49a78;
 const ET = {
   bandit: {
-    name: '山贼', hp: 84, spd: 3.6, r: .45, xp: 8, gold: [2, 5], poise: 1.2, mass: 1, reach: 2.1,
+    name: '산적', hp: 84, spd: 3.6, r: .45, xp: 8, gold: [2, 5], poise: 1.2, mass: 1, reach: 2.1,
     rig: () => makeHumanoid({ colors: { robe: 0x6b4e38, trim: 0x3d3028, sash: 0x8a2a20, skin: skinA, hair: 0x1a1614, pants: 0x2e2a28, boots: 0x1c1a18 }, head: 'band', vest: true, bracer: true, skirt: .3, fur: true, strap: true, weapon: 'saber', stance: [-.34, 1.2, .18, -.22, .88, .36] }),
     atks: [{ kind: 'melee', anim: 'chop', max: 2.4, wind: .58, act: .16, rec: .6, dmg: 10, shape: { t: 'arc', r: 2.7, arc: 1.7 }, lunge: 1.3, cd: 1.6 },
     { kind: 'melee', anim: 'sweepRL', max: 2.4, wind: .66, act: .18, rec: .65, dmg: 11, shape: { t: 'arc', r: 2.8, arc: 2.8 }, lunge: .9, cd: 2.6 }]
   },
   spear: {
-    name: '枪兵', hp: 120, spd: 3.1, r: .45, xp: 12, gold: [3, 7], poise: 2, mass: 1.2, reach: 3.3,
+    name: '창병', hp: 120, spd: 3.1, r: .45, xp: 12, gold: [3, 7], poise: 2, mass: 1.2, reach: 3.3,
     rig: () => makeHumanoid({ colors: { robe: 0x46586e, trim: 0x2c333c, sash: 0x6b6f76, skin: skinA, hair: 0x1a1614, pants: 0x2a2e33, boots: 0x18191b }, head: 'helmet', sleeves: true, bracer: true, skirt: .46, armor: true, weapon: 'spear', pauldron: 0x70767c, stance: [-.32, 1.02, .1, 0, .16, 1] }),
     atks: [{ kind: 'melee', anim: 'thrust', max: 3.7, wind: .72, act: .16, rec: .7, dmg: 14, shape: { t: 'line', len: 4.3, w: 1.3 }, lunge: 2.2, cd: 2.0, tele: true }]
   },
   archer: {
-    name: '弓手', hp: 52, spd: 3.3, r: .42, xp: 10, gold: [3, 6], poise: .8, mass: .9, keep: [10, 17], ranged: true,
+    name: '궁수', hp: 52, spd: 3.3, r: .42, xp: 10, gold: [3, 6], poise: .8, mass: .9, keep: [10, 17], ranged: true,
     rig: () => makeHumanoid({ colors: { robe: 0x505a3a, trim: 0x2c3220, sash: 0x2c3220, skin: skinA, hair: 0x1a1614, pants: 0x3a3a30, boots: 0x1c1a18 }, head: 'hat', sleeves: true, skirt: .42, weapon: 'bow', quiver: true, stance: [-.28, .9, .08, 0, -1, 0] }),
     atks: [{ kind: 'shoot', anim: 'shoot', min: 5, max: 24, wind: 1.3, act: .1, rec: .9, dmg: 9, cd: 3.8 }]
   },
   wolf: {
-    name: '妖狼', hp: 56, spd: 6.4, r: .5, xp: 7, gold: [1, 4], poise: .8, mass: .8, reach: 5.2, hitY: .7,
+    name: '요랑', hp: 56, spd: 6.4, r: .5, xp: 7, gold: [1, 4], poise: .8, mass: .8, reach: 5.2, hitY: .7,
     rig: () => makeWolf({}),
     atks: [{ kind: 'pounce', min: 2.6, max: 6.5, wind: .46, act: .4, rec: .55, dmg: 9, speed: 17, cd: 2.2 }, { kind: 'melee', anim: 'bite', max: 1.9, wind: .34, act: .14, rec: .5, dmg: 7, shape: { t: 'arc', r: 2.0, arc: 1.8 }, lunge: .8, cd: 1.3 }]
   },
   brute: {
-    name: '石甲力士', hp: 400, spd: 2.3, r: .8, xp: 30, gold: [10, 18], poise: 9, mass: 3.5, reach: 2.9,
+    name: '석갑역사', hp: 400, spd: 2.3, r: .8, xp: 30, gold: [10, 18], poise: 9, mass: 3.5, reach: 2.9,
     rig: () => makeHumanoid({ colors: { robe: 0x3a2e2a, trim: 0x2a2624, sash: 0x5a4a3a, skin: 0x7d7f86, hair: 0x2a2826, pants: 0x2e2a28, boots: 0x1c1a18 }, head: 'mask', bulk: 1.45, scale: 1.65, skirt: .4, bare: true, beads: true, jaw: .9, headSize: 1.22, bracer: true, weapon: 'club', pauldron: 0x55524e, wrap: true, stance: [-.3, 1.3, .05, -.2, .6, -.7] }),
     atks: [{ kind: 'melee', anim: 'slam', max: 3.6, wind: 1.1, act: .18, rec: 1.0, dmg: 24, shape: { t: 'circle', r: 3.5, off: 2.3 }, lunge: .8, cd: 2.4, tele: true, quake: true },
     { kind: 'melee', anim: 'sweepRL', max: 3.4, wind: .85, act: .2, rec: .8, dmg: 18, shape: { t: 'arc', r: 4.0, arc: 3.0 }, lunge: .6, cd: 3.6, tele: true }]
   },
   wraith: {
-    name: '幽魂', hp: 96, spd: 2.7, r: .45, xp: 16, gold: [5, 10], poise: 1.5, mass: .8, keep: [8, 14], ranged: true, ghost: true, float: .45,
+    name: '유혼', hp: 96, spd: 2.7, r: .45, xp: 16, gold: [5, 10], poise: 1.5, mass: .8, keep: [8, 14], ranged: true, ghost: true, float: .45,
     rig: () => makeHumanoid({ colors: { robe: 0x4a3878, trim: 0x7a52b0, sash: 0x7a52b0, skin: 0x8a86a0, hair: 0x0a0a0c, pants: 0x1a1426, boots: 0x1a1426, eye: 0xb46cff }, head: 'hood', sleeves: 'long', skirt: 1.15, ghost: true, weapon: 'none' }),
     atks: [{ kind: 'cast', anim: 'cast', min: 4, max: 20, wind: .9, act: .12, rec: .8, dmg: 11, n: 3, cd: 3.4 }, { kind: 'blink', anim: 'cast', max: 4.2, wind: .32, act: .05, rec: .3, dmg: 0, cd: 5 }]
   },
   boss1: {
-    name: '黑风寨主 · 屠千山', hp: 2700, spd: 3.5, r: .95, xp: 150, gold: [90, 110], poise: 34, mass: 8, reach: 3.3, boss: true,
+    name: '흑풍채주 · 도천산', hp: 2700, spd: 3.5, r: .95, xp: 150, gold: [90, 110], poise: 34, mass: 8, reach: 3.3, boss: true,
     rig: () => makeHumanoid({ colors: { robe: 0x5a1f1a, trim: 0x2a2a2e, sash: 0xc59a3a, skin: 0xb88a66, hair: 0x14100e, pants: 0x221c1a, boots: 0x141210 }, head: 'warlord', bulk: 1.4, scale: 1.85, sleeves: true, bracer: true, skirt: .5, armor: true, jaw: .7, headSize: 1.12, fur: true, weapon: 'guandao', cape: 0x7a1a14, pauldron: 0x4a4d52, wrap: true, stance: [-.42, 1.12, .1, -.1, .96, .2] }),
     atks: [{ kind: 'melee', anim: 'chop', max: 4.4, wind: .62, act: .18, rec: .25, dmg: 20, shape: { t: 'arc', r: 5.0, arc: 1.5 }, lunge: 1.8, cd: 2.5, tele: true, chain: 1 },
     { kind: 'melee', anim: 'sweepRL', max: 0, wind: .46, act: .2, rec: .9, dmg: 22, shape: { t: 'arc', r: 5.2, arc: 3.2 }, lunge: 1.6, cd: 0, tele: true, only: 'chain' },
@@ -3565,7 +3565,7 @@ const ET = {
     { kind: 'summon', anim: 'roar', max: 99, wind: .9, act: .1, rec: .6, dmg: 0, cd: 999, only: 'script' }]
   },
   boss2: {
-    name: '剑魔 · 独孤夜', hp: 6200, dmgB: .2, spd: 4.6, r: .65, xp: 400, gold: [200, 240], poise: 30, mass: 5, reach: 2.9, boss: true,
+    name: '검마 · 독고야', hp: 6200, dmgB: .2, spd: 4.6, r: .65, xp: 400, gold: [200, 240], poise: 30, mass: 5, reach: 2.9, boss: true,
     rig: () => makeHumanoid({ colors: { robe: 0x151217, trim: 0x7a1a1a, sash: 0x7a1a1a, skin: 0xcfc4c0, hair: 0xe8e6e0, pants: 0x121013, boots: 0x0c0a0c, eye: 0xff2a1a }, head: 'demon', scale: 1.32, sleeves: 'long', skirt: .82, weapon: 'dark', cape: 0x1a1418, capeRag: true, stance: [-.42, .9, -.04, -.3, -.7, -.6] }),
     atks: [{ kind: 'melee', anim: 'sweepRL', max: 3.8, wind: .42, act: .16, rec: .16, dmg: 20, shape: { t: 'arc', r: 4.2, arc: 2.9 }, lunge: 2.2, cd: 2.2, tele: true, chain: 1 },
     { kind: 'melee', anim: 'sweepLR', max: 0, wind: .34, act: .16, rec: .16, dmg: 20, shape: { t: 'arc', r: 4.2, arc: 2.9 }, lunge: 2.2, cd: 0, tele: true, only: 'chain', chain: 2 },
@@ -3589,7 +3589,7 @@ function spawnEnemy(type, x, z, o = {}) {
   e.hp = e.maxHp; const sc = rig.root.scale.x * (elite ? 1.18 : 1); rig.root.scale.setScalar(sc); e.radius = cfg.r * (elite ? 1.15 : 1); e.hitY = (cfg.hitY || 1.15) * sc + (cfg.float || 0);
   rig.root.position.copy(e.pos); rig.root.rotation.y = e.yaw; GFX.scene.add(rig.root);
   if (rig.bladeLen) e.trail = new Trail(cfg.boss ? 0xff4a2a : 0xff8a5a, .16, cfg.boss ? 1.3 : .8);
-  if (elite) e.name = '精锐 · ' + cfg.name;
+  if (elite) e.name = '정예 · ' + cfg.name;
   FX.smoke(e.pos, cfg.boss ? 22 : 10, cfg.boss ? 1.5 : .9); if (cfg.boss) { G.boss = e; FX.ring(e.pos, 1, 9, 0xff3a22, .7); Cam.shake = .5; Snd.gong(); }
   G.enemies.push(e); return e;
 }
@@ -3621,7 +3621,7 @@ function damageEnemy(e, dmg, o = {}) {
 }
 function breakPoise(e) {
   e.poiseD = 0; cancelAttack(e); e.state = 'stagger'; e.st = 0; e.stagger = e.stun = e.boss ? 2.6 : e.cfg.poise > 4 ? 1.8 : 1.3;
-  FX.num({ x: e.pos.x, y: e.hitY + 1.3, z: e.pos.z }, '破绽', 'word', 1.2); Snd.clang(); FX.ring(e.pos, .5, 4, 0xffd060, .4);
+  FX.num({ x: e.pos.x, y: e.hitY + 1.3, z: e.pos.z }, '빈틈', 'word', 1.2); Snd.clang(); FX.ring(e.pos, .5, 4, 0xffd060, .4);
 }
 /* 被弹反：小卒当场露出破绽，力士与头领吃一大截架势 */
 function parriedBy(e) {
@@ -3673,7 +3673,7 @@ function startAttack_E(e, i, chained) {
   e.wind = a.wind * (chained ? 1 : rand(.95, 1.1)) / (e.phase > 1 ? 1.15 : 1) * (e.windK || 1); e.teleMade = false; e.lockYaw = false; e.glinted = false;
   if (a.kind === 'leap') { e.tele = null; }
   if (a.kind === 'dash') { e.tele = FX.telegraph({ type: 'line', x: e.pos.x, z: e.pos.z, yaw: e.yaw, len: a.speed * a.act, w: 2.2, dur: e.wind, color: 0xff3a22 }); }
-  if (a.kind === 'summon') { UI.banner('喽啰何在', '', 'red'); Snd.gong(); }
+  if (a.kind === 'summon') { UI.banner('졸개들은 어디 있느냐', '', 'red'); Snd.gong(); }
 }
 function execAttack(e) {
   const a = e.atk, fx = Math.sin(e.yaw), fz = Math.cos(e.yaw), dmg = a.dmg * e.dmgK;
@@ -3818,7 +3818,7 @@ function makeSpirit(o) {
 
 Object.assign(ET, {
   assassin: {
-    name: '刺客', hp: 92, spd: 4.6, r: .42, xp: 14, gold: [4, 8], poise: 1.3, mass: .9, reach: 2.4,
+    name: '자객', hp: 92, spd: 4.6, r: .42, xp: 14, gold: [4, 8], poise: 1.3, mass: .9, reach: 2.4,
     rig: () => makeHumanoid({ colors: { robe: 0x1c1f26, trim: 0x34283a, sash: 0x6a1a22, skin: skinA, hair: 0x0c0c0e, pants: 0x16181c, boots: 0x0e0f11 }, head: 'hood', face: { glow: '#ff5a3a' }, sleeves: true, bracer: true, skirt: .5, weapon: 'sword', stance: [-.3, 1.0, .2, -.4, .5, .7] }),
     atks: [{ kind: 'melee', anim: 'sweepRL', max: 2.6, wind: .4, act: .14, rec: .2, dmg: 9, shape: { t: 'arc', r: 2.8, arc: 2.4 }, lunge: 1.6, cd: 2.2, chain: 1 },
     { kind: 'melee', anim: 'sweepLR', max: 0, wind: .28, act: .14, rec: .6, dmg: 9, shape: { t: 'arc', r: 2.8, arc: 2.4 }, lunge: 1.2, cd: 0, only: 'chain' },
@@ -3827,7 +3827,7 @@ Object.assign(ET, {
     { kind: 'blink', anim: 'cast', min: 5, max: 20, wind: .3, act: .05, rec: .05, dmg: 0, cd: 7, behind: true, chain: 0 }]
   },
   slave: {
-    name: '剑奴', hp: 150, spd: 2.9, r: .45, xp: 16, gold: [4, 9], poise: 2.6, mass: 1.3, reach: 2.6, revive: true,
+    name: '검노', hp: 150, spd: 2.9, r: .45, xp: 16, gold: [4, 9], poise: 2.6, mass: 1.3, reach: 2.6, revive: true,
     rig: () => makeHumanoid({ colors: { robe: 0x3c4240, trim: 0x22272a, sash: 0x4a2a24, skin: 0x8a948e, hair: 0x2a2c2c, pants: 0x262a2a, boots: 0x161818, eye: 0x5affc8 }, head: 'hood', face: { glow: '#5affc8' }, sleeves: true, skirt: .6, armor: true, weapon: 'saber', pauldron: 0x4a4c4a, stance: [-.36, 1.1, .12, -.2, .8, .3] }),
     atks: [{ kind: 'melee', anim: 'chop', max: 2.8, wind: .62, act: .16, rec: .25, dmg: 13, shape: { t: 'arc', r: 2.9, arc: 1.6 }, lunge: 1.2, cd: 2.4, tele: true, chain: 1 },
     { kind: 'melee', anim: 'sweepLR', max: 0, wind: .42, act: .16, rec: .25, dmg: 12, shape: { t: 'arc', r: 3, arc: 2.6 }, lunge: 1, cd: 0, only: 'chain', chain: 2 },
@@ -3835,12 +3835,12 @@ Object.assign(ET, {
     { kind: 'dash', anim: 'dash', min: 4, max: 11, wind: .8, act: .26, rec: .9, dmg: 16, speed: 26, cd: 6 }]
   },
   spirit: {
-    name: '剑灵', hp: 42, spd: 4.2, xp: 6, gold: [1, 3], poise: .6, mass: .5, keep: [4.5, 8], hitY: 1.25, r: .45, ghost: true, flier: true,
+    name: '검령', hp: 42, spd: 4.2, xp: 6, gold: [1, 3], poise: .6, mass: .5, keep: [4.5, 8], hitY: 1.25, r: .45, ghost: true, flier: true,
     rig: () => makeSpirit({}),
     atks: [{ kind: 'pounce', anim: 'thrust', min: 2.4, max: 8.5, wind: .7, act: .38, rec: .6, dmg: 9, speed: 22, cd: 2.6 }]
   },
   boss3: {
-    name: '竹影 · 无相', hp: 4200, spd: 5.2, r: .55, xp: 260, gold: [140, 170], poise: 26, mass: 4, reach: 2.8, boss: true,
+    name: '죽영 · 무상', hp: 4200, spd: 5.2, r: .55, xp: 260, gold: [140, 170], poise: 26, mass: 4, reach: 2.8, boss: true,
     rig: () => makeHumanoid({ colors: { robe: 0x24332f, trim: 0xd6d0c0, sash: 0x8a1a1a, skin: 0xcfc4b8, hair: 0x0e0e0e, pants: 0x18211f, boots: 0x0e1312 }, head: 'hat', face: { void: 1, glow: '#9ff0e0' }, scale: 1.2, sleeves: 'long', skirt: .9, weapon: 'sword', cape: 0x1c2826, capeRag: true, stance: [-.36, .95, .05, -.3, -.4, -.7] }),
     atks: [{ kind: 'melee', anim: 'sweepRL', max: 3.4, wind: .4, act: .14, rec: .14, dmg: 18, shape: { t: 'arc', r: 3.8, arc: 2.8 }, lunge: 2, cd: 2, tele: true, chain: 1 },
     { kind: 'melee', anim: 'sweepLR', max: 0, wind: .3, act: .14, rec: .14, dmg: 18, shape: { t: 'arc', r: 3.8, arc: 2.8 }, lunge: 2, cd: 0, tele: true, only: 'chain', chain: 2 },
@@ -3851,7 +3851,7 @@ Object.assign(ET, {
     { kind: 'spikes', anim: 'cast', min: 3, max: 26, wind: .7, act: .2, rec: .7, dmg: 22, cd: 7, phase2: true }]
   },
   clone: {
-    name: '无相 · 影', hp: 1, spd: 5, r: .55, xp: 0, gold: [0, 0], poise: 1, mass: 2, reach: 2.8, ghost: true,
+    name: '무상 · 영', hp: 1, spd: 5, r: .55, xp: 0, gold: [0, 0], poise: 1, mass: 2, reach: 2.8, ghost: true,
     rig: () => { const r = ET.boss3.rig(); r.setOpacity(.55); return r; },
     atks: [{ kind: 'melee', anim: 'sweepRL', max: 3.4, wind: .5, act: .14, rec: .6, dmg: 10, shape: { t: 'arc', r: 3.6, arc: 2.6 }, lunge: 1.8, cd: 2.6, tele: true },
     { kind: 'shoot', anim: 'cast', min: 5, max: 20, wind: .7, act: .08, rec: .6, dmg: 7, n: 3, dart: true, cd: 5.5 }]
@@ -3863,9 +3863,9 @@ ET.boss2.atks[6].cd = 9;
 
 /* 首领分阶段：血线跌破 at 时换阶段，播横幅、喘一口气，可能接一招剧本招式 */
 const PHASES = {
-  boss1: [{ at: .66, script: 4 }, { at: .45, up: true, banner: ['屠千山 · 狂怒', '火油罐，连环跳劈'] }, { at: .2, script: 4 }],
-  boss2: [{ at: .5, up: true, banner: ['剑魔入魔', '剑雨倾城'], cd: 6 }, { at: .22, up: true, banner: ['万剑同悲', '巨剑自天而落'], cd: 7 }],
-  boss3: [{ at: .5, up: true, banner: ['无相 · 分影', '真身只有一个'], script: 5 }, { at: .22, up: true, banner: ['无相 · 竹海', '竹刺破土'], script: 5 }],
+  boss1: [{ at: .66, script: 4 }, { at: .45, up: true, banner: ['도천산 · 광노', '기름 항아리, 연속 점프 내려치기'] }, { at: .2, script: 4 }],
+  boss2: [{ at: .5, up: true, banner: ['검마 입마', '검우경성'], cd: 6 }, { at: .22, up: true, banner: ['만검동비', '거검이 하늘에서 떨어짐'], cd: 7 }],
+  boss3: [{ at: .5, up: true, banner: ['무상 · 분영', '진짜 몸은 하나뿐'], script: 5 }, { at: .22, up: true, banner: ['무상 · 죽해', '죽순이 땅을 뚫음'], script: 5 }],
 };
 function bossPhase(e) {
   const P = PHASES[e.type]; if (!P) return; e.pi = e.pi || 0; const ph = P[e.pi];
@@ -3895,7 +3895,7 @@ const FOE_ATK = {
   giants(e, a, dmg) {
     const n = 8, R = 6.5; G.hazards.push({ x: Pl.pos.x, z: Pl.pos.z, r: 3.2, delay: 0, t: 0, dur: 1.2, dmg, tele: null, kind: 'giant' });
     for (let i = 0; i < n; i++) { const an = i / n * TAU; G.hazards.push({ x: Pl.pos.x + Math.cos(an) * R, z: Pl.pos.z + Math.sin(an) * R, r: 3, delay: .5 + i * .12, t: 0, dur: 1.1, dmg, tele: null, kind: 'giant' }); }
-    UI.toast('万剑落 · 看准空隙', 2); Snd.gong();
+    UI.toast('만검낙 · 빈틈을 노려라', 2); Snd.gong();
   },
 };
 /* 落地特效：竹刺、火油、巨剑各不相同 */
@@ -3923,7 +3923,7 @@ function updateEFire(z, dt) {
 /* 剑奴倒地后会再爬起来，除非被处决或趁倒地再补一剑 */
 function slaveDown(e) {
   e.revived = true; cancelAttack(e); e.state = 'down'; e.st = 0; e.hp = Math.round(e.maxHp * .4); e.stun = 2.4; e.stagger = 2.4; e.poiseD = 0; e.kx *= .3; e.kz *= .3;
-  FX.num({ x: e.pos.x, y: e.hitY + 1.2, z: e.pos.z }, '未死', 'word', 1); FX.wisp({ x: e.pos.x, y: e.hitY, z: e.pos.z }, 0x5affc8, 10, 1.5); Snd.clang();
+  FX.num({ x: e.pos.x, y: e.hitY + 1.2, z: e.pos.z }, '죽지 않음', 'word', 1); FX.wisp({ x: e.pos.x, y: e.hitY, z: e.pos.z }, 0x5affc8, 10, 1.5); Snd.clang();
 }
 /* 每帧额外的敌人表现 */
 function foeTick(e, dt) {
@@ -3935,12 +3935,12 @@ function foeTick(e, dt) {
 /* ---------------- 章节，和每一处战斗里一拨接一拨的来敌 ---------------- */
 // 本文件：章节表 CHAPTERS 和每处战斗里一拨接一拨的来敌（fillQueue / spawnFromQueue / updateStage）。
 const CHAPTERS = [
-  { id: 'gate', n: '山门', idx: '第一章', sub: '暮山试剑',
-    story: '暮色四合，黑风寨夜袭青云剑宗。师兄弟尽数下山未归，偌大试剑坪上，只剩你一人一剑。' },
-  { id: 'bamboo', n: '竹林', idx: '第二章', sub: '月下追影',
-    story: '寨主授首，残党遁入后山竹海。月色如水，竹影深处藏着一群不肯露脸的人。' },
-  { id: 'tomb', n: '剑冢', idx: '第三章', sub: '万剑同悲',
-    story: '一路追上绝顶，才知祸根埋在剑冢。沉睡三百年的剑魔醒了，满山断剑都在低鸣。' },
+  { id: 'gate', n: '산문', idx: '제1장', sub: '모산시검',
+    story: '해 질 녘, 흑풍채가 청운검종을 야습했다. 사형제들은 모두 산을 내려가 돌아오지 않았고, 넓은 시검평에는 당신과 검 한 자루뿐이다.' },
+  { id: 'bamboo', n: '죽림', idx: '제2장', sub: '월하추영',
+    story: '채주의 목이 떨어지고 잔당은 뒷산 죽해로 숨었다. 달빛이 물 같고 대나무 그림자 깊은 곳에 얼굴을 숨긴 무리가 있다.' },
+  { id: 'tomb', n: '검총', idx: '제3장', sub: '만검동비',
+    story: '정상까지 쫓아가서야 화근이 검총에 묻혀 있음을 알았다. 삼백 년 잠든 검마가 깨어났고, 산의 부러진 검이 모두 낮게 울고 있다.' },
 ];
 function fillQueue(comp) {
   const q = []; for (const k in comp) for (let i = 0; i < comp[k]; i++) q.push(k);
@@ -3963,7 +3963,7 @@ function updateStage(dt) {
   if (G.queue.length && alive < G.cap) { G.spawnT -= dt; if (G.spawnT <= 0) { spawnFromQueue(); G.spawnT = alive < 3 ? .25 : .7; } }
   // 前一拨快清完（只剩一两个）就压上下一拨
   if (!G.queue.length && G.sub < G.waves.length - 1 && alive <= (G.waves.length > 2 ? 2 : 1)) {
-    G.subT += dt; if (G.subT > 1.4) { G.subT = 0; G.sub++; fillQueue(G.waves[G.sub]); G.spawnT = .6; UI.toast(G.sub === G.waves.length - 1 ? '敌军殿后压上' : '援兵将至', 2.2); Snd.gong(); }
+    G.subT += dt; if (G.subT > 1.4) { G.subT = 0; G.sub++; fillQueue(G.waves[G.sub]); G.spawnT = .6; UI.toast(G.sub === G.waves.length - 1 ? '적군 후위가 밀어붙인다' : '원군 도착 임박', 2.2); Snd.gong(); }
   }
   if (!G.queue.length && G.sub >= G.waves.length - 1 && G.enemies.length === 0 && G.stage > 0 && (Net.on ? coopAnyAlive() : Pl.state !== 'dead') && !G.cleared) { G.cleared = true; stageClear(); }
 }
@@ -3975,13 +3975,13 @@ function stageClear() { Save.stageDone(G.stage); Run.won(); }
 // 战 遭遇 · 精 精锐 · 奇 奇遇 · 市 剑庐 · 憩 歇脚 · 宝 藏宝 · 首 首领。身死这一局就结束，剑魄和藏经阁的修为留着。
 // 在路线图上会自动存档（打到一半关掉，下次从路线图接着走）。
 const NODE = {
-  fight: { g: '战', n: '遭遇', c: '#c9b48a', d: '一拨来敌，打完拾钱' },
-  elite: { g: '精', n: '精锐', c: '#ef6a55', d: '硬仗：精锐扎堆，赢了必得一道珍品机缘' },
-  event: { g: '奇', n: '奇遇', c: '#9fc7e8', d: '江湖路上的人和事，福祸难料' },
-  shop: { g: '市', n: '剑庐', c: '#dcae55', d: '锻剑、淬体、养气、买回春丹' },
-  rest: { g: '憩', n: '歇脚', c: '#62cdb9', d: '调息回血，或者磨一磨剑' },
-  treasure: { g: '宝', n: '藏宝', c: '#e8c46a', d: '一口旧箱子，三样里挑一样' },
-  boss: { g: '首', n: '首领', c: '#ff3a22', d: '本章强敌' },
+  fight: { g: '전', n: '조우', c: '#c9b48a', d: '적 한 무리를 쓰러뜨리고 동전을 줍는다' },
+  elite: { g: '정', n: '정예', c: '#ef6a55', d: '힘든 싸움: 정예가 몰려 있고, 이기면 진품 기연을 반드시 얻음' },
+  event: { g: '기', n: '기우', c: '#9fc7e8', d: '강호 길에서 만나는 사람과 일, 길흉을 알 수 없다' },
+  shop: { g: '시장', n: '검려', c: '#dcae55', d: '검 단련, 체력 단련, 양기, 회춘단 구입' },
+  rest: { g: '휴식', n: '쉬어 가기', c: '#62cdb9', d: '호흡으로 체력을 회복하거나 검을 갈기' },
+  treasure: { g: '보', n: '보물 숨김', c: '#e8c46a', d: '낡은 상자, 세 가지 중 하나를 고르세요' },
+  boss: { g: '수', n: '두목', c: '#ff3a22', d: '이번 장의 강적' },
 };
 const MAP_ROWS = 7, MAP_COLS = 4, BOSSES = ['boss1', 'boss3', 'boss2'];
 /* 每章能出的敌人和“身价”（越凶越贵，一拨的总身价随层数涨） */
@@ -3992,12 +3992,12 @@ const POOL = [
 ];
 /* 劫数：通关一次解锁下一劫，层层叠加 */
 const ASC = [
-  { n: '无劫', d: '寻常江湖' },
-  { n: '一劫', d: '敌人气血 +15%' },
-  { n: '二劫', d: '精锐更常见，精锐气血再 +20%' },
-  { n: '三劫', d: '敌人伤害 +15%' },
-  { n: '四劫', d: '歇脚调息只回两成气血' },
-  { n: '五劫', d: '首领气血 +25%，开局少带一枚回春丹' },
+  { n: '겁 없음', d: '평범한 강호' },
+  { n: '1겁', d: '적 체력 +15%' },
+  { n: '2겁', d: '정예가 더 자주 나오고, 정예 체력 추가 +20%' },
+  { n: '3겁', d: '적 피해 +15%' },
+  { n: '4겁', d: '쉬며 호흡을 고르면 체력 20%만 회복' },
+  { n: '5겁', d: '두목 체력 +25%, 시작 시 회춘단 1알 감소' },
 ];
 function ascApply(a) { Object.assign(G, { asc: a, ascHp: a >= 1 ? 1.15 : 1, ascElite: a >= 2 ? 1.2 : 1, ascDmg: a >= 3 ? 1.15 : 1, ascBoss: a >= 5 ? 1.25 : 1 }); }
 const ascMax = () => Math.min(ASC.length - 1, Save.load().asc || 0);
@@ -4069,7 +4069,7 @@ const Run = {
     hideAll(); clearField(); $('hud').hidden = true; $('touch').hidden = true; unlock(); G.state = 'rlmap'; this.node = null; this.save();
     const ch = CHAPTERS[this.ch], ns = this.map.nodes, ok = new Set(this.reach()), done = new Set(this.path);
     $('rmT').firstChild.textContent = ch.n; $('rmS').textContent = `${ch.idx} · ${ch.sub}${G.asc ? ' · ' + ASC[G.asc].n : ''}`;
-    $('rmStat').innerHTML = `<span>气血 <b>${Math.ceil(Pl.hp)} / ${Pl.maxHp}</b></span><span>铜钱 <b>${Math.floor(Pl.gold)}</b></span><span>回春丹 <b>${Pl.pots}</b></span><span>境界 <b>${cnNum(Pl.lv)}</b></span><span>佩剑 <b>${swordTier().name}</b></span>`;
+    $('rmStat').innerHTML = `<span>체력 <b>${Math.ceil(Pl.hp)} / ${Pl.maxHp}</b></span><span>동전 <b>${Math.floor(Pl.gold)}</b></span><span>회춘단 <b>${Pl.pots}</b></span><span>경지 <b>${cnNum(Pl.lv)}</b></span><span>패검 <b>${swordTier().name}</b></span>`;
     const L = [];
     for (const a of ns) for (const id of a.next) { const b = ns[id], walked = done.has(a.id) && done.has(b.id) && this.path.indexOf(b.id) === this.path.indexOf(a.id) + 1, live = a.id === this.at && ok.has(b.id);
       L.push(`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" class="${walked ? 'walk' : live ? 'live' : ''}"/>`); }
@@ -4082,7 +4082,7 @@ const Run = {
       g.onmouseenter = () => this.tip(ns[+g.dataset.n]); }
     this.tip(null); UI.perkList('rmPerks'); $('rlmap').hidden = false;
   },
-  tip(n) { $('rmTip').textContent = n ? `${NODE[n.t].n}：${NODE[n.t].d}` : (this.at < 0 ? '从最下面一层挑一处出发' : '只能走到相连的上一层 · 越往上越凶'); },
+  tip(n) { $('rmTip').textContent = n ? `${NODE[n.t].n}：${NODE[n.t].d}` : (this.at < 0 ? '맨 아래 층에서 출발할 곳을 고르세요' : '이어진 바로 위 층으로만 갈 수 있습니다 · 위로 갈수록 험해집니다'); },
   go(id) {
     if (G.state !== 'rlmap' || !this.reach().includes(id)) return;
     const n = this.map.nodes[id]; this.at = id; this.path.push(id); this.step++; this.node = n; $('rlmap').hidden = true; Snd.init(); Snd.ui();
@@ -4100,34 +4100,34 @@ const Run = {
     G.eliteP = n.t === 'elite' ? (G.asc >= 2 ? .55 : .4) : lv >= 3 ? Math.min(.28, .07 + .02 * (lv - 3)) + (G.asc >= 2 ? .06 : 0) : 0;
     fillQueue(G.waves[0]); G.spawnT = 1.1;
     $('hud').hidden = false; $('touch').hidden = !Input.touch; G.state = 'playing'; canvas.focus();
-    if (n.t === 'boss') UI.banner(ET[BOSSES[ci]].name, CHAPTERS[ci].n + ' · 首领', 'red'); else { UI.banner(n.t === 'elite' ? '精锐当道' : `第${cnNum(this.step)}程`, G.stageName, n.t === 'elite' ? 'red' : ''); Snd.gong(); }
+    if (n.t === 'boss') UI.banner(ET[BOSSES[ci]].name, CHAPTERS[ci].n + ' · 두목', 'red'); else { UI.banner(n.t === 'elite' ? '정예 득세' : `제${cnNum(this.step)}단계`, G.stageName, n.t === 'elite' ? 'red' : ''); Snd.gong(); }
   },
   /* 一处打完：剑魄照旧，精锐给珍品机缘，首领破章 */
   won() {
     const n = this.node, ci = this.ch; if (!n) return;
     try { if (n.t === 'boss' && parent !== window) parent.postMessage({ qfx: 'wave', n: [3, 6, 10][ci] }, '*'); } catch (_) {}
     G.hazards.length = 0; Pl.mp = Pl.maxMp;
-    const sg = addSoul((4 + 2 * Math.min(G.stage, 12)) * (n.t === 'boss' ? 3 : n.t === 'elite' ? 1.6 : 1) + (G.kills - (G.k0 ?? G.kills)) * .25); G.soulRun = (G.soulRun || 0) + sg; setTimeout(() => UI.toast(`剑魄 +${sg}`, 1.6), 900);
+    const sg = addSoul((4 + 2 * Math.min(G.stage, 12)) * (n.t === 'boss' ? 3 : n.t === 'elite' ? 1.6 : 1) + (G.kills - (G.k0 ?? G.kills)) * .25); G.soulRun = (G.soulRun || 0) + sg; setTimeout(() => UI.toast(`검백 +${sg}`, 1.6), 900);
     if (n.t === 'boss') {
       const r = Save.load().rec; r.bestCh = Math.max(r.bestCh || 0, ci + 1); Save.write();
       if (ci >= CHAPTERS.length - 1) { Game.victory(); return; }
-      G.clearT = 3.2; const ch = CHAPTERS[ci]; UI.banner(`${ch.n} · 已破`, ch.idx + ' · ' + ch.sub, 'gold'); Snd.level(); return;
+      G.clearT = 3.2; const ch = CHAPTERS[ci]; UI.banner(`${ch.n} · 돌파 완료`, ch.idx + ' · ' + ch.sub, 'gold'); Snd.level(); return;
     }
-    if (this.bounty === 'sword' && Pl.swordLv < 9) { Pl.swordLv++; recalc(); setSwordTier(); setTimeout(() => UI.toast('孤魂留下的残剑：锻剑一重', 2.2), 1400); }
-    if (this.bounty === 'pelt') { Pl.gold += 45; setTimeout(() => UI.toast('狼皮换得铜钱 45 文', 2.2), 1400); }
+    if (this.bounty === 'sword' && Pl.swordLv < 9) { Pl.swordLv++; recalc(); setSwordTier(); setTimeout(() => UI.toast('외로운 혼이 남긴 부러진 검: 검 단련 1중', 2.2), 1400); }
+    if (this.bounty === 'pelt') { Pl.gold += 45; setTimeout(() => UI.toast('늑대 가죽을 팔아 동전 45문 획득', 2.2), 1400); }
     this.bounty = null;
-    if (n.t === 'fight' && Math.random() < .18 && Pl.pots < 5) { Pl.pots++; setTimeout(() => UI.toast('拾得回春丹一枚', 1.8), 1400); }
-    UI.banner('敌势已尽', n.t === 'elite' ? '精锐授首' : '收拾行囊，再上路', 'gold'); Snd.level(); G.rlDoneT = 1.8;
+    if (n.t === 'fight' && Math.random() < .18 && Pl.pots < 5) { Pl.pots++; setTimeout(() => UI.toast('회춘단 한 알을 주웠다', 1.8), 1400); }
+    UI.banner('적의 기세가 다했다', n.t === 'elite' ? '정예 처치' : '짐을 챙겨 다시 길을 떠난다', 'gold'); Snd.level(); G.rlDoneT = 1.8;
   },
   /* 打完停一会儿让灵气珠飞回来，再结算 */
   afterFight() {
-    if (this.node && this.node.t === 'elite') { this.offer(rareCards(), '精锐授首', '珍品机缘一道，择之'); return; }
+    if (this.node && this.node.t === 'elite') { this.offer(rareCards(), '정예 처치', '진품 기연 하나를 고르세요'); return; }
     this.showMap();
   },
   nextChapter() { this.ch++; this.map = genMap(); this.at = -1; this.path = []; this.node = null; Game.enterChapter(this.ch); },
   /* ---- 三选一（精锐、藏宝、奇遇里的机缘） ---- */
   offer(cards, t, s, after) {
-    if (!cards.length) { Pl.gold += 60; UI.toast('机缘已尽 · 改得铜钱 60', 2); (after || (() => this.showMap()))(); return; }
+    if (!cards.length) { Pl.gold += 60; UI.toast('기연 소진 · 대신 동전 60 획득', 2); (after || (() => this.showMap()))(); return; }
     G.state = 'reward'; unlock(); this.after = after || (() => this.showMap()); this.cards = cards;
     $('hud').hidden = true; UI.showCards(cards, t, s, c => this.pickCard(c));
   },
@@ -4135,22 +4135,22 @@ const Run = {
   /* ---- 歇脚 ---- */
   rest() {
     const heal = G.asc >= 4 ? .2 : .35, opts = [
-      { n: '调息', d: `回复 ${Math.round(heal * 100)}% 气血（${Math.round(Pl.maxHp * heal)} 点）`, f: () => { healPlayer(Pl.maxHp * heal, true); return '一炷香后，气息渐匀。'; } },
-      { n: '磨剑', d: Pl.swordLv >= 9 ? '剑已磨到头了' : `锻剑一重，不花铜钱（攻击 +13%）`, ok: () => Pl.swordLv < 9, f: () => { Pl.swordLv++; recalc(); setSwordTier(); Snd.forge(); return `剑锋又亮了一分：${swordTier().name} · ${cnNum(Pl.swordLv)}重。`; } },
-      { n: '炼丹', d: Pl.pots >= 5 ? '丹囊满了' : '炼一枚回春丹', ok: () => Pl.pots < 5, f: () => { Pl.pots++; return '药香满室，得回春丹一枚。'; } },
+      { n: '호흡 조절', d: `체력 ${Math.round(heal * 100)}% 회복(${Math.round(Pl.maxHp * heal)} 포인트)`, f: () => { healPlayer(Pl.maxHp * heal, true); return '향 하나 탈 시간이 지나자 숨이 고르게 돌아왔다.'; } },
+      { n: '검 갈기', d: Pl.swordLv >= 9 ? '검을 더 갈 수 없다' : `검 단련 1중, 동전 소모 없음(공격 +13%)`, ok: () => Pl.swordLv < 9, f: () => { Pl.swordLv++; recalc(); setSwordTier(); Snd.forge(); return `검끝이 한 층 더 빛난다: ${swordTier().name} · ${cnNum(Pl.swordLv)}중.`; } },
+      { n: '연단', d: Pl.pots >= 5 ? '단약 주머니가 가득 찼다' : '회춘단 한 알 제련', ok: () => Pl.pots < 5, f: () => { Pl.pots++; return '약향이 방에 가득하고, 회춘단 한 알을 얻었다.'; } },
     ];
-    this.panel('歇脚', '山间小筑 · 只能做一件事', '炉火温着一壶茶。天色还早，歇一歇，或者把剑磨利些。', opts);
+    this.panel('쉬어 가기', '산속 작은 집 · 한 가지만 할 수 있음', '화로에 찻주전자가 데워져 있다. 아직 이르니 쉬거나 검을 더 갈아 보자.', opts);
   },
   /* ---- 藏宝 ---- */
   treasure() {
     const g = randi(25, 55) + this.ch * 15; Pl.gold += g; Snd.forge();
-    this.offer(rareCards(), '藏宝', `箱底压着铜钱 ${g} 文 · 另有三样，择其一`);
+    this.offer(rareCards(), '보물 숨김', `상자 바닥에 동전 ${g}문이 눌려 있다 · 그 밖에 세 가지, 하나를 고르세요`);
   },
   /* ---- 奇遇 ---- */
   event() {
     const seen = this.seenEv || (this.seenEv = new Set()), pool = EVENTS.filter(e => !seen.has(e.id) && (!e.ch || e.ch.includes(this.ch)));
     const e = pick(pool.length ? pool : EVENTS); seen.add(e.id);
-    this.panel(e.t, '奇遇', e.d, e.opts.map(o => ({ ...o, d: typeof o.d === 'function' ? o.d() : o.d })));
+    this.panel(e.t, '기우', e.d, e.opts.map(o => ({ ...o, d: typeof o.d === 'function' ? o.d() : o.d })));
   },
   panel(t, s, d, opts) {
     G.state = 'event'; unlock(); $('hud').hidden = true;
@@ -4164,7 +4164,7 @@ const Run = {
     if (G.state !== 'event' || $('evOpts').hidden || !o || (o.ok && !o.ok())) return;
     const res = o.f(); Snd.ui(); $('evOpts').hidden = true;
     if (res && res.fight) { $('event').hidden = true; this.fight({ ...this.node, t: 'fight' }, res.fight); return; }
-    if (res && res.cards) { $('event').hidden = true; this.offer(res.cards, this.node ? $('evT').firstChild.textContent : '机缘', res.sub || '择其一'); return; }
+    if (res && res.cards) { $('event').hidden = true; this.offer(res.cards, this.node ? $('evT').firstChild.textContent : '기연', res.sub || '하나를 고르세요'); return; }
     if (Pl.hp <= 0) Pl.hp = 1;
     $('evR').textContent = res || ''; $('evR').hidden = !res; $('evGo').hidden = false; $('evGo').focus();
   },
@@ -4184,41 +4184,41 @@ const hpCost = k => Math.max(1, Math.round(Pl.maxHp * k));
 function hurtFlat(n) { Pl.hp = Math.max(1, Pl.hp - n); Pl.hurtV = 1; }
 /* 奇遇：每局不重样。f() 返回结果文字；返回 { fight } 就地开打，返回 { cards } 给三选一 */
 const EVENTS = [
-  { id: 'swordsman', t: '落难剑客', d: '路边倒着一个剑客，腿上中了一箭，手里还攥着半本剑谱。', opts: [
-    { n: '赠他一枚回春丹', d: '失去回春丹一枚，他把剑谱送你（三选一）', ok: () => Pl.pots > 0, f: () => { Pl.pots--; return { cards: rareCards(), sub: '剑客的半本剑谱 · 择其一' }; } },
-    { n: '翻他的行囊', d: '得铜钱 70 文，但他挣扎着刺了你一剑', f: () => { Pl.gold += 70; hurtFlat(hpCost(.12)); return '你拿了钱。背后那一剑，疼了一路。'; } },
-    { n: '走开', d: '什么也不做', f: () => '江湖路远，各安天命。' }] },
-  { id: 'temple', t: '山间古寺', d: '半山腰一座古寺，香炉还有余温，不见僧人。', opts: [
-    { n: '上一炷香', d: '花 30 文，回复四成气血', ok: () => Pl.gold >= 30, f: () => { Pl.gold -= 30; healPlayer(Pl.maxHp * .4, true); return '青烟袅袅，心定了，伤也轻了。'; } },
-    { n: '在佛前参禅', d: '悟出一道剑意机缘（弹反、处决更强）', f: () => { const p = PERKS.filter(x => x.s === 'yi' && pk(x.id) < x.max); if (!p.length) { Pl.gold += 40; return '心中空明，却无所得。案上留着 40 文香火钱。'; } const q = pick(p); takePerk(q); return `坐到月上中天，忽有所悟：「${q.n}」。`; } },
-    { n: '离开', d: '什么也不做', f: () => '你合十一拜，转身下山。' }] },
-  { id: 'dice', t: '野店赌坊', d: '酒旗下面一桌骰子，庄家朝你招手：“客官，押一把？”', opts: [
-    { n: '押 40 文', d: '五五开：赢了得 100 文，输了 40 文没了', ok: () => Pl.gold >= 40, f: () => { Pl.gold -= 40; if (Math.random() < .5) { Pl.gold += 100; return '三个六！庄家脸都绿了，你揣着 100 文出了门。'; } return '骰子落定，你输了。庄家笑得合不拢嘴。'; } },
-    { n: '掀桌子', d: '骰子灌了铅！打跑这伙赌徒', fight: 1, f: () => ({ fight: [{ bandit: 4 + G.asc % 2 }, { bandit: 3, archer: 1 }] }) },
-    { n: '离开', d: '什么也不做', f: () => '赌字头上一把刀，不碰为妙。' }] },
-  { id: 'smith', t: '铸剑老人', d: '溪边一座铁匠铺，老人眯眼看你的剑：“好坯子，可惜没开锋。”', opts: [
-    { n: '请他开锋', d: () => `花 ${60 + Pl.swordLv * 15} 文，锻剑一重`, ok: () => Pl.swordLv < 9 && Pl.gold >= 60 + Pl.swordLv * 15, f: () => { Pl.gold -= 60 + Pl.swordLv * 15; Pl.swordLv++; recalc(); setSwordTier(); Snd.forge(); return `火星四溅，${swordTier().name}寒光更胜。`; } },
-    { n: '以血淬剑', d: () => `失去 ${hpCost(.2)} 点气血，锻剑一重`, ok: () => Pl.swordLv < 9, f: () => { hurtFlat(hpCost(.2)); Pl.swordLv++; recalc(); setSwordTier(); Snd.forge(); return '剑身饮了你的血，嗡嗡作响。'; } },
-    { n: '离开', d: '什么也不做', f: () => '老人摇摇头，又低头打铁去了。' }] },
-  { id: 'spring', t: '寒潭', d: '一汪寒潭，水清见底，潭边石上刻着“洗剑”二字。', opts: [
-    { n: '饮一口潭水', d: '回复三成气血，内力回满', f: () => { healPlayer(Pl.maxHp * .3, true); Pl.mp = Pl.maxMp; return '凉意直透丹田，浑身一轻。'; } },
-    { n: '入潭洗剑', d: '得一道剑气机缘', f: () => { const p = PERKS.filter(x => x.s === 'qi' && pk(x.id) < x.max && (!x.need || skLv(x.need))); if (!p.length) { healPlayer(Pl.maxHp * .3, true); return '剑已无垢。你顺便洗了把脸，精神一振。'; } const q = pick(p); takePerk(q); return `潭水沸腾，剑气冲霄：「${q.n}」。`; } }] },
-  { id: 'stele', t: '残碑', d: '荒草里半截石碑，碑上刻着一路剑招，剩下一半已经风化。', opts: [
-    { n: '拓下剑招', d: '学一门新剑技，或把已会的剑技升一重', ok: () => Object.keys(SK).some(id => skLv(id) ? skLv(id) < 3 : Pl.slots.includes(null)), f: () => { const ids = Object.keys(SK).filter(id => skLv(id) ? skLv(id) < 3 : Pl.slots.includes(null)); const id = pick(ids), l = skLv(id); learnSkill(id); return l ? `「${SK[id].n}」更进一重。` : `学会了「${SK[id].n}」。`; } },
-    { n: '在碑前打坐', d: '回复两成气血', f: () => { healPlayer(Pl.maxHp * .2, true); return '风吹草低，一身疲惫散去。'; } }] },
-  { id: 'black', t: '黑市', d: '一个蒙面人拦住你：“机缘，要不要？只收气血，不收铜钱。”', opts: [
-    { n: '以气血换机缘', d: () => `失去 ${hpCost(.25)} 点气血，换珍品机缘三选一`, ok: () => Pl.hp > hpCost(.25) + 1, f: () => { hurtFlat(hpCost(.25)); return { cards: rareCards(), sub: '蒙面人摊开三卷 · 择其一' }; } },
-    { n: '买一枚回春丹', d: '花 25 文（比剑庐便宜）', ok: () => Pl.gold >= 25 && Pl.pots < 5, f: () => { Pl.gold -= 25; Pl.pots++; return '药丸还带着体温。'; } },
-    { n: '离开', d: '什么也不做', f: () => '蒙面人冷笑一声，隐入林中。' }] },
-  { id: 'child', t: '迷路的孩子', d: '一个小童坐在路边哭，说爹娘在山下村子里，他找不到路了。', opts: [
-    { n: '送他回村', d: '村民谢你回春丹一枚、铜钱 30 文', f: () => { Pl.pots = Math.min(5, Pl.pots + 1); Pl.gold += 30; return '村口的灯一盏盏亮起来，孩子的娘哭着道谢。'; } },
-    { n: '指个方向', d: '得铜钱 10 文', f: () => { Pl.gold += 10; return '孩子塞给你十文钱，一溜烟跑了。'; } }] },
-  { id: 'wolves', t: '狼嚎', d: '林子里绿光点点，狼群盯上你了。', ch: [0, 1], opts: [
-    { n: '拔剑迎战', d: '打退狼群，狼皮能换 45 文', fight: 1, f: () => (Run.bounty = 'pelt', { fight: [{ wolf: 5 }, { wolf: 4, brute: G.asc >= 3 ? 1 : 0 }] }) },
-    { n: '绕路', d: () => `失去 ${hpCost(.1)} 点气血，不打`, f: () => { hurtFlat(hpCost(.1)); return '你在荆棘里穿行半夜，总算甩掉了狼群。'; } }] },
-  { id: 'ghost', t: '剑冢孤魂', d: '一缕孤魂飘在断剑之间：“替我了结那些剑奴，这柄残剑归你。”', ch: [2], opts: [
-    { n: '应下', d: '打一场，赢了锻剑一重', fight: 1, f: () => { Run.bounty = 'sword'; return { fight: [{ slave: 3, spirit: 3 }, { slave: 2, wraith: 2 }] }; } },
-    { n: '婉拒', d: '孤魂叹息着散去，留下 50 文', f: () => { Pl.gold += 50; return '断剑之间，只剩风声。'; } }] },
+  { id: 'swordsman', t: '몰락한 검객', d: '길가에 검객이 쓰러져 있다. 다리에 화살을 맞았고 손에는 반쪽짜리 검보를 쥐고 있다.', opts: [
+    { n: '그에게 회춘단 한 알 주기', d: '회춘단 한 알을 내고 검보를 받는다(3택 1)', ok: () => Pl.pots > 0, f: () => { Pl.pots--; return { cards: rareCards(), sub: '검객의 반쪽 검보 · 하나를 고르세요' }; } },
+    { n: '그의 짐 뒤지기', d: '동전 70문 획득, 하지만 그가 발버둥 치며 당신을 찔렀다', f: () => { Pl.gold += 70; hurtFlat(hpCost(.12)); return '돈을 받았다. 등 뒤의 그 일검이 오는 길 내내 아팠다.'; } },
+    { n: '물러가기', d: '아무것도 하지 않음', f: () => '강호길 멀다, 각자 천명에 맡긴다.' }] },
+  { id: 'temple', t: '산속 옛 절', d: '산 중턱에 오래된 절이 있다. 향로에 아직 온기가 있지만 스님은 보이지 않는다.', opts: [
+    { n: '지난 향', d: '30문을 내고 체력 40% 회복', ok: () => Pl.gold >= 30, f: () => { Pl.gold -= 30; healPlayer(Pl.maxHp * .4, true); return '푸른 연기가 피어올라 마음이 가라앉고 상처도 가벼워졌다.'; } },
+    { n: '부처 앞에서 참선', d: '검의 기연 획득(패리, 처형 강화)', f: () => { const p = PERKS.filter(x => x.s === 'yi' && pk(x.id) < x.max); if (!p.length) { Pl.gold += 40; return '마음이 맑아졌지만 얻은 것은 없다. 상 위에 향화전 40문이 놓여 있다.'; } const q = pick(p); takePerk(q); return `달이 중천에 오를 때까지 앉아 있다가 문득 깨달았다: 「${q.n}」.`; } },
+    { n: '떠나기', d: '아무것도 하지 않음', f: () => '당신은 합장해 절하고 돌아서서 산을 내려간다.' }] },
+  { id: 'dice', t: '들판 주막 도박장', d: '주기 아래 탁자에 주사위가 있고, 주인이 손짓한다. "손님, 한 판 걸어 보시겠소?"', opts: [
+    { n: '40문 걸기', d: '반반: 이기면 100문, 지면 40문을 잃는다', ok: () => Pl.gold >= 40, f: () => { Pl.gold -= 40; if (Math.random() < .5) { Pl.gold += 100; return '세 개가 모두 육이다! 주인 얼굴이 새파래졌고, 당신은 100문을 챙겨 나선다.'; } return '주사위가 멈췄고 당신이 졌다. 주인은 입이 귀에 걸리도록 웃는다.'; } },
+    { n: '상 뒤엎기', d: '주사위에 납이 들었다! 도박꾼 무리를 쫓아내라', fight: 1, f: () => ({ fight: [{ bandit: 4 + G.asc % 2 }, { bandit: 3, archer: 1 }] }) },
+    { n: '떠나기', d: '아무것도 하지 않음', f: () => '도박 \'도\' 자 위에 칼이 얹혀 있으니 건드리지 않는 게 낫다.' }] },
+  { id: 'smith', t: '주검 노인', d: '개울가 대장간에서 노인이 실눈으로 당신의 검을 본다. "바탕은 좋은데 날을 못 세웠구나."', opts: [
+    { n: '날을 세워 달라고 부탁', d: () => `${60 + Pl.swordLv * 15}문을 내고 검 단련 1중`, ok: () => Pl.swordLv < 9 && Pl.gold >= 60 + Pl.swordLv * 15, f: () => { Pl.gold -= 60 + Pl.swordLv * 15; Pl.swordLv++; recalc(); setSwordTier(); Snd.forge(); return `불꽃이 튀며 ${swordTier().name}의 한광이 더 빛난다.`; } },
+    { n: '피로 검을 담금질', d: () => `체력 ${hpCost(.2)} 잃고 검 단련 1중`, ok: () => Pl.swordLv < 9, f: () => { hurtFlat(hpCost(.2)); Pl.swordLv++; recalc(); setSwordTier(); Snd.forge(); return '검이 당신의 피를 마시고 웅웅 울린다.'; } },
+    { n: '떠나기', d: '아무것도 하지 않음', f: () => '노인은 고개를 젓고는 다시 고개를 숙이고 쇠를 두드렸다.' }] },
+  { id: 'spring', t: '한담', d: '맑은 차가운 못이 있다. 못가 바위에 \'세검\' 두 글자가 새겨져 있다.', opts: [
+    { n: '못물 한 모금 마시기', d: '체력 30% 회복, 내공 가득 충전', f: () => { healPlayer(Pl.maxHp * .3, true); Pl.mp = Pl.maxMp; return '서늘한 기운이 단전까지 스미고 온몸이 가벼워졌다.'; } },
+    { n: '못에 들어 검을 씻다', d: '검기 기연 획득', f: () => { const p = PERKS.filter(x => x.s === 'qi' && pk(x.id) < x.max && (!x.need || skLv(x.need))); if (!p.length) { healPlayer(Pl.maxHp * .3, true); return '검의 때가 다 벗겨졌다. 겸사겸사 세수도 하니 정신이 번쩍 든다.'; } const q = pick(p); takePerk(q); return `못물이 끓고 검기가 하늘을 찌른다: 「${q.n}」.`; } }] },
+  { id: 'stele', t: '잔비', d: '풀숲에 반쪽짜리 비석이 있다. 비석에 검초가 새겨져 있으나 나머지 반은 풍화되었다.', opts: [
+    { n: '검초 탁본', d: '새 검기술을 배우거나, 아는 검기술을 1중 올립니다', ok: () => Object.keys(SK).some(id => skLv(id) ? skLv(id) < 3 : Pl.slots.includes(null)), f: () => { const ids = Object.keys(SK).filter(id => skLv(id) ? skLv(id) < 3 : Pl.slots.includes(null)); const id = pick(ids), l = skLv(id); learnSkill(id); return l ? `「${SK[id].n}」이(가) 한 단계 오릅니다.` : `「${SK[id].n}」을(를) 익혔다.`; } },
+    { n: '비석 앞에서 좌선', d: '체력 20% 회복', f: () => { healPlayer(Pl.maxHp * .2, true); return '바람이 풀을 스치자 온몸의 피로가 사라졌다.'; } }] },
+  { id: 'black', t: '암시장', d: '복면인이 길을 막는다. "기연, 필요하냐? 체력만 받고 동전은 안 받는다."', opts: [
+    { n: '체력을 기연으로 바꾼다', d: () => `체력 ${hpCost(.25)} 잃고 진품 기연 3택 1`, ok: () => Pl.hp > hpCost(.25) + 1, f: () => { hurtFlat(hpCost(.25)); return { cards: rareCards(), sub: '복면인이 세 두루마리를 펼친다 · 하나를 고르세요' }; } },
+    { n: '회춘단 한 알 구입', d: '25문 지불(검려보다 저렴)', ok: () => Pl.gold >= 25 && Pl.pots < 5, f: () => { Pl.gold -= 25; Pl.pots++; return '알약에 아직 체온이 남아 있다.'; } },
+    { n: '떠나기', d: '아무것도 하지 않음', f: () => '복면인이 차갑게 웃고는 숲으로 사라졌다.' }] },
+  { id: 'child', t: '길 잃은 아이', d: '어린아이가 길가에 앉아 울고 있다. 부모가 산 아래 마을에 계신데 길을 잃었다고 한다.', opts: [
+    { n: '마을까지 데려다주기', d: '마을 사람이 회춘단 한 알과 동전 30문으로 사례했다', f: () => { Pl.pots = Math.min(5, Pl.pots + 1); Pl.gold += 30; return '마을 어귀에 등불이 하나둘 켜지고, 아이의 어머니가 울며 고마워한다.'; } },
+    { n: '방향을 가리키기', d: '동전 10문 획득', f: () => { Pl.gold += 10; return '아이가 동전 열 닢을 쥐여 주고 쏜살같이 달아났다.'; } }] },
+  { id: 'wolves', t: '늑대 울음', d: '숲에 녹색 불빛이 점점이 보이고, 늑대 무리가 당신을 노린다.', ch: [0, 1], opts: [
+    { n: '검을 뽑아 맞서다', d: '늑대 무리를 물리치면 늑대 가죽을 45문에 바꿀 수 있다', fight: 1, f: () => (Run.bounty = 'pelt', { fight: [{ wolf: 5 }, { wolf: 4, brute: G.asc >= 3 ? 1 : 0 }] }) },
+    { n: '우회', d: () => `체력 ${hpCost(.1)} 잃고 싸우지 않음`, f: () => { hurtFlat(hpCost(.1)); return '가시덤불 속을 한밤 내내 헤쳐 나가서야 늑대 무리를 따돌렸다.'; } }] },
+  { id: 'ghost', t: '검총의 외로운 혼', d: '외로운 혼 하나가 부러진 검 사이를 떠돈다. "저 검노들을 처리해 주게. 이 부러진 검은 자네 걸세."', ch: [2], opts: [
+    { n: '수락', d: '한 판 싸워 이기면 검 단련 1중', fight: 1, f: () => { Run.bounty = 'sword'; return { fight: [{ slave: 3, spirit: 3 }, { slave: 2, wraith: 2 }] }; } },
+    { n: '정중히 거절', d: '외로운 혼이 한숨 쉬며 흩어지고 50문을 남겼다', f: () => { Pl.gold += 50; return '부러진 검 사이에 바람 소리만 남았다.'; } }] },
 ];
 /* === 69-coop.js === */
 /* ---------------- 同袍肉鸽：两到四人一起闯同一张路线图 ----------------
@@ -4248,7 +4248,7 @@ const Net = {
   players: [], ghosts: new Map(), byId: new Map(), nid: 1, sendT: 0, snapT: 0, tgt: null, ready: new Set(), votes: {}, mapAt: 0, revT: {},
 };
 const coopN = () => Net.on ? Math.max(1, Net.players.length) : 1;
-const coopName = id => (Net.players.find(p => p.id === id) || {}).name || '同袍';
+const coopName = id => (Net.players.find(p => p.id === id) || {}).name || '동료';
 const coopSlot = id => Math.max(0, Net.players.findIndex(p => p.id === id));
 
 /* ---------- 传输：PeerJS；调试时可换成同一浏览器里的 BroadcastChannel ---------- */
@@ -4259,7 +4259,7 @@ async function coopPeerLib() {
   for (const src of ['peerjs.min.js', 'assets/peerjs.min.js', 'https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js', 'https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js']) {
     try { await coopLoadScript(src); if (window.Peer) return window.Peer; } catch (_) {}
   }
-  throw new Error('联机组件没加载上，检查一下网络');
+  throw new Error('멀티플레이 구성요소를 불러오지 못했습니다. 네트워크를 확인하세요');
 }
 /* 刃影的服务器能发中转（TURN）凭据：在刃影里打开时借来用，打不通直连的网络（校园网等）也能走中转 */
 async function coopIce() {
@@ -4316,16 +4316,16 @@ Net.lobby = () => { const m = { t: 'lob', ps: Net.players, code: Net.code }; Net
 
 /* 建房：随机四位房间码，被占了就换一个 */
 async function coopHost() {
-  coopLeave(); coopSaveName(); Net.host = true; Net.me = 0; Net.players = [{ id: 0, name: coopMyName() }]; coopMsg('正在登记房间……');
+  coopLeave(); coopSaveName(); Net.host = true; Net.me = 0; Net.players = [{ id: 0, name: coopMyName() }]; coopMsg('방을 등록하는 중...');
   for (let k = 0; k < 4; k++) {
     const code = String(randi(1000, 9999)); let err;
-    try { Net.peer = await coopT().host(code, coopOnConn, e => { err = e; coopHostDone(code, e); }); } catch (e) { coopMsg(e.message || '建房失败'); Net.host = false; return; }
+    try { Net.peer = await coopT().host(code, coopOnConn, e => { err = e; coopHostDone(code, e); }); } catch (e) { coopMsg(e.message || '방 만들기 실패'); Net.host = false; return; }
     await new Promise(r => setTimeout(r, 30)); if (err !== 'taken') return; Net.peer.close();
   }
 }
 function coopHostDone(code, e) {
-  if (e === 'taken') return; if (e) { coopMsg('建房失败：' + e + '。换个网络再试试'); Net.on = false; Net.host = false; return; }
-  Net.on = true; Net.code = code; coopBeatOn(); coopMsg('把房间码告诉同袍，人齐了点「开局」'); coopLobbyUI();
+  if (e === 'taken') return; if (e) { coopMsg('방 만들기 실패: ' + e + '. 다른 네트워크로 다시 시도해 보세요'); Net.on = false; Net.host = false; return; }
+  Net.on = true; Net.code = code; coopBeatOn(); coopMsg('방 코드를 동료에게 알려 주고, 모이면 「시작」을 누르세요'); coopLobbyUI();
 }
 let coopNextId = 1;
 function coopOnConn(L) {
@@ -4333,10 +4333,10 @@ function coopOnConn(L) {
   L.onmsg = m => {
     L.seen = performance.now();
     if (m.t === 'hello') {
-      if (m.v !== COOP_V) { L.send({ t: 'deny', why: '版本不一致，双方都刷新一下网页' }); return; }
-      if (Net.started) { L.send({ t: 'deny', why: '这一局已经开打了' }); return; }
-      if (Net.players.length >= COOP_MAX) { L.send({ t: 'deny', why: '房间满了（最多四人）' }); return; }
-      const id = coopNextId++; L.id = id; Net.links.set(id, L); Net.players.push({ id, name: String(m.name || '同袍').slice(0, 8) });
+      if (m.v !== COOP_V) { L.send({ t: 'deny', why: '버전이 다릅니다. 양쪽 모두 페이지를 새로고침하세요' }); return; }
+      if (Net.started) { L.send({ t: 'deny', why: '이 판은 이미 시작되었습니다' }); return; }
+      if (Net.players.length >= COOP_MAX) { L.send({ t: 'deny', why: '방이 가득 찼습니다(최대 4명)' }); return; }
+      const id = coopNextId++; L.id = id; Net.links.set(id, L); Net.players.push({ id, name: String(m.name || '동료').slice(0, 8) });
       L.send({ t: 'wel', id }); Net.lobby(); Snd.ui(); return;
     }
     if (L.id) Net.recv(L.id, m);
@@ -4344,17 +4344,17 @@ function coopOnConn(L) {
   L.onclose = () => { if (!L.id) return; Net.links.delete(L.id); coopDrop(L.id); };
 }
 async function coopJoin(code) {
-  code = String(code || '').replace(/\D/g, ''); if (code.length !== 4) { coopMsg('房间码是四位数字'); return; }
-  coopLeave(); coopSaveName(); coopMsg('正在找房间……');
+  code = String(code || '').replace(/\D/g, ''); if (code.length !== 4) { coopMsg('방 코드는 네 자리 숫자입니다'); return; }
+  coopLeave(); coopSaveName(); coopMsg('방을 찾는 중...');
   try {
     Net.peer = await coopT().join(code, (e, L) => {
-      if (e) { coopMsg(e === 'nohost' ? '没找到这个房间，核对一下房间码' : e === 'timeout' ? '连不上房主，可能是网络不通' : '加入失败：' + e); return; }
+      if (e) { coopMsg(e === 'nohost' ? '이 방을 찾지 못했습니다. 방 코드를 확인하세요' : e === 'timeout' ? '방장에게 연결할 수 없습니다. 네트워크 문제일 수 있습니다' : '참가 실패: ' + e); return; }
       Net.link = L; Net.code = code; Net.host = false; Net.on = true;
       Net.hostSeen = performance.now(); coopBeatOn();
       L.onmsg = m => { Net.hostSeen = performance.now(); Net.onMsg(m); }; L.onclose = () => coopLost();
-      L.send({ t: 'hello', v: COOP_V, name: coopMyName() }); coopMsg('已连上，等房主开局');
+      L.send({ t: 'hello', v: COOP_V, name: coopMyName() }); coopMsg('연결됨, 방장이 시작하길 기다리는 중');
     });
-  } catch (e) { coopMsg(e.message || '加入失败'); }
+  } catch (e) { coopMsg(e.message || '참가 실패'); }
 }
 function coopLeave() {
   if (Net.link) { Net.link.onclose = null; Net.link.close(); } for (const L of Net.links.values()) { L.onclose = null; L.close(); }
@@ -4374,13 +4374,13 @@ addEventListener('pagehide', () => { if (Net.on) coopLeave(); });
 /* 有人走了：房主把他从名单里拿掉；房主走了，大家这一局就散了 */
 function coopDrop(id) {
   Net.players = Net.players.filter(p => p.id !== id); const g = Net.ghosts.get(id); if (g) ghostDrop(g); Net.ghosts.delete(id); Net.ready.delete(id); delete Net.votes[id];
-  Net.bcast({ t: 'gone', id }); Net.lobby(); if (Net.started) { UI.toast(`${coopNameOf(id)}离开了`, 2.4); coopMapInfo(); }
+  Net.bcast({ t: 'gone', id }); Net.lobby(); if (Net.started) { UI.toast(`${coopNameOf(id)}님이 나갔다`, 2.4); coopMapInfo(); }
 }
-const coopNameOf = id => { const g = Net.ghosts.get(id); return g ? g.name : '同袍'; };
+const coopNameOf = id => { const g = Net.ghosts.get(id); return g ? g.name : '동료'; };
 function coopLost() {
   const was = Net.started; coopLeave();
-  if (was && G.state !== 'title' && G.state !== 'over') { Game.over(false); $('overS').textContent = '房主离开了，联机中断'; }
-  else coopMsg('和房主断开了');
+  if (was && G.state !== 'title' && G.state !== 'over') { Game.over(false); $('overS').textContent = '방장이 나가서 멀티플레이가 끊겼다'; }
+  else coopMsg('방장과 연결이 끊겼다');
 }
 
 /* ---------- 房主收到同袍的消息 ---------- */
@@ -4546,11 +4546,11 @@ function coopSnap(m) {
       if (st === 'windup' || st === 'active' || st === 'recover') { const a = e.cfg.atks[r[6]]; if (a) { if (e.atk !== a || prev !== st) { e.atk = a; e.atkI = r[6]; } e.wind = r[7] || a.wind; e.rec = a.rec; } }
       if (st === 'windup') { e.teleMade = false; e.glinted = false; }
       if (st === 'active') coopActFx(e, r[12], r[13]);
-      if (st === 'down') FX.num({ x: e.pos.x, y: e.hitY + 1.2, z: e.pos.z }, '未死', 'word', 1);
+      if (st === 'down') FX.num({ x: e.pos.x, y: e.hitY + 1.2, z: e.pos.z }, '죽지 않음', 'word', 1);
     }
     if (st === 'stagger') e.stagger = r[14];
     e.hp = Math.min(e.hp, r[8]); if (r[8] > e.hp + 1 && (st === 'return' || st === 'down' || st === 'idle')) e.hp = r[8]; if (Math.abs(e.hp - r[8]) > e.maxHp * .1) e.hp = r[8];
-    const stun0 = e.stun; e.stun = r[9]; if (stun0 <= 0 && e.stun > .5) { FX.num({ x: e.pos.x, y: e.hitY + 1.3, z: e.pos.z }, '破绽', 'word', 1.2); Snd.clang(); }
+    const stun0 = e.stun; e.stun = r[9]; if (stun0 <= 0 && e.stun > .5) { FX.num({ x: e.pos.x, y: e.hitY + 1.3, z: e.pos.z }, '빈틈', 'word', 1.2); Snd.clang(); }
     if (r[10] > (e.phase || 1)) { const P = (PHASES[e.type] || [])[e.pi || 0]; e.pi = (e.pi || 0) + 1; if (P && P.banner) UI.banner(P.banner[0], P.banner[1], 'red'); FX.ring(e.pos, 1, 12, 0xff2a1a, .8); Snd.gong(); }
     e.phase = r[10]; e.poiseD = r[11];
   }
@@ -4564,7 +4564,7 @@ function coopActFx(e, tx, tz) {
   else if (a.kind === 'leap' && tx !== null) { e.lx = e.pos.x; e.lz = e.pos.z; e.tx = tx; e.tz = tz; e.tele = FX.telegraph({ type: 'circle', x: tx, z: tz, r: a.r, dur: a.act }); Snd.swing(1); }
   else if (a.kind === 'shoot') { if (a.dart) Snd.swing(0); else Snd.bow(); }
   else if (a.kind === 'cast' || a.kind === 'rain') Snd.cast();
-  else if (a.kind === 'summon') { UI.banner('喽啰何在', '', 'red'); Snd.gong(); }
+  else if (a.kind === 'summon') { UI.banner('졸개들은 어디 있느냐', '', 'red'); Snd.gong(); }
 }
 /* 同袍这边的敌人：位置跟着房主走，动作按房主给的状态和进度放 */
 function puppetEnemy(e, dt, t) {
@@ -4628,7 +4628,7 @@ function coopTick(dt, rdt) {
   if (Pl.state !== 'dead' && G.state === 'playing') for (const g of Net.ghosts.values()) {
     if (g.state !== 'dead') { Net.revT[g.id] = 0; continue; }
     const near = Math.hypot(g.pos.x - Pl.pos.x, g.pos.z - Pl.pos.z) < 2.4; Net.revT[g.id] = near ? (Net.revT[g.id] || 0) + dt : 0;
-    if (near && Math.floor((Net.revT[g.id] - dt) * 2) !== Math.floor(Net.revT[g.id] * 2)) UI.toast(`正在扶起${g.name} · ${Math.min(100, Math.round(Net.revT[g.id] / 2.5 * 100))}%`, .8);
+    if (near && Math.floor((Net.revT[g.id] - dt) * 2) !== Math.floor(Net.revT[g.id] * 2)) UI.toast(`${g.name}님을 일으키는 중 · ${Math.min(100, Math.round(Net.revT[g.id] / 2.5 * 100))}%`, .8);
     if (Net.revT[g.id] >= 2.5) { Net.revT[g.id] = -9; Net.send({ t: 'rev', to: g.id }); FX.pillar(g.pos, 0x8be0a0, 4); Snd.level(); }
   }
   // 房主：全都倒了，这一局就结束
@@ -4637,20 +4637,20 @@ function coopTick(dt, rdt) {
 /* 左上角：同袍的气血 */
 function coopHud() {
   const el = $('coopHud'), gs = [...Net.ghosts.values()].filter(g => g.net); el.hidden = !gs.length; if (!gs.length) return;
-  el.innerHTML = gs.map(g => `<div class="${g.state === 'dead' ? 'down' : ''}"><span style="color:${COOP_TAG[g.slot % 4]}">${g.name}${g.state === 'dead' ? ' · 倒地' : g.busy ? ' · 挑机缘' : ''}</span><i><b style="width:${Math.round(sat((g.hp || 0) / (g.mhp || 1)) * 100)}%"></b></i></div>`).join('');
+  el.innerHTML = gs.map(g => `<div class="${g.state === 'dead' ? 'down' : ''}"><span style="color:${COOP_TAG[g.slot % 4]}">${g.name}${g.state === 'dead' ? ' · 쓰러짐' : g.busy ? ' · 기연 고르는 중' : ''}</span><i><b style="width:${Math.round(sat((g.hp || 0) / (g.mhp || 1)) * 100)}%"></b></i></div>`).join('');
 }
 function coopAnyAlive() { return Pl.state !== 'dead' || [...Net.ghosts.values()].some(g => g.net && g.state !== 'dead'); }
 /* 自己倒下：画面发灰，等人扶或者等这一处打完 */
 function coopDeadTick(rdt) {
   G.deathT += rdt; GFX.final.uniforms.uGray.value = Math.min(.75, G.deathT / 1.5); G.slowT = 0; G.enemyTS = 1;
-  if (G.deathT - rdt <= .6 && G.deathT > .6) { UI.banner('力竭倒地', '同袍站到身边能扶你起来 · 这一处打完也会醒', 'red'); }
+  if (G.deathT - rdt <= .6 && G.deathT > .6) { UI.banner('힘이 다해 쓰러짐', '동료가 곁에 서면 일으켜 줄 수 있습니다 · 이곳 전투가 끝나도 깨어납니다', 'red'); }
 }
 function coopRevive(k) {
   if (Pl.state !== 'dead') return; Pl.state = 'free'; Pl.st = 0; Pl.deadT = 0; Pl.hp = Math.max(1, Math.round(Pl.maxHp * k)); Pl.iframe = 2; G.deathT = 0; GFX.final.uniforms.uGray.value = 0;
   FX.pillar(Pl.pos, 0x8be0a0, 6); FX.ring(Pl.pos, .5, 5, 0x8be0a0, .5); Snd.level();
 }
-function coopRevived(by) { if (Pl.state !== 'dead') return; coopRevive(.35); UI.banner('起身', `${by}把你扶了起来`, 'gold'); }
-function coopReviveAll() { if (Pl.state === 'dead') { coopRevive(.3); UI.toast('缓过一口气 · 气血三成', 2); } }
+function coopRevived(by) { if (Pl.state !== 'dead') return; coopRevive(.35); UI.banner('일어나기', `${by}님이 당신을 일으켜 세웠다`, 'gold'); }
+function coopReviveAll() { if (Pl.state === 'dead') { coopRevive(.3); UI.toast('한숨 돌림 · 체력 30%', 2); } }
 /* 同袍那边只跑两个计时：一章打完的过场、一处打完的结算 */
 function coopClientStage(dt) {
   if (G.clearT > 0) { G.clearT -= dt; if (G.clearT <= 0) Game.chapterClear(); return; }
@@ -4666,7 +4666,7 @@ Run.go = function (id) {
   if (G.state !== 'rlmap' || !this.reach().includes(id)) return;
   if (!Net.host) { Net.send({ t: 'vote', n: id }); Net.myVote = id; coopMapInfo(); Snd.ui(); return; }
   const wait = coopWait();
-  if (wait.length && performance.now() - Net.mapAt < 25000) { UI.toast(`等${wait.join('、')}回到路线图（25 秒后可以先走）`, 2.4); return; }
+  if (wait.length && performance.now() - Net.mapAt < 25000) { UI.toast(`${wait.join(', ')}님이 지도로 돌아오길 기다리는 중(25초 후 먼저 갈 수 있음)`, 2.4); return; }
   const n = this.map.nodes[id], m = { t: 'go', n: id }; if (n.t === 'event') m.ev = coopPickEv();
   Run.forceEv = m.ev; Net.ready.clear(); Net.votes = {}; Net.bcast(m); runGo(id);
 };
@@ -4696,28 +4696,28 @@ Run.won = function () { if (Net.on && Net.host) { Net.bcast({ t: 'won' }); coopR
 Run.event = function () {
   if (!Net.on || !Run.forceEv) return runEvent();
   const e = EVENTS.find(x => x.id === Run.forceEv) || pick(EVENTS); (this.seenEv || (this.seenEv = new Set())).add(e.id); Run.forceEv = null;
-  const opts = e.opts.map(o => { const d = typeof o.d === 'function' ? o.d() : o.d; return o.fight && !Net.host ? { ...o, d: d + '（这一项由房主定夺）', ok: () => false } : { ...o, d }; });
-  this.panel(e.t, Net.host ? '奇遇 · 同袍各选各的' : '奇遇 · 同袍各选各的', e.d, opts);
+  const opts = e.opts.map(o => { const d = typeof o.d === 'function' ? o.d() : o.d; return o.fight && !Net.host ? { ...o, d: d + '(이 항목은 방장이 정합니다)', ok: () => false } : { ...o, d }; });
+  this.panel(e.t, Net.host ? '기우 · 동료는 각자 선택' : '기우 · 동료는 각자 선택', e.d, opts);
 };
 Run.nextChapter = function () {
   if (!Net.on) return runNext();
-  if (!Net.host) { UI.toast('等房主启程', 1.8); $('btnIlGo').textContent = '等房主启程'; return; }
+  if (!Net.host) { UI.toast('방장의 출발을 기다리는 중', 1.8); $('btnIlGo').textContent = '방장의 출발을 기다리는 중'; return; }
   this.ch++; this.map = genMap(); this.at = -1; this.path = []; this.node = null; Net.ready.clear(); Net.bcast({ t: 'chap', ch: this.ch, map: this.map }); Game.enterChapter(this.ch);
 };
 function coopChapter(m) {
-  if (G.state === 'title' || G.state === 'over') return; $('btnIlGo').textContent = '启程';
+  if (G.state === 'title' || G.state === 'over') return; $('btnIlGo').textContent = '출발';
   Run.ch = m.ch; Run.map = m.map; Run.at = -1; Run.path = []; Run.node = null; Game.enterChapter(m.ch);
 }
 Run.showMap = function () {
   runShowMap(); if (!Net.on) return;
   Net.mapAt = performance.now(); if (!Net.host) Net.send({ t: 'rdy', at: Run.at }); coopMapInfo();
 };
-Run.tip = function (n) { runTip(n); if (Net.on && !n) $('rmTip').textContent = Net.host ? '你是房主：由你择路，同袍的建议显示在下面' : '由房主择路 · 点一处可以给房主提个建议'; };
+Run.tip = function (n) { runTip(n); if (Net.on && !n) $('rmTip').textContent = Net.host ? '당신이 방장입니다: 길은 당신이 고르고, 동료의 제안은 아래에 표시됩니다' : '방장이 길을 고릅니다 · 한 곳을 눌러 방장에게 제안할 수 있습니다'; };
 function coopMapInfo() {
-  const el = $('rmCoop'); if (!el) return; el.hidden = !Net.on; $('btnRmLeave').textContent = Net.on ? '退出联机' : '暂离 · 已存档'; if (!Net.on || G.state !== 'rlmap') return;
+  const el = $('rmCoop'); if (!el) return; el.hidden = !Net.on; $('btnRmLeave').textContent = Net.on ? '멀티플레이 나가기' : '잠시 이탈 · 저장됨'; if (!Net.on || G.state !== 'rlmap') return;
   const ns = Run.map.nodes, lines = Net.players.map(p => {
     const me = p.id === Net.me, ok = p.id === 0 || Net.ready.has(p.id) || me, v = p.id === Net.me ? Net.myVote : Net.votes[p.id];
-    return `<span style="color:${COOP_TAG[coopSlot(p.id) % 4]}">${p.name}${p.id === 0 ? '（房主）' : ''}</span>${Net.host ? (ok ? ' 已到' : ' 还在路上') : ''}${v !== undefined && v !== null && ns[v] ? ' · 想走' + NODE[ns[v].t].n : ''}`;
+    return `<span style="color:${COOP_TAG[coopSlot(p.id) % 4]}">${p.name}${p.id === 0 ? '(방장)' : ''}</span>${Net.host ? (ok ? ' 도착' : ' 이동 중') : ''}${v !== undefined && v !== null && ns[v] ? ' · 희망 경로: ' + NODE[ns[v].t].n : ''}`;
   });
   el.innerHTML = lines.join('<br>');
   // 同袍想走的那一处，在图上描一圈
@@ -4726,7 +4726,7 @@ function coopMapInfo() {
 }
 
 /* ---------- 大厅 ---------- */
-const coopMyName = () => (($('coopName') && $('coopName').value.trim()) || Save.load().coopName || '无名侠客').slice(0, 8);
+const coopMyName = () => (($('coopName') && $('coopName').value.trim()) || Save.load().coopName || '무명 협객').slice(0, 8);
 function coopSaveName() { const v = $('coopName').value.trim().slice(0, 8); if (v) { Save.load().coopName = v; Save.write(); } }
 function coopMsg(s) { const el = $('coopMsg'); if (el) el.textContent = s; }
 function coopShow() {
@@ -4735,8 +4735,8 @@ function coopShow() {
 function coopLobbyUI() {
   const room = Net.on && Net.code; $('coopRoom').hidden = !room; $('coopPre').hidden = !!room; $('btnCoopGo').hidden = !(Net.on && Net.host);
   if (!room) return; $('coopCodeT').textContent = Net.code;
-  $('coopList').innerHTML = Net.players.map(p => `<span style="border-color:${COOP_TAG[coopSlot(p.id) % 4]};color:${COOP_TAG[coopSlot(p.id) % 4]}">${p.name}${p.id === 0 ? ' · 房主' : ''}${p.id === Net.me ? ' · 你' : ''}</span>`).join('');
-  $('btnCoopGo').textContent = `开局 · ${Net.players.length} 人`;
+  $('coopList').innerHTML = Net.players.map(p => `<span style="border-color:${COOP_TAG[coopSlot(p.id) % 4]};color:${COOP_TAG[coopSlot(p.id) % 4]}">${p.name}${p.id === 0 ? ' · 방장' : ''}${p.id === Net.me ? ' · 나' : ''}</span>`).join('');
+  $('btnCoopGo').textContent = `시작 · ${Net.players.length}명`;
 }
 /* 房主开局：把第一章的路线图发给大家，各自带着自己藏经阁的修为上路 */
 function coopGoAll() {
@@ -4860,32 +4860,32 @@ function gainXp(v) {
   Pl.xp += v * (1 + .0 * 1);
   while (Pl.xp >= Pl.xpNeed) {
     Pl.xp -= Pl.xpNeed; Pl.lv++; recalc(); healPlayer(Pl.maxHp * .15); Pl.mp = Pl.maxMp; Pl.pending++; FX.pillar(Pl.pos, 0x62cdb9, 8); FX.ring(Pl.pos, .5, 7, 0x62cdb9, .7); Snd.level(); GFX.flashAt(Pl.pos, 0x9ff0e0, 5);
-    FX.num({ x: Pl.pos.x, y: 2.5, z: Pl.pos.z }, `${cnNum(Pl.lv)}境`, 'word', 1.4);
+    FX.num({ x: Pl.pos.x, y: 2.5, z: Pl.pos.z }, `${cnNum(Pl.lv)}경지`, 'word', 1.4);
   }
 }
 
 /* ---- 机缘 ---- */
 /* s 流派：qi 剑气 · lei 雷火 · shen 身法 · yi 剑意 · gen 根基；同派机缘合计三重、六重各有共鸣 */
 const PERKS = [
-  { id: 'atk', s: 'gen', n: '锋锐', r: 1, max: 6, d: '剑锋加锐，攻击提高 15%。' }, { id: 'aspd', s: 'qi', n: '疾风', r: 1, max: 5, d: '剑走疾风，出剑速度提高 10%。' }, { id: 'crit', s: 'lei', n: '洞察', r: 1, max: 5, d: '目察破绽，暴击几率提高 8%。' },
-  { id: 'critd', s: 'lei', n: '破军', r: 2, max: 4, d: '一击破军，暴击伤害提高 35%。' }, { id: 'hp', s: 'gen', n: '金钟', r: 1, max: 6, d: '身如金钟，生命上限 +30，并回复等量生命。' }, { id: 'leech', s: 'gen', n: '汲魂', r: 2, max: 3, d: '剑饮敌血，造成伤害的 2.5% 化为生命。' },
-  { id: 'mspd', s: 'shen', n: '凌波', r: 1, max: 4, d: '踏波而行，移动速度 +8%，闪避更省体力。' }, { id: 'mp', s: 'gen', n: '归元', r: 1, max: 4, d: '气归丹田，内力上限 +20，回复加快 50%。' },
-  { id: 'wave', s: 'qi', n: '剑气外放', r: 2, max: 3, d: '轻剑末式「跃斩」与「破山」落地，荡出剑气，每重多一道。' }, { id: 'thunder', s: 'lei', n: '惊雷', r: 3, max: 3, d: '暴击时或有落雷应声而下，殃及周围敌人。' },
-  { id: 'frost', s: 'lei', n: '寒魄', r: 2, max: 3, d: '剑附寒魄，中者迟缓；对迟缓之敌伤害 +15%。' }, { id: 'burn', s: 'lei', n: '焚心', r: 2, max: 3, d: '命中即燃，三息之内灼烧不止。' },
-  { id: 'split', s: 'qi', n: '分光', r: 2, max: 2, d: '「剑气纵横」多荡出两道剑气。', need: 'qi' }, { id: 'jiangang', s: 'qi', n: '剑罡', r: 1, max: 3, d: '剑气凝罡，一切剑气伤害 +25%。' },
-  { id: 'cdr', s: 'qi', n: '剑心通明', r: 2, max: 3, d: '心念一动，剑技调息缩短 13%。' }, { id: 'shield', s: 'gen', n: '护体真气', r: 3, max: 3, d: '真气自凝成罩，每隔一阵可挡一次伤害。' },
-  { id: 'snow', s: 'shen', n: '踏雪', r: 3, max: 2, d: '贴刃闪避成「踏雪」，数息之内伤害 +40%。' }, { id: 'wolf', s: 'shen', n: '贪狼', r: 1, max: 3, d: '每斩一敌，回 4 点内力、2% 生命。' },
-  { id: 'youshen', s: 'shen', n: '游身', r: 2, max: 3, d: '踏雪判定更宽，「瞬斩」伤害 +30%。' },
-  { id: 'tingfeng', s: 'yi', n: '听风', r: 1, max: 3, d: '听风辨器，弹反时机放宽 0.05 息。' }, { id: 'huifeng', s: 'yi', n: '回锋', r: 2, max: 1, d: '弹反之后三息之内，下一剑必定暴击。' },
-  { id: 'duanyue', s: 'yi', n: '断岳', r: 2, max: 3, d: '处决伤害 +30%，处决回复的生命多 4%。' }, { id: 'jieli', s: 'yi', n: '借力', r: 1, max: 2, d: '反弹回去的飞物伤害翻倍；接住飞物回 10 点内力。' },
-  { id: 'gold', s: 'gen', n: '聚宝', r: 1, max: 3, d: '财气自聚，铜钱收获 +30%，拾取范围更广。' },
+  { id: 'atk', s: 'gen', n: '예리함', r: 1, max: 6, d: '검끝이 더 예리해졌습니다. 공격 +15%.' }, { id: 'aspd', s: 'qi', n: '질풍', r: 1, max: 5, d: '검이 질풍처럼 달립니다. 검 휘두르는 속도 +10%.' }, { id: 'crit', s: 'lei', n: '통찰', r: 1, max: 5, d: '눈으로 빈틈을 살펴 치명타 확률 +8%.' },
+  { id: 'critd', s: 'lei', n: '파군', r: 2, max: 4, d: '일격에 군을 깨뜨립니다. 치명타 피해 +35%.' }, { id: 'hp', s: 'gen', n: '금종', r: 1, max: 6, d: '몸이 금종 같아 생명 상한 +30, 같은 만큼 생명 회복.' }, { id: 'leech', s: 'gen', n: '급혼', r: 2, max: 3, d: '검이 적의 피를 마셔, 준 피해의 2.5%가 생명으로 바뀝니다.' },
+  { id: 'mspd', s: 'shen', n: '능파', r: 1, max: 4, d: '물결을 밟고 가며 이동 속도 +8%, 회피 체력 소모 감소.' }, { id: 'mp', s: 'gen', n: '귀원', r: 1, max: 4, d: '기가 단전으로 돌아가 내공 상한 +20, 회복 50% 빨라집니다.' },
+  { id: 'wave', s: 'qi', n: '검기 방출', r: 2, max: 3, d: '가벼운 검 끝 초식 「도약참」과 「파산」이 착지하며 검기를 퍼뜨리고, 중첩마다 한 줄기 추가.' }, { id: 'thunder', s: 'lei', n: '경뢰', r: 3, max: 3, d: '치명타 때 낙뢰가 떨어져 주변 적에게 피해를 줄 수 있습니다.' },
+  { id: 'frost', s: 'lei', n: '한백', r: 2, max: 3, d: '검에 한백이 깃들어 맞은 적이 느려집니다. 느려진 적에게 피해 +15%.' }, { id: 'burn', s: 'lei', n: '분심', r: 2, max: 3, d: '맞으면 불붙어 3초 동안 계속 탑니다.' },
+  { id: 'split', s: 'qi', n: '분광', r: 2, max: 2, d: '「검기종횡」으로 검기가 두 줄기 더 퍼집니다.', need: 'qi' }, { id: 'jiangang', s: 'qi', n: '검강', r: 1, max: 3, d: '검기가 강기로 응축됩니다. 모든 검기 피해 +25%.' },
+  { id: 'cdr', s: 'qi', n: '검심통명', r: 2, max: 3, d: '마음이 움직여 검기술 재사용 시간이 13% 줄었다.' }, { id: 'shield', s: 'gen', n: '호체진기', r: 3, max: 3, d: '진기가 저절로 응결해 방어막이 되어, 일정 간격마다 피해를 한 번 막습니다.' },
+  { id: 'snow', s: 'shen', n: '답설', r: 3, max: 2, d: '칼날에 붙어 회피하면 「답설」이 되어, 몇 초 동안 피해 +40%.' }, { id: 'wolf', s: 'shen', n: '탐랑', r: 1, max: 3, d: '적을 벨 때마다 내공 4, 생명 2% 회복.' },
+  { id: 'youshen', s: 'shen', n: '유신', r: 2, max: 3, d: '답설 판정이 넓어지고 「순참」 피해 +30%.' },
+  { id: 'tingfeng', s: 'yi', n: '청풍', r: 1, max: 3, d: '바람 소리로 병기를 가립니다. 패리 시점이 0.05초 넓어집니다.' }, { id: 'huifeng', s: 'yi', n: '회봉', r: 2, max: 1, d: '패리 후 3초 안에 다음 일검은 반드시 치명타입니다.' },
+  { id: 'duanyue', s: 'yi', n: '단악', r: 2, max: 3, d: '처형 피해 +30%, 처형으로 회복하는 생명 +4%.' }, { id: 'jieli', s: 'yi', n: '힘 빌리기', r: 1, max: 2, d: '튕겨낸 투사체의 피해가 두 배가 되고, 투사체를 받으면 내공 10을 회복합니다.' },
+  { id: 'gold', s: 'gen', n: '취보', r: 1, max: 3, d: '재물운이 저절로 모여 동전 획득 +30%, 줍는 범위가 넓어집니다.' },
 ];
 const SCHOOLS = {
-  qi: { n: '剑气', c: '#62cdb9', r3: '剑气伤害 +30%', r6: '每一式轻剑都带出一道小剑气' },
-  lei: { n: '雷火', c: '#e8874f', r3: '暴击必燃', r6: '每斩六剑，引落一道天雷' },
-  shen: { n: '身法', c: '#9fc7e8', r3: '闪避省三成体力，踏雪判定更宽', r6: '踏雪时留下残影，一息后炸开' },
-  yi: { n: '剑意', c: '#dcae55', r3: '格挡不再掉血', r6: '弹反时震出一圈剑气' },
-  gen: { n: '根基', c: '#c9b48a', r3: '生命上限 +15%', r6: '每章一次，濒死回魂' },
+  qi: { n: '검기', c: '#62cdb9', r3: '검기 피해 +30%', r6: '가벼운 검 초식마다 작은 검기가 함께 나갑니다' },
+  lei: { n: '뇌화', c: '#e8874f', r3: '치명타는 반드시 불붙음', r6: '여섯 번 벨 때마다 천둥 한 줄기를 끌어옵니다' },
+  shen: { n: '신법', c: '#9fc7e8', r3: '회피 체력 소모 30% 감소, 답설 판정 확대', r6: '답설 때 잔영이 남아 1초 뒤 폭발' },
+  yi: { n: '검의', c: '#dcae55', r3: '막아도 체력이 닳지 않음', r6: '패리할 때 검기가 한 바퀴 퍼집니다' },
+  gen: { n: '근기', c: '#c9b48a', r3: '생명 상한 +15%', r6: '장마다 한 번, 빈사 시 혼 회복' },
 };
 function reso(s) { let n = 0; for (const p of PERKS) if (p.s === s) n += pk(p.id); return n; }
 const cardW = r => [0, 55, 32, 14][r];
@@ -4906,14 +4906,14 @@ function wpick(a) { let tw = 0; for (const c of a) tw += c.w; let r = Math.rando
 function takeCard(c) {
   if (c.k !== 'perk') { learnSkill(c.id); Snd.ui(); return; }
   const p = c.p, s0 = reso(p.s); takePerk(p); const s1 = reso(p.s), S = SCHOOLS[p.s];
-  if (s0 < 3 && s1 >= 3) UI.toast(`${S.n}共鸣 · 三重：${S.r3}`, 3.2); else if (s0 < 6 && s1 >= 6) UI.toast(`${S.n}共鸣 · 六重：${S.r6}`, 3.2);
+  if (s0 < 3 && s1 >= 3) UI.toast(`${S.n} 공명 · 3중: ${S.r3}`, 3.2); else if (s0 < 6 && s1 >= 6) UI.toast(`${S.n} 공명 · 6중: ${S.r6}`, 3.2);
 }
 function takePerk(p) { Pl.perks[p.id] = pk(p.id) + 1; const hp0 = Pl.maxHp; recalc(); Pl.hp = Math.min(Pl.maxHp, Pl.hp + Math.max(0, Pl.maxHp - hp0)); if (p.id === 'mp') Pl.mp = Pl.maxMp; if (p.id === 'shield') { Pl.shield = 1; } Snd.ui(); }
 const SHOP = [
-  { id: 'sword', n: () => '锻剑 · ' + cnNum(Pl.swordLv + 1) + '重', cost: () => Math.round(55 * Math.pow(1.5, Pl.swordLv)), max: () => Pl.swordLv >= 9, d: () => { const nt = SWORD_TIERS[Math.min(4, Math.floor((Pl.swordLv + 1) / 2))]; return '攻击 +13%。' + (nt !== swordTier() ? `剑身一振，蜕作「${nt.name}」。` : `手中仍是「${swordTier().name}」`); }, buy: () => { Pl.swordLv++; recalc(); setSwordTier(); Snd.forge(); } },
-  { id: 'body', n: () => '淬体', cost: () => Math.round(45 * Math.pow(1.38, Pl.bodyLv)), max: () => Pl.bodyLv >= 10, d: () => '筋强骨壮，生命上限 +28，并回复三成生命。', buy: () => { Pl.bodyLv++; recalc(); healPlayer(Pl.maxHp * .3 + 28); Snd.ui(); } },
-  { id: 'qi', n: () => '养气', cost: () => Math.round(45 * Math.pow(1.38, Pl.qiLv)), max: () => Pl.qiLv >= 8, d: () => '吐纳养气，内力上限 +22，回复更快。', buy: () => { Pl.qiLv++; recalc(); Pl.mp = Pl.maxMp; Snd.ui(); } },
-  { id: 'pot', n: () => `回春丹（${Pl.pots}/5）`, cost: () => 35, max: () => Pl.pots >= 5, d: () => '一丸入喉，回复 45% 生命。', buy: () => { Pl.pots++; Snd.ui(); } },
+  { id: 'sword', n: () => '검 단련 · ' + cnNum(Pl.swordLv + 1) + '중', cost: () => Math.round(55 * Math.pow(1.5, Pl.swordLv)), max: () => Pl.swordLv >= 9, d: () => { const nt = SWORD_TIERS[Math.min(4, Math.floor((Pl.swordLv + 1) / 2))]; return '공격 +13%.' + (nt !== swordTier() ? `검신이 떨리며 「${nt.name}」(으)로 탈바꿈했다.` : `손에 든 것은 여전히 「${swordTier().name}」`); }, buy: () => { Pl.swordLv++; recalc(); setSwordTier(); Snd.forge(); } },
+  { id: 'body', n: () => '쇄체', cost: () => Math.round(45 * Math.pow(1.38, Pl.bodyLv)), max: () => Pl.bodyLv >= 10, d: () => '근골이 튼튼해져 생명 상한 +28, 생명 30% 회복.', buy: () => { Pl.bodyLv++; recalc(); healPlayer(Pl.maxHp * .3 + 28); Snd.ui(); } },
+  { id: 'qi', n: () => '양기', cost: () => Math.round(45 * Math.pow(1.38, Pl.qiLv)), max: () => Pl.qiLv >= 8, d: () => '호흡을 가다듬어 내공 상한 +22, 회복이 빨라집니다.', buy: () => { Pl.qiLv++; recalc(); Pl.mp = Pl.maxMp; Snd.ui(); } },
+  { id: 'pot', n: () => `회춘단(${Pl.pots}/5)`, cost: () => 35, max: () => Pl.pots >= 5, d: () => '알약을 삼키자 생명이 45% 회복됩니다.', buy: () => { Pl.pots++; Snd.ui(); } },
 ];
 
 /* === 75-meta.js === */
@@ -4958,14 +4958,14 @@ const fmtTime = s => { s = Math.round(s); const m = Math.floor(s / 60); return `
 
 /* ---------------- 剑魄与藏经阁：死了也留得住的东西 ---------------- */
 const META = [
-  { id: 'gu', n: '根骨', max: 5, cost: l => 30 + 25 * l, d: l => `生命上限 +${6 * l}%` },
-  { id: 'jian', n: '剑骨', max: 5, cost: l => 30 + 25 * l, d: l => `攻击 +${5 * l}%` },
-  { id: 'dan', n: '丹房', max: 2, cost: l => 50 + 50 * l, d: l => `开局多带 ${l} 枚回春丹` },
-  { id: 'pan', n: '盘缠', max: 3, cost: l => 40 + 30 * l, d: l => `开局铜钱 +${40 * l}` },
-  { id: 'wu', n: '悟性', max: 2, cost: l => 80 + 70 * l, d: l => `每章可重掷破境卡 ${l} 次` },
-  { id: 'xia', n: '剑匣', max: 1, cost: () => 160, d: () => '开局 E 槽自带一门随机剑技' },
-  { id: 'yuan', n: '宿缘', max: 2, cost: l => 90 + 60 * l, d: l => `开局自带 ${l} 道随机机缘` },
-  { id: 'hun', n: '回魂', max: 1, cost: () => 220, d: () => '每局一次，濒死时回复三成生命' },
+  { id: 'gu', n: '근골', max: 5, cost: l => 30 + 25 * l, d: l => `생명 상한 +${6 * l}%` },
+  { id: 'jian', n: '검골', max: 5, cost: l => 30 + 25 * l, d: l => `공격 +${5 * l}%` },
+  { id: 'dan', n: '단방', max: 2, cost: l => 50 + 50 * l, d: l => `시작 시 회춘단 ${l}알 추가` },
+  { id: 'pan', n: '노잣돈', max: 3, cost: l => 40 + 30 * l, d: l => `시작 동전 +${40 * l}` },
+  { id: 'wu', n: '오성', max: 2, cost: l => 80 + 70 * l, d: l => `장마다 경지 돌파 카드를 ${l}번 다시 뽑을 수 있습니다` },
+  { id: 'xia', n: '검갑', max: 1, cost: () => 160, d: () => '시작 시 E 슬롯에 무작위 검기술 1개' },
+  { id: 'yuan', n: '숙연', max: 2, cost: l => 90 + 60 * l, d: l => `시작 시 무작위 기연 ${l}개` },
+  { id: 'hun', n: '회혼', max: 1, cost: () => 220, d: () => '한 판에 한 번, 빈사 시 생명 30% 회복' },
 ];
 const up = k => Save.load().up[k] || 0;
 function buyMeta(m) { const d = Save.load(), l = up(m.id); if (l >= m.max || d.soul < m.cost(l)) return false; d.soul -= m.cost(l); d.up[m.id] = l + 1; Save.write(); return true; }
@@ -4994,31 +4994,31 @@ const UI = {
   hide(id, h) { const key = id + '.h'; if (this.c[key] !== h) { this.c[key] = h; $(id).hidden = h; } },
   toast(msg, dur = 1.8) { const el = $('toast'); el.textContent = msg; el.classList.add('show'); this.toastT = dur; },
   banner(t, s = '', cls = '') { const el = $('banner'); $('banT').textContent = t; $('banS').textContent = s; el.className = 'banner ' + cls; void el.offsetWidth; el.classList.add('show'); },
-  combo(n) { if (n < 2) { this.hide('combo', true); return; } this.hide('combo', false); this.set('comboN', n); this.set('comboR', n >= 60 ? '万夫莫敌' : n >= 40 ? '无双' : n >= 25 ? '游龙' : n >= 12 ? '流水' : n >= 5 ? '行云' : ''); const el = $('combo'); el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); },
+  combo(n) { if (n < 2) { this.hide('combo', true); return; } this.hide('combo', false); this.set('comboN', n); this.set('comboR', n >= 60 ? '만부막적' : n >= 40 ? '무쌍' : n >= 25 ? '유룡' : n >= 12 ? '유수' : n >= 5 ? '행운' : ''); const el = $('combo'); el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); },
   update(dt) {
     this.cls('game', 'touch', Input.touch);
     if (this.toastT > 0) { this.toastT -= dt; if (this.toastT <= 0) $('toast').classList.remove('show'); }
     this.bar('hpFill', Pl.hp / Pl.maxHp); this.bar('hpLag', Pl.hp / Pl.maxHp); this.set('hpTxt', Math.ceil(Pl.hp) + ' / ' + Pl.maxHp); this.bar('mpFill', Pl.mp / Pl.maxMp); this.bar('staFill', Pl.sta / Pl.maxSta);
-    this.cls('hpBar', 'shield', Pl.shield > 0); this.set('lvNum', cnNum(Pl.lv)); this.set('gold', Math.floor(Pl.gold)); this.set('swName', swordTier().name + (Pl.swordLv ? ' · ' + cnNum(Pl.swordLv) + '重' : '')); this.set('pots', Pl.pots);
-    this.set('buffs', (Pl.buffT > 0 ? '踏雪 ' : '') + (Pl.shield > 0 ? '真气 ' : '') + (Pl.bellT > 0 ? '金钟 ' : '') + (Pl.wuyingT > 0 ? '无影 ' : '') + (Pl.nextCrit > 0 ? '回锋 ' : '')); this.bar('xpFill', Pl.xp / Pl.xpNeed);
-    for (let i = 0; i < 4; i++) { const d = slotDef(i), id = 'sk' + i, empty = !d; this.cls(id, 'empty', empty); if (this.c[id + '.d'] !== d) { this.c[id + '.d'] = d; const b = $(id); b.querySelector('.g').textContent = d ? d.g : i === 3 ? '绝' : '空'; b.querySelector('.n').textContent = d ? d.n + (i < 3 && skLv(Pl.slots[i]) > 1 ? ' · ' + cnNum(skLv(Pl.slots[i])) + '重' : '') : i === 3 ? '绝学' : '空槽'; }
+    this.cls('hpBar', 'shield', Pl.shield > 0); this.set('lvNum', cnNum(Pl.lv)); this.set('gold', Math.floor(Pl.gold)); this.set('swName', swordTier().name + (Pl.swordLv ? ' · ' + cnNum(Pl.swordLv) + '중' : '')); this.set('pots', Pl.pots);
+    this.set('buffs', (Pl.buffT > 0 ? '답설 ' : '') + (Pl.shield > 0 ? '진기 ' : '') + (Pl.bellT > 0 ? '금종 ' : '') + (Pl.wuyingT > 0 ? '무영 ' : '') + (Pl.nextCrit > 0 ? '회봉 ' : '')); this.bar('xpFill', Pl.xp / Pl.xpNeed);
+    for (let i = 0; i < 4; i++) { const d = slotDef(i), id = 'sk' + i, empty = !d; this.cls(id, 'empty', empty); if (this.c[id + '.d'] !== d) { this.c[id + '.d'] = d; const b = $(id); b.querySelector('.g').textContent = d ? d.g : i === 3 ? '절' : '비어 있음'; b.querySelector('.n').textContent = d ? d.n + (i < 3 && skLv(Pl.slots[i]) > 1 ? ' · ' + cnNum(skLv(Pl.slots[i])) + '중' : '') : i === 3 ? '절학' : '빈 슬롯'; }
       if (i < 3) { const lvk = id + '.l', lv = d ? skLv(Pl.slots[i]) : 0; if (this.c[lvk] !== lv) { this.c[lvk] = lv; this.c[id + '.d'] = null; } }
       const cd = empty ? 0 : i === 3 ? 0 : Pl.cds[i] / (Pl.cdMax[i] || d.cd), k = id + '.cd', v = Math.round(cd * 100) / 100; if (this.c[k] !== v) { this.c[k] = v; $(id).style.setProperty('--cd', v); } this.cls(id, 'nomp', !empty && i < 3 && Pl.mp < d.mp); }
     { const v = Math.round(Pl.rage) / 100; if (this.c.rage !== v) { this.c.rage = v; $('sk3').style.setProperty('--rage', v); } this.cls('sk3', 'ready', !!Pl.ult && Pl.rage >= 100); }
     { const v = Math.round(sat(Pl.potCd / 1.5) * 100) / 100; if (this.c.potcd !== v) { this.c.potcd = v; $('sk4').style.setProperty('--cd', v); } }
     const alive = G.enemies.filter(e => e.state !== 'dead').length + G.queue.length;
     let t1, t2; const ch = CHAPTERS[G.chapter] || CHAPTERS[0];
-    if (Tut.on) { t1 = '试剑'; t2 = '山门前 · 先活动活动筋骨'; }
-    else if (G.clearT > 0) { t1 = ch.n; t2 = '已破'; }
+    if (Tut.on) { t1 = '시검'; t2 = '산문 앞 · 먼저 몸 풀기'; }
+    else if (G.clearT > 0) { t1 = ch.n; t2 = '돌파 완료'; }
     else if (!Run.node) { t1 = ch.n; t2 = ch.sub; }
-    else { t1 = Run.node.t === 'boss' ? ch.n + ' · 首领' : `${ch.n} · 第${cnNum(Run.step)}程`; t2 = G.rlDoneT > 0 || G.cleared ? '敌已尽 · 收拾行囊' : `${G.stageName} · 残敌 ${alive}`; }
+    else { t1 = Run.node.t === 'boss' ? ch.n + ' · 두목' : `${ch.n} · 제${cnNum(Run.step)}단계`; t2 = G.rlDoneT > 0 || G.cleared ? '적을 모두 처치 · 짐 챙기기' : `${G.stageName} · 남은 적 ${alive}`; }
     this.set('waveT', t1); this.set('waveS', t2);
     const b = G.boss && G.boss.state !== 'dead' ? G.boss : null; this.hide('bossBox', !b); if (b && this.c.bossTk !== b) { this.c.bossTk = b; const bb = $('bossFill').parentNode; bb.querySelectorAll('.tk').forEach(x => x.remove()); for (const ph of PHASES[b.type] || []) { const t = document.createElement('i'); t.className = 'tk'; t.style.left = (ph.at * 100) + '%'; bb.appendChild(t); } }
     if (b) { this.set('bossName', b.name); this.bar('bossFill', b.hp / b.maxHp); this.bar('bossLag', b.hp / b.maxHp); this.bar('bossPoise', b.stun > 0 ? 1 : b.poiseD / b.cfg.poise); }
     const lk = Pl.lock && Pl.lock.state !== 'dead' && Pl.state !== 'exec' ? Pl.lock : null; this.cls('hud', 'cine', Pl.state === 'exec'); this.hide('lockm', !lk);
     if (lk) { _pv.set(lk.pos.x, lk.hitY + gH(lk.pos.x, lk.pos.z), lk.pos.z).project(GFX.camera); const sx = ((_pv.x * .5 + .5) * innerWidth).toFixed(0), sy = (-_pv.y * .5 + .5) * innerHeight; $('lockm').style.transform = `translate(${sx}px,${sy.toFixed(0)}px) rotate(45deg)`; if (!lk.boss) $('lockInfo').style.transform = `translate(${sx}px,${(sy - 44 - lk.radius * 14).toFixed(0)}px)`; }
     this.hide('lockInfo', !lk || !!lk.boss); if (lk && !lk.boss) { this.bar('lockHp', lk.hp / lk.maxHp); this.bar('lockPo', lk.stun > 0 ? 1 : (lk.poiseD || 0) / (lk.cfg.poise * (lk.elite ? 1.6 : 1))); this.cls('lockInfo', 'stun', lk.stun > 0); }
-    const ex = Pl.state !== 'dead' && Pl.state !== 'exec' ? findExec() : null; this.hide('execm', !ex || Input.touch); this.cls('tParry', 'exec', !!ex); this.set('tParry', ex ? '决' : '格'); this.cls('tLock', 'on', !!lk);
+    const ex = Pl.state !== 'dead' && Pl.state !== 'exec' ? findExec() : null; this.hide('execm', !ex || Input.touch); this.cls('tParry', 'exec', !!ex); this.set('tParry', ex ? '결' : '막기'); this.cls('tLock', 'on', !!lk);
     if (ex && !Input.touch) { _pv.set(ex.pos.x, ex.hitY + .2 + gH(ex.pos.x, ex.pos.z), ex.pos.z).project(GFX.camera); $('execm').style.transform = `translate(${((_pv.x * .5 + .5) * innerWidth).toFixed(0)}px,${((-_pv.y * .5 + .5) * innerHeight).toFixed(0)}px) translate(18px,-50%)`; }
     this.mini();
   },
@@ -5037,19 +5037,19 @@ const UI = {
     const a = angDiff(yaw, Pl.yaw); g.translate(c, c); g.rotate(-a); g.fillStyle = '#62cdb9'; g.beginPath(); g.moveTo(0, -11); g.lineTo(7, 8); g.lineTo(0, 4); g.lineTo(-7, 8); g.closePath(); g.fill(); g.restore();
   },
   perkList(el) {
-    const sk = Pl.slots.filter(Boolean).map(id => `<span class="pk-sk">${SK[id].n}${skLv(id) > 1 ? ' ' + cnNum(skLv(id)) + '重' : ''}</span>`).concat(Pl.ult ? [`<span class="pk-ult">${ULT[Pl.ult].n}</span>`] : []);
-    const rs = Object.keys(SCHOOLS).filter(s => reso(s) >= 3).map(s => `<span class="pk-rs" style="color:${SCHOOLS[s].c}">${SCHOOLS[s].n}共鸣 ${reso(s) >= 6 ? '六' : '三'}重</span>`);
-    const html = sk.concat(rs, PERKS.filter(p => pk(p.id)).map(p => `<span>${p.n}${pk(p.id) > 1 ? ' ' + cnNum(pk(p.id)) + '重' : ''}</span>`)).join(''); $(el).innerHTML = html || '<span>尚无机缘</span>'; },
+    const sk = Pl.slots.filter(Boolean).map(id => `<span class="pk-sk">${SK[id].n}${skLv(id) > 1 ? ' ' + cnNum(skLv(id)) + '중' : ''}</span>`).concat(Pl.ult ? [`<span class="pk-ult">${ULT[Pl.ult].n}</span>`] : []);
+    const rs = Object.keys(SCHOOLS).filter(s => reso(s) >= 3).map(s => `<span class="pk-rs" style="color:${SCHOOLS[s].c}">${SCHOOLS[s].n}공명 ${reso(s) >= 6 ? '6' : '3'}중</span>`);
+    const html = sk.concat(rs, PERKS.filter(p => pk(p.id)).map(p => `<span>${p.n}${pk(p.id) > 1 ? ' ' + cnNum(pk(p.id)) + '중' : ''}</span>`)).join(''); $(el).innerHTML = html || '<span>기연 없음</span>'; },
   cardHtml(c, i) {
-    if (c.k === 'perk') { const p = c.p, S = SCHOOLS[p.s], r = reso(p.s), nx = r + 1, tip = r < 3 && nx >= 3 ? `共鸣三重：${S.r3}` : r < 6 && nx >= 6 ? `共鸣六重：${S.r6}` : `${S.n} ${r} → ${nx} 重`;
-      return [`card r${p.r}`, `<span class="rs">${['', '凡', '珍', '绝'][p.r]}</span><span class="ct" style="color:${S.c}">机缘 · ${S.n}</span><span class="cn">${p.n}</span><span class="cdsc">${p.d}</span><span class="cr">${tip}</span><span class="cs"><span>${pk(p.id) ? '已修 ' + cnNum(pk(p.id)) + ' 重' : '初悟'} / ${cnNum(p.max)}</span><span class="ck">${i + 1}</span></span>`]; }
-    if (c.k === 'ult') { const u = ULT[c.id]; return ['card ult', `<span class="rs">绝</span><span class="ct">绝学 · V</span><span class="cn">${u.n}</span><span class="cdsc">${u.d}</span><span class="cr">剑意满时施展，只能择一门</span><span class="cs"><span>绝学</span><span class="ck">${i + 1}</span></span>`]; }
+    if (c.k === 'perk') { const p = c.p, S = SCHOOLS[p.s], r = reso(p.s), nx = r + 1, tip = r < 3 && nx >= 3 ? `공명 3중: ${S.r3}` : r < 6 && nx >= 6 ? `공명 6중: ${S.r6}` : `${S.n} ${r} → ${nx} 중`;
+      return [`card r${p.r}`, `<span class="rs">${['', '범', '진', '절'][p.r]}</span><span class="ct" style="color:${S.c}">기연 · ${S.n}</span><span class="cn">${p.n}</span><span class="cdsc">${p.d}</span><span class="cr">${tip}</span><span class="cs"><span>${pk(p.id) ? '수련 ' + cnNum(pk(p.id)) + ' 중' : '초오'} / ${cnNum(p.max)}</span><span class="ck">${i + 1}</span></span>`]; }
+    if (c.k === 'ult') { const u = ULT[c.id]; return ['card ult', `<span class="rs">절</span><span class="ct">절학 · V</span><span class="cn">${u.n}</span><span class="cdsc">${u.d}</span><span class="cr">검의가 가득 찼을 때 발동, 한 가지만 선택 가능</span><span class="cs"><span>절학</span><span class="ck">${i + 1}</span></span>`]; }
     const d = SK[c.id], l = skLv(c.id), slot = l ? Pl.slots.indexOf(c.id) : Pl.slots.indexOf(null);
-    return ['card skill', `<span class="rs">${d.g}</span><span class="ct">剑谱 · ${'QER'[slot]}</span><span class="cn">${d.n}</span><span class="cdsc">${d.d(l + 1)}</span><span class="cr">内力 ${d.mp} · 调息 ${d.cd} 息</span><span class="cs"><span>${l ? `${cnNum(l)}重 → ${cnNum(l + 1)}重` : '新学，入' + 'QER'[slot] + '槽'}</span><span class="ck">${i + 1}</span></span>`];
+    return ['card skill', `<span class="rs">${d.g}</span><span class="ct">검보 · ${'QER'[slot]}</span><span class="cn">${d.n}</span><span class="cdsc">${d.d(l + 1)}</span><span class="cr">내공 ${d.mp} · 재사용 ${d.cd}초</span><span class="cs"><span>${l ? `${cnNum(l)}중 → ${cnNum(l + 1)}중` : '신규, ' + 'QER'[slot] + ' 슬롯'}</span><span class="ck">${i + 1}</span></span>`];
   },
   showLevelUp() {
-    const cards = offerCards(); this.showCards(cards, '破境', `已入${cnNum(Pl.lv - Pl.pending + 1)}境 · 择其一`, c => Game.pickPerk(c));
-    this.perks = cards; const rr = $('btnReroll'); rr.hidden = !(Pl.rerolls > 0); rr.textContent = `重掷 · 余 ${Pl.rerolls}（R）`;
+    const cards = offerCards(); this.showCards(cards, '경지 돌파', `이미 ${cnNum(Pl.lv - Pl.pending + 1)}경지 · 하나를 고르세요`, c => Game.pickPerk(c));
+    this.perks = cards; const rr = $('btnReroll'); rr.hidden = !(Pl.rerolls > 0); rr.textContent = `다시 뽑기 · 남음 ${Pl.rerolls}(R)`;
   },
   /* 三张卷轴择一：破境、精锐、藏宝、奇遇共用 */
   showCards(cards, t, sub, onPick) {
@@ -5060,23 +5060,23 @@ const UI = {
   showMeta() {
     const d = Save.load(), host = $('metaGrid'); host.innerHTML = ''; $('metaSoul').textContent = d.soul;
     META.forEach((m, i) => { const l = up(m.id), mx = l >= m.max, cost = mx ? 0 : m.cost(l), b = document.createElement('button'); b.type = 'button'; b.className = 'item'; b.id = 'meta' + i; b.disabled = mx || d.soul < cost;
-      b.innerHTML = `<span class="in">${m.n}</span><span class="ip">${mx ? '已臻圆满' : cost + ' 剑魄'}</span><span class="id">${m.d(Math.max(1, mx ? l : l + 1))}</span><span class="mlv">${cnNum(l)} / ${cnNum(m.max)} 重</span>`;
+      b.innerHTML = `<span class="in">${m.n}</span><span class="ip">${mx ? '최대 달성' : cost + ' 검백'}</span><span class="id">${m.d(Math.max(1, mx ? l : l + 1))}</span><span class="mlv">${cnNum(l)} / ${cnNum(m.max)} 중</span>`;
       b.onclick = () => { if (buyMeta(m)) { Snd.init(); Snd.forge(); UI.showMeta(); } }; host.appendChild(b); });
-    const r = d.rec; $('recs').innerHTML = [[r.bestCh ? (r.bestCh >= CHAPTERS.length ? '通关' : '破' + CHAPTERS[r.bestCh - 1].n) : '—', '最远'], [r.clears, '通关'], [d.asc ? ASC[Math.min(d.asc, ASC.length - 1)].n : '—', '已解劫数'], [r.bestTime ? fmtTime(r.bestTime) : '—', '最快'], [r.maxCombo, '最高连击'], [r.kills, '总斩敌'], [r.runs, '开局'], [r.souls || 0, '累计剑魄']].map(([v, k]) => `<span><b>${v}</b>${k}</span>`).join('');
+    const r = d.rec; $('recs').innerHTML = [[r.bestCh ? (r.bestCh >= CHAPTERS.length ? '클리어' : '파' + CHAPTERS[r.bestCh - 1].n) : '—', '최원'], [r.clears, '클리어'], [d.asc ? ASC[Math.min(d.asc, ASC.length - 1)].n : '—', '해금된 겁'], [r.bestTime ? fmtTime(r.bestTime) : '—', '최단'], [r.maxCombo, '최고 연속 타격'], [r.kills, '총 처치'], [r.runs, '시작'], [r.souls || 0, '누적 검백']].map(([v, k]) => `<span><b>${v}</b>${k}</span>`).join('');
     $('meta').hidden = false; $('title').hidden = true;
   },
   showSettings(from) {
     this.setFrom = from; const seg = (id, opts, cur, fn) => { const h = $(id); h.innerHTML = ''; opts.forEach(([v, n]) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = n; b.className = v === cur ? 'on' : ''; b.onclick = () => { fn(v); UI.showSettings(from); }; h.appendChild(b); }); };
     seg('setQ', QN.map((n, i) => [i, n]), GFX.quality, v => { GFX.quality = v; setSetting('q', v); applyQuality(); });
-    seg('setShake', [[0, '关'], [.5, '弱'], [1, '强']], setting('shake'), v => setSetting('shake', v));
-    seg('setNums', [[1, '显示'], [0, '隐藏']], setting('nums'), v => setSetting('nums', v));
+    seg('setShake', [[0, '관'], [.5, '약'], [1, '강']], setting('shake'), v => setSetting('shake', v));
+    seg('setNums', [[1, '표시'], [0, '숨김']], setting('nums'), v => setSetting('nums', v));
     $('setSens').value = setting('sens'); $('setVol').value = setting('vol');
     if (from === 'pause') $('pause').hidden = true; else $('title').hidden = true; $('settings').hidden = false;
   },
   closeSettings() { $('settings').hidden = true; if (this.setFrom === 'pause') $('pause').hidden = false; else $('title').hidden = false; },
   showShop() {
     const host = $('shopGrid'); host.innerHTML = ''; $('shopGold').textContent = Math.floor(Pl.gold);
-    SHOP.forEach((it, i) => { const b = document.createElement('button'), mx = it.max(), cost = it.cost(); b.type = 'button'; b.className = 'item'; b.id = 'shop' + i; b.disabled = mx || Pl.gold < cost; b.innerHTML = `<span class="in">${it.n()}</span><span class="ip">${mx ? '已臻极致' : cost + ' 文'}</span><span class="id">${it.d()}</span>`; b.onclick = () => { if (Pl.gold >= cost && !it.max()) { Pl.gold -= cost; it.buy(); UI.showShop(); } }; host.appendChild(b); });
+    SHOP.forEach((it, i) => { const b = document.createElement('button'), mx = it.max(), cost = it.cost(); b.type = 'button'; b.className = 'item'; b.id = 'shop' + i; b.disabled = mx || Pl.gold < cost; b.innerHTML = `<span class="in">${it.n()}</span><span class="ip">${mx ? '최대 달성' : cost + ' 문'}</span><span class="id">${it.d()}</span>`; b.onclick = () => { if (Pl.gold >= cost && !it.max()) { Pl.gold -= cost; it.buy(); UI.showShop(); } }; host.appendChild(b); });
     $('shop').hidden = false;
   },
 };
@@ -5087,18 +5087,18 @@ const UI = {
 const K = (pc, tc) => Input.touch ? tc : pc;
 /* 每一步：id、提示 t、开始时 init、做到了 done；fail 返回 null（没失败）或 { retryTo: 退回哪一步的 id, hint?: 提示 } */
 const TUT = [
-  { id: 'move', t: () => K('<kbd>W A S D</kbd> 走动，<kbd>鼠标</kbd> 转视角', '拖动左下摇杆走动，滑动屏幕转视角'), init() { Tut.p0 = Pl.pos.clone(); }, done: () => Pl.pos.distanceTo(Tut.p0) > 7 },
-  { id: 'combo', t: () => K('<kbd>左键</kbd> 或 <kbd>J</kbd> 连砍木人', '连点「斩」砍木人') + ` · ${Math.min(5, Tut.hits)}/5`, init() { Tut.hits = 0; Tut.foe = tutFoe('dummy'); }, done: () => Tut.hits >= 5 },
-  { id: 'dodge', t: () => K('<kbd>空格</kbd> 闪避，闪避时刀枪不入', '点「闪」闪避，闪避时刀枪不入'), init() { Tut.dodged = false; }, done: () => Tut.dodged },
-  { id: 'parry', t: () => K('陪练出手前刀上一闪寒光，此时按 <kbd>F</kbd> 弹反', '陪练刀上一闪寒光时点「格」弹反'), init() { tutDrop(); Tut.foe = tutFoe('spar'); Tut.p0n = Pl.parries; }, done: () => Pl.parries > Tut.p0n,
-    fail: () => Pl.parries <= Tut.p0n && Tut.foe && Tut.foe.state === 'dead' ? { retryTo: 'parry', hint: '先等他出手，寒光一闪再按格' } : null },
-  { id: 'exec', t: () => K('弹开后陪练露出破绽，靠近按 <kbd>F</kbd> 处决', '弹开后陪练露出破绽，靠近点「决」处决'), init() { }, done: () => !Tut.foe || Tut.foe.state === 'dead', fail: () => Tut.foe && Tut.foe.state !== 'dead' && Tut.foe.stun <= 0 && Tut.foe.state !== 'stagger' ? { retryTo: 'parry' } : null },
-  { id: 'charge', t: () => K('按住 <kbd>K</kbd> 或右键蓄满再松开，使出「破山」', '按住「旋」蓄满再松开，使出「破山」'), init() { tutDrop(); Tut.foe = tutFoe('dummy'); }, done: () => Pl.state === 'attack' && Pl.atkDef === PISHAN },
+  { id: 'move', t: () => K('<kbd>W A S D</kbd> 이동, <kbd>마우스</kbd>로 시점 회전', '왼쪽 아래 스틱으로 이동, 화면을 밀어 시점 회전'), init() { Tut.p0 = Pl.pos.clone(); }, done: () => Pl.pos.distanceTo(Tut.p0) > 7 },
+  { id: 'combo', t: () => K('<kbd>좌클릭</kbd> 또는 <kbd>J</kbd>로 나무 인형 연속 베기', '「참」을 연타해 나무 인형 베기') + ` · ${Math.min(5, Tut.hits)}/5`, init() { Tut.hits = 0; Tut.foe = tutFoe('dummy'); }, done: () => Tut.hits >= 5 },
+  { id: 'dodge', t: () => K('<kbd>스페이스</kbd>로 회피, 회피 중에는 공격을 받지 않음', '「회피」를 눌러 회피, 회피 중에는 공격을 받지 않음'), init() { Tut.dodged = false; }, done: () => Tut.dodged },
+  { id: 'parry', t: () => K('연습 상대가 공격하기 전 칼에 한광이 번쩍이면 <kbd>F</kbd>로 패리', '연습 상대 칼에 한광이 번쩍일 때 「막기」를 눌러 패리'), init() { tutDrop(); Tut.foe = tutFoe('spar'); Tut.p0n = Pl.parries; }, done: () => Pl.parries > Tut.p0n,
+    fail: () => Pl.parries <= Tut.p0n && Tut.foe && Tut.foe.state === 'dead' ? { retryTo: 'parry', hint: '먼저 상대가 움직이길 기다렸다가, 한광이 번쩍일 때 막기' } : null },
+  { id: 'exec', t: () => K('튕겨낸 뒤 연습 상대의 빈틈이 드러납니다. 다가가 <kbd>F</kbd>로 처형', '튕겨낸 뒤 연습 상대의 빈틈이 드러납니다. 다가가 「결」을 눌러 처형'), init() { }, done: () => !Tut.foe || Tut.foe.state === 'dead', fail: () => Tut.foe && Tut.foe.state !== 'dead' && Tut.foe.stun <= 0 && Tut.foe.state !== 'stagger' ? { retryTo: 'parry' } : null },
+  { id: 'charge', t: () => K('<kbd>K</kbd> 또는 우클릭을 길게 눌러 가득 채운 뒤 놓으면 「파산」 발동', '「회전」을 길게 눌러 가득 채운 뒤 놓으면 「파산」 발동'), init() { tutDrop(); Tut.foe = tutFoe('dummy'); }, done: () => Pl.state === 'attack' && Pl.atkDef === PISHAN },
 ];
 const Tut = { on: false, i: 0, t: 0 };
 function tutFoe(kind) {
   const a = Pl.yaw, p = new V3(Pl.pos.x + Math.sin(a) * 4, 0, Pl.pos.z + Math.cos(a) * 4); collide(p, .5);
-  const e = spawnEnemy('bandit', p.x, p.z); e.tut = kind; e.name = kind === 'dummy' ? '木人' : '陪练'; e.xpK = 0;
+  const e = spawnEnemy('bandit', p.x, p.z); e.tut = kind; e.name = kind === 'dummy' ? '나무 인형' : '연습 상대'; e.xpK = 0;
   if (kind === 'dummy') { e.maxHp = e.hp = 99999; } else { e.dmgK = 0; e.windK = 1.7; e.maxHp = e.hp = 400; } Pl.lock = e; return e;
 }
 function tutDrop() { for (const e of G.enemies) if (e.tut && e.state !== 'dead') { e.state = 'dead'; e.deadT = .9; FX.smoke(e.pos, 10, 1, .08); } }
@@ -5110,32 +5110,32 @@ Tut.next = function () {
 Tut.end = function (done, quiet) {
   this.on = false; tutDrop(); $('tut').hidden = true; Save.load().tut = 1; Save.write(); Pl.lock = null; Pl.hp = Pl.maxHp; Pl.mp = Pl.maxMp;
   if (quiet) return;
-  if (done) { UI.banner('试剑已毕', '黑风寨的人到了', 'gold'); Snd.level(); }
+  if (done) { UI.banner('시검 완료', '흑풍채 사람들이 도착했다', 'gold'); Snd.level(); }
   setTimeout(() => { if (G.state === 'playing' && !Run.node) Run.showMap(); }, done ? 1600 : 300);
 };
 Tut.update = function (dt) {
   const s = TUT[this.i]; if (!s) return; this.t += dt; const f = s.fail ? s.fail() : null;
   if (f) { const to = TUT.findIndex(x => x.id === f.retryTo); if (f.hint) UI.toast(f.hint, 2.4); this.i = (to >= 0 ? to : this.i) - 1; this.next(); return; }
   if (this.t > .4 && s.done()) { this.next(); return; }
-  const h = s.t(); if (this.html !== h) { this.html = h; $('tutT').innerHTML = h; } UI.set('tutN', `试剑 ${cnNum(this.i + 1)} / ${cnNum(TUT.length)}`);
+  const h = s.t(); if (this.html !== h) { this.html = h; $('tutT').innerHTML = h; } UI.set('tutN', `시검 ${cnNum(this.i + 1)} / ${cnNum(TUT.length)}`);
 };
 /* === 90-main.js === */
 /* ---------------- 流程与主循环 ---------------- */
 // 本文件：流程和主循环：画质（applyQuality）、开新局 / 清场、Game（菜单 → 路线图 → 战斗 → 结算的流程）、按键、每帧 frame、绑定界面、boot 启动。
 const canvas = $('c'), root = $('game');
-const QN = ['流畅', '均衡', '精美', '极致'];
+const QN = ['유창', '균형', '정미', '극치'];
 function showBest() {
   const d = Save.load(), r = d.rec, run = Save.rl(), parts = [];
-  if (r.clears) parts.push(`已通关 ${r.clears} 次`); else if (r.bestCh) parts.push(`最远破至${CHAPTERS[Math.min(r.bestCh, CHAPTERS.length) - 1].n}`);
-  if (r.bestTime) parts.push(`最快 ${fmtTime(r.bestTime)}`); if (r.maxCombo) parts.push(`最高 ${r.maxCombo} 连`);
-  $('best').textContent = parts.length ? '旧日战绩：' + parts.join(' · ') : '';
-  $('btnMeta').textContent = d.soul ? `藏经阁 · 剑魄 ${d.soul}` : '藏经阁';
-  const c = $('btnCont'); c.hidden = !run; if (run) c.textContent = `续行 · ${CHAPTERS[run.ch].n}${run.asc ? ' · ' + ASC[run.asc].n : ''}`;
-  $('btnStart').textContent = run ? '重开一局' : '开一局'; $('btnStart').classList.toggle('pri', !run);
+  if (r.clears) parts.push(`${r.clears}회 클리어`); else if (r.bestCh) parts.push(`최고 ${CHAPTERS[Math.min(r.bestCh, CHAPTERS.length) - 1].n}까지 돌파`);
+  if (r.bestTime) parts.push(`최단 ${fmtTime(r.bestTime)}`); if (r.maxCombo) parts.push(`최고 ${r.maxCombo}연`);
+  $('best').textContent = parts.length ? '지난 전적: ' + parts.join(' · ') : '';
+  $('btnMeta').textContent = d.soul ? `장경각 · 검백 ${d.soul}` : '장경각';
+  const c = $('btnCont'); c.hidden = !run; if (run) c.textContent = `이어가기 · ${CHAPTERS[run.ch].n}${run.asc ? ' · ' + ASC[run.asc].n : ''}`;
+  $('btnStart').textContent = run ? '다시 시작' : '한 판 시작'; $('btnStart').classList.toggle('pri', !run);
   // 劫数：通关一次解锁下一劫
   const m = ascMax(), seg = $('ascSeg'), cur = Math.min(d.ascPick || 0, m); seg.hidden = m <= 0; $('ascD').hidden = m <= 0; seg.innerHTML = '';
   for (let i = 0; i <= m; i++) { const b = document.createElement('button'); b.type = 'button'; b.textContent = ASC[i].n; b.className = i === cur ? 'on' : ''; b.onclick = () => { Save.load().ascPick = i; Save.write(); showBest(); }; seg.appendChild(b); }
-  $('ascD').textContent = cur ? ASC.slice(1, cur + 1).map(a => a.d).join(' · ') : '寻常江湖 · 通关一次解锁下一劫';
+  $('ascD').textContent = cur ? ASC.slice(1, cur + 1).map(a => a.d).join(' · ') : '평범한 강호 · 한 번 클리어하면 다음 겁 해금';
 }
 function applyQuality() {
   const q = GFX.quality, pr = Math.min(window.devicePixelRatio || 1, [1, 1.25, 1.5, 2][q]); GFX.resize(root.clientWidth || innerWidth, root.clientHeight || innerHeight, pr);
@@ -5204,9 +5204,9 @@ const Game = {
   /* 一章打完：结算 + 剑庐 + 启程 */
   chapterClear() {
     G.state = 'interlude'; unlock(); clearField(); const ch = CHAPTERS[G.chapter], nx = CHAPTERS[G.chapter + 1];
-    $('ilT').firstChild.textContent = ch.n + ' · 已破'; $('ilS').textContent = ch.idx + ' · ' + ch.sub;
-    $('ilStats').innerHTML = `<div><b>${cnNum(Pl.lv)}</b>境界</div><div><b>${G.kills}</b>斩敌</div><div><b>${G.maxCombo}</b>最高连击</div><div><b>${fmtTime(G.playT)}</b>历时</div>`;
-    $('ilNext').textContent = nx ? `前路：${nx.idx} · ${nx.n}。${nx.story}` : '';
+    $('ilT').firstChild.textContent = ch.n + ' · 돌파 완료'; $('ilS').textContent = ch.idx + ' · ' + ch.sub;
+    $('ilStats').innerHTML = `<div><b>${cnNum(Pl.lv)}</b>경지</div><div><b>${G.kills}</b>처치</div><div><b>${G.maxCombo}</b>최고 연타</div><div><b>${fmtTime(G.playT)}</b>소요 시간</div>`;
+    $('ilNext').textContent = nx ? `앞길: ${nx.idx} · ${nx.n}. ${nx.story}` : '';
     $('interlude').hidden = false; healPlayer(Pl.maxHp, true); Pl.mp = Pl.maxMp;
   },
   nextChapter() { if (G.state !== 'interlude') return; Run.nextChapter(); },
@@ -5214,15 +5214,15 @@ const Game = {
     // 联机这一局不动单人存档；房主收摊就告诉大家，同袍自己退出就断开
     const co = Net.on, keep = co && Save.load().rl; if (co) { if (Net.host) Net.bcast({ t: 'over' }); coopLeave(); }
     G.state = 'over'; unlock(); Save.runEnd(win); if (keep) { Save.load().rl = keep; Save.write(); } const ch = CHAPTERS[G.chapter];
-    $('btnAgain').textContent = co ? '回大厅' : '再来一局'; G.coopOver = co;
-    $('overT').firstChild.textContent = win ? '万剑归寂' : '剑折人亡';
-    $('overS').textContent = win ? `三章尽破，青锋入鞘${G.asc ? ' · ' + ASC[G.asc].n : ''}` : `剑锋折于${ch.n} · 第${cnNum(Math.max(1, Run.step))}程`;
-    $('overStats').innerHTML = `<div><b>${cnNum(win ? CHAPTERS.length : G.chapter + 1)}</b>章</div><div><b>${cnNum(Math.max(1, Run.step))}</b>程</div><div><b>${cnNum(Pl.lv)}</b>境界</div><div><b>${G.kills}</b>斩敌</div><div><b>${G.maxCombo}</b>最高连击</div><div><b>${fmtTime(G.playT)}</b>历时</div><div><b>${Math.round(G.dmgDone)}</b>总伤害</div><div><b>${swordTier().name[0]}${swordTier().name[1]}</b>佩剑</div>`;
+    $('btnAgain').textContent = co ? '로비로' : '한 판 더'; G.coopOver = co;
+    $('overT').firstChild.textContent = win ? '만검귀적' : '검이 부러지고 사람이 죽다';
+    $('overS').textContent = win ? `세 장을 모두 깨고, 청봉이 칼집에 든다${G.asc ? ' · ' + ASC[G.asc].n : ''}` : `검끝이 ${ch.n} · 제${cnNum(Math.max(1, Run.step))}단계에서 꺾였다`;
+    $('overStats').innerHTML = `<div><b>${cnNum(win ? CHAPTERS.length : G.chapter + 1)}</b>장</div><div><b>${cnNum(Math.max(1, Run.step))}</b>단계</div><div><b>${cnNum(Pl.lv)}</b>경지</div><div><b>${G.kills}</b>처치</div><div><b>${G.maxCombo}</b>최고 연타</div><div><b>${fmtTime(G.playT)}</b>소요 시간</div><div><b>${Math.round(G.dmgDone)}</b>총 피해</div><div><b>${swordTier().name[0]}${swordTier().name[1]}</b>패검</div>`;
     UI.perkList('overPerks'); const sg = addSoul(win ? 60 + 20 * (G.asc || 0) : 0) + (G.soulRun || 0);
-    $('overSoul').textContent = `此行共得剑魄 ${sg} · 藏经阁中现有 ${Save.load().soul}` + (G.ascUnlocked ? ` · 解锁「${ASC[G.ascUnlocked].n}」` : '');
+    $('overSoul').textContent = `이번 여정 검백 ${sg} 획득 · 장경각 보유 ${Save.load().soul}` + (G.ascUnlocked ? ` · 「${ASC[G.ascUnlocked].n}」 해금` : '');
     $('over').hidden = false;
   },
-  victory() { UI.banner('万剑归寂', '', 'gold'); Snd.level(); Game.over(true); },
+  victory() { UI.banner('만검귀적', '', 'gold'); Snd.level(); Game.over(true); },
   home() { coopLeave(); hideAll(); $('hud').hidden = true; $('touch').hidden = true; clearField(); resetGame(); placePlayer(); G.state = 'title'; $('title').hidden = false; showBest(); },
 };
 Input.onLock = locked => { if (!locked && G.state === 'playing') Game.pause(); };
@@ -5231,7 +5231,7 @@ Input.onLock = locked => { if (!locked && G.state === 'playing') Game.pause(); }
 function eatKeys() { for (const k in Input.hits) delete Input.hits[k]; }
 function handleKeys() {
   const s = G.state;
-  if (Input.hit('KeyN')) { Snd.setMute(!Snd.muted); $('btnMute').textContent = '声音：' + (Snd.muted ? '关' : '开'); }
+  if (Input.hit('KeyN')) { Snd.setMute(!Snd.muted); $('btnMute').textContent = '소리: ' + (Snd.muted ? '관' : '열기'); }
   if (s === 'playing') { if (Input.hit('KeyP') || Input.hit('Escape')) Game.pause(); }
   else if (s === 'rlmap') {
     const r = Run.reach().sort((a, b) => Run.map.nodes[a].x - Run.map.nodes[b].x);
@@ -5277,19 +5277,19 @@ function frame(now) {
   FX.updateNums(G.state === 'playing' ? rdt : 0, GFX.camera, root.clientWidth, root.clientHeight);
   if (!dbg('noRender') && G.state !== 'travel') GFX.render(); Input.endFrame();
   // 自适应画质
-  fN++; fT += rdt; if (fT >= 1) { const fps = fN / fT; fN = 0; fT = 0; if (G.state === 'playing' && fps < 38) { if (++slowAcc >= 3 && GFX.quality > 0) { GFX.quality--; applyQuality(); slowAcc = 0; UI.toast('画面已自动调低，可在暂停菜单更改', 3); } } else slowAcc = 0; }
+  fN++; fT += rdt; if (fT >= 1) { const fps = fN / fT; fN = 0; fT = 0; if (G.state === 'playing' && fps < 38) { if (++slowAcc >= 3 && GFX.quality > 0) { GFX.quality--; applyQuality(); slowAcc = 0; UI.toast('화질을 자동으로 낮췄습니다. 일시정지 메뉴에서 바꿀 수 있습니다', 3); } } else slowAcc = 0; }
 }
 
 function bindUI() {
-  $('btnStart').onclick = () => { if (Save.rl() && !dbg('instant') && !confirm('重开会放弃存着的那一局（剑魄和藏经阁不受影响），确定吗？')) return; Game.start(); }; $('btnCont').onclick = () => Game.cont();
-  $('btnResume').onclick = () => Game.resume(); $('btnRestart').onclick = () => { if (!dbg('instant') && !confirm('放弃这一局？剑魄照样留着。')) return; $('pause').hidden = true; Game.over(false); };
-  $('btnRmLeave').onclick = () => { if (Net.on && !dbg('instant') && !confirm('退出联机？这一局就和同袍分开了。')) return; Game.home(); };
+  $('btnStart').onclick = () => { if (Save.rl() && !dbg('instant') && !confirm('다시 시작하면 저장된 판이 사라집니다(검백과 장경각은 영향 없음). 계속할까요?')) return; Game.start(); }; $('btnCont').onclick = () => Game.cont();
+  $('btnResume').onclick = () => Game.resume(); $('btnRestart').onclick = () => { if (!dbg('instant') && !confirm('이 판을 포기할까요? 검백은 그대로 남습니다.')) return; $('pause').hidden = true; Game.over(false); };
+  $('btnRmLeave').onclick = () => { if (Net.on && !dbg('instant') && !confirm('멀티플레이에서 나갈까요? 이 판은 동료와 떨어지게 됩니다.')) return; Game.home(); };
   $('btnCoop').onclick = () => coopShow(); $('btnHost').onclick = () => coopHost(); $('btnJoin').onclick = () => coopJoin($('coopCode').value);
   $('coopCode').onkeydown = e => { if (e.key === 'Enter') coopJoin($('coopCode').value); };
   $('btnCoopGo').onclick = () => coopGoAll(); $('btnCoopBack').onclick = () => Game.home(); $('evGo').onclick = () => Run.closeEvent();
   $('btnAgain').onclick = () => { if (G.coopOver) { Game.home(); coopShow(); } else Game.start(); }; $('btnHome').onclick = () => Game.home(); $('btnShopClose').onclick = () => Game.closeShop();
   $('btnIlShop').onclick = () => Game.openShop(); $('btnIlGo').onclick = () => Game.nextChapter();
-  $('btnMute').onclick = () => { Snd.setMute(!Snd.muted); $('btnMute').textContent = '声音：' + (Snd.muted ? '关' : '开'); };
+  $('btnMute').onclick = () => { Snd.setMute(!Snd.muted); $('btnMute').textContent = '소리: ' + (Snd.muted ? '관' : '열기'); };
   $('btnMeta').onclick = () => UI.showMeta(); $('btnMetaClose').onclick = () => { $('meta').hidden = true; $('title').hidden = false; showBest(); };
   $('btnSet').onclick = () => UI.showSettings('title'); $('btnSet2').onclick = () => UI.showSettings('pause'); $('btnSetClose').onclick = () => UI.closeSettings();
   $('btnReroll').onclick = () => Game.reroll(); $('btnTutSkip').onclick = () => { Tut.end(false); canvas.focus(); };
@@ -5304,7 +5304,7 @@ function bindUI() {
 async function boot() {
   const q0 = setting('q'); if (typeof dbg('quality') !== 'number') GFX.quality = q0 >= 0 ? q0 : (matchMedia('(pointer:coarse)').matches || Math.min(innerWidth, innerHeight) < 500 ? 1 : 2);
   bindUI(); showBest();
-  try { if (document.fonts && document.fonts.load) await Promise.race([Promise.all([document.fonts.load('80px "Ma Shan Zheng"', '青云剑宗试坪'), document.fonts.load('900 20px "Noto Serif SC"', '0123456789')]), new Promise(r => setTimeout(r, 2500))]); } catch (_) {}
+  try { if (document.fonts && document.fonts.load) await Promise.race([Promise.all([document.fonts.load('80px "Ma Shan Zheng"', '청운검종 시험장'), document.fonts.load('900 20px "Noto Serif SC"', '0123456789')]), new Promise(r => setTimeout(r, 2500))]); } catch (_) {}
   await new Promise(r => setTimeout(r, 30));
   try {
     initGfx(canvas); FX.init(GFX.scene); World.build('gate'); initPlayer(GFX.scene); initOrbs(GFX.scene); placePlayer(); applyQuality();
@@ -5312,7 +5312,7 @@ async function boot() {
     last = performance.now(); requestAnimationFrame(frame);
     $('btnStart').disabled = false; $('loading').hidden = true;
     if (DBG) DBG.game = { G, Pl, Game, Input, GFX, Cam, spawnEnemy, UI, ET, frame, FX, gainXp, Orbs, setSwordTier, World, Save, CHAPTERS, MAPS, killEnemy, damageEnemy, hurtPlayer, SK, ULT, PERKS, SCHOOLS, reso, learnSkill, offerCards, findExec, startExec, parriedBy, breakPoise, Tut, TERR, gH, Run, NODE, EVENTS, genMap, genWaves, rareCards, ascApply, ASC, Net };
-  } catch (err) { console.error(err && err.stack || err); $('loading').textContent = '无法启动 3D 画面：' + (err && err.message ? err.message : err) + '。请换用支持 WebGL 的桌面浏览器。'; }
+  } catch (err) { console.error(err && err.stack || err); $('loading').textContent = '3D 화면을 시작할 수 없습니다: ' + (err && err.message ? err.message : err) + '. WebGL을 지원하는 데스크톱 브라우저를 사용하세요.'; }
 }
 boot();
 

@@ -251,7 +251,7 @@ function buildGate(scene) {
   mesh(boxG(18, 2.6, 8), redD, 0, 15.6, -64.5, tmp); mesh(boxG(19, .5, 9), teal, 0, 16.9, -64.5, tmp);
   const r2 = roofMesh(27, 15, 4.6, tile); r2.position.set(0, 17.1, -64.5); tmp.add(r2);
   mesh(boxG(8.4, .7, .7), goldM, 0, 21.9, -64.5, tmp); for (const sx of [-1, 1]) { const o = mesh(coneG(.5, 1.8, 5), goldM, sx * 4.3, 22.5, -64.5, tmp); o.rotation.z = -sx * .5; }
-  const plq = new T.Mesh(new T.PlaneGeometry(6.4, 2.2), new T.MeshStandardMaterial({ map: canvasTex(texPlaque('青云剑宗')), roughness: .6, emissive: 0x3a2a10, emissiveIntensity: .5 })); plq.position.set(0, 12.6, -57.2); plq.rotation.x = .2; tmp.add(plq);
+  const plq = new T.Mesh(new T.PlaneGeometry(6.4, 2.2), new T.MeshStandardMaterial({ map: canvasTex(texPlaque('청운검종')), roughness: .6, emissive: 0x3a2a10, emissiveIntensity: .5 })); plq.position.set(0, 12.6, -57.2); plq.rotation.x = .2; tmp.add(plq);
   const lanternMat = stdMat(0xff5a2a, { emissive: 0xff4a1e, ei: 1.9, rough: .6 });
   for (let i = 0; i < 4; i++) { const x = -8.1 + i * 5.4; const l = mesh(sphG(.5, 12, 8), lanternMat, x, 9.1, -57.6, tmp); l.scale.set(1, 1.2, 1); mesh(cylG(.02, .02, 1.6, 4), dark, x, 10.3, -57.6, tmp); mesh(cylG(.22, .22, .12, 8), goldM, x, 9.72, -57.6, tmp); World.lamps.push(l); }
   for (const sx of [-1, 1]) { const x = sx * 8.2, z = -57.4; mesh(cylG(.25, .4, 1.3, 8), dark, x, 3.85, z, tmp); mesh(cylG(.75, .4, .5, 10), dark, x, 4.7, z, tmp); mesh(cylG(.62, .62, .1, 10), stdMat(0xff7a2a, { emissive: 0xff6a1a, ei: 2.6 }), x, 4.93, z, tmp); World.fires.push(new V3(x, 5.1, z)); }
@@ -265,7 +265,7 @@ function buildGate(scene) {
   mesh(boxG(8.2, .8, .7), teal, 0, 7.2, 0, gate); mesh(boxG(8.2, .6, .6), red, 0, 5.9, 0, gate);
   for (const sx of [-1, 1]) { mesh(boxG(5.2, .7, .6), teal, sx * 5.8, 5.3, 0, gate); const rf = roofMesh(6.6, 2.6, 1.1, tile); rf.position.set(sx * 5.8, 5.7, 0); gate.add(rf); }
   const gr = roofMesh(10.4, 3.2, 1.5, tile); gr.position.set(0, 7.6, 0); gate.add(gr);
-  const gp = new T.Mesh(new T.PlaneGeometry(3.4, 1.25), new T.MeshStandardMaterial({ map: canvasTex(texPlaque('试剑坪', 400, 150)), roughness: .6, emissive: 0x3a2a10, emissiveIntensity: .5 })); gp.position.set(0, 6.55, -.4); gp.rotation.y = PI; gate.add(gp);
+  const gp = new T.Mesh(new T.PlaneGeometry(3.4, 1.25), new T.MeshStandardMaterial({ map: canvasTex(texPlaque('시검평', 400, 150)), roughness: .6, emissive: 0x3a2a10, emissiveIntensity: .5 })); gp.position.set(0, 6.55, -.4); gp.rotation.y = PI; gate.add(gp);
   shadowAll(gate); gp.castShadow = false;
 
   /* 石灯 */

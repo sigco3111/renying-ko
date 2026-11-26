@@ -25,7 +25,7 @@ const Net = {
   players: [], ghosts: new Map(), byId: new Map(), nid: 1, sendT: 0, snapT: 0, tgt: null, ready: new Set(), votes: {}, mapAt: 0, revT: {},
 };
 const coopN = () => Net.on ? Math.max(1, Net.players.length) : 1;
-const coopName = id => (Net.players.find(p => p.id === id) || {}).name || '同袍';
+const coopName = id => (Net.players.find(p => p.id === id) || {}).name || '동료';
 const coopSlot = id => Math.max(0, Net.players.findIndex(p => p.id === id));
 
 /* ---------- 传输：PeerJS；调试时可换成同一浏览器里的 BroadcastChannel ---------- */
@@ -36,7 +36,7 @@ async function coopPeerLib() {
   for (const src of ['peerjs.min.js', 'assets/peerjs.min.js', 'https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js', 'https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js']) {
     try { await coopLoadScript(src); if (window.Peer) return window.Peer; } catch (_) {}
   }
-  throw new Error('联机组件没加载上，检查一下网络');
+  throw new Error('멀티플레이 구성요소를 불러오지 못했습니다. 네트워크를 확인하세요');
 }
 /* 刃影的服务器能发中转（TURN）凭据：在刃影里打开时借来用，打不通直连的网络（校园网等）也能走中转 */
 async function coopIce() {
@@ -93,16 +93,16 @@ Net.lobby = () => { const m = { t: 'lob', ps: Net.players, code: Net.code }; Net
 
 /* 建房：随机四位房间码，被占了就换一个 */
 async function coopHost() {
-  coopLeave(); coopSaveName(); Net.host = true; Net.me = 0; Net.players = [{ id: 0, name: coopMyName() }]; coopMsg('正在登记房间……');
+  coopLeave(); coopSaveName(); Net.host = true; Net.me = 0; Net.players = [{ id: 0, name: coopMyName() }]; coopMsg('방을 등록하는 중...');
   for (let k = 0; k < 4; k++) {
     const code = String(randi(1000, 9999)); let err;
-    try { Net.peer = await coopT().host(code, coopOnConn, e => { err = e; coopHostDone(code, e); }); } catch (e) { coopMsg(e.message || '建房失败'); Net.host = false; return; }
+    try { Net.peer = await coopT().host(code, coopOnConn, e => { err = e; coopHostDone(code, e); }); } catch (e) { coopMsg(e.message || '방 만들기 실패'); Net.host = false; return; }
     await new Promise(r => setTimeout(r, 30)); if (err !== 'taken') return; Net.peer.close();
   }
 }
 function coopHostDone(code, e) {
-  if (e === 'taken') return; if (e) { coopMsg('建房失败：' + e + '。换个网络再试试'); Net.on = false; Net.host = false; return; }
-  Net.on = true; Net.code = code; coopBeatOn(); coopMsg('把房间码告诉同袍，人齐了点「开局」'); coopLobbyUI();
+  if (e === 'taken') return; if (e) { coopMsg('방 만들기 실패: ' + e + '. 다른 네트워크로 다시 시도해 보세요'); Net.on = false; Net.host = false; return; }
+  Net.on = true; Net.code = code; coopBeatOn(); coopMsg('방 코드를 동료에게 알려 주고, 모이면 「시작」을 누르세요'); coopLobbyUI();
 }
 let coopNextId = 1;
 function coopOnConn(L) {
@@ -110,10 +110,10 @@ function coopOnConn(L) {
   L.onmsg = m => {
     L.seen = performance.now();
     if (m.t === 'hello') {
-      if (m.v !== COOP_V) { L.send({ t: 'deny', why: '版本不一致，双方都刷新一下网页' }); return; }
-      if (Net.started) { L.send({ t: 'deny', why: '这一局已经开打了' }); return; }
-      if (Net.players.length >= COOP_MAX) { L.send({ t: 'deny', why: '房间满了（最多四人）' }); return; }
-      const id = coopNextId++; L.id = id; Net.links.set(id, L); Net.players.push({ id, name: String(m.name || '同袍').slice(0, 8) });
+      if (m.v !== COOP_V) { L.send({ t: 'deny', why: '버전이 다릅니다. 양쪽 모두 페이지를 새로고침하세요' }); return; }
+      if (Net.started) { L.send({ t: 'deny', why: '이 판은 이미 시작되었습니다' }); return; }
+      if (Net.players.length >= COOP_MAX) { L.send({ t: 'deny', why: '방이 가득 찼습니다(최대 4명)' }); return; }
+      const id = coopNextId++; L.id = id; Net.links.set(id, L); Net.players.push({ id, name: String(m.name || '동료').slice(0, 8) });
       L.send({ t: 'wel', id }); Net.lobby(); Snd.ui(); return;
     }
     if (L.id) Net.recv(L.id, m);
@@ -121,17 +121,17 @@ function coopOnConn(L) {
   L.onclose = () => { if (!L.id) return; Net.links.delete(L.id); coopDrop(L.id); };
 }
 async function coopJoin(code) {
-  code = String(code || '').replace(/\D/g, ''); if (code.length !== 4) { coopMsg('房间码是四位数字'); return; }
-  coopLeave(); coopSaveName(); coopMsg('正在找房间……');
+  code = String(code || '').replace(/\D/g, ''); if (code.length !== 4) { coopMsg('방 코드는 네 자리 숫자입니다'); return; }
+  coopLeave(); coopSaveName(); coopMsg('방을 찾는 중...');
   try {
     Net.peer = await coopT().join(code, (e, L) => {
-      if (e) { coopMsg(e === 'nohost' ? '没找到这个房间，核对一下房间码' : e === 'timeout' ? '连不上房主，可能是网络不通' : '加入失败：' + e); return; }
+      if (e) { coopMsg(e === 'nohost' ? '이 방을 찾지 못했습니다. 방 코드를 확인하세요' : e === 'timeout' ? '방장에게 연결할 수 없습니다. 네트워크 문제일 수 있습니다' : '참가 실패: ' + e); return; }
       Net.link = L; Net.code = code; Net.host = false; Net.on = true;
       Net.hostSeen = performance.now(); coopBeatOn();
       L.onmsg = m => { Net.hostSeen = performance.now(); Net.onMsg(m); }; L.onclose = () => coopLost();
-      L.send({ t: 'hello', v: COOP_V, name: coopMyName() }); coopMsg('已连上，等房主开局');
+      L.send({ t: 'hello', v: COOP_V, name: coopMyName() }); coopMsg('연결됨, 방장이 시작하길 기다리는 중');
     });
-  } catch (e) { coopMsg(e.message || '加入失败'); }
+  } catch (e) { coopMsg(e.message || '참가 실패'); }
 }
 function coopLeave() {
   if (Net.link) { Net.link.onclose = null; Net.link.close(); } for (const L of Net.links.values()) { L.onclose = null; L.close(); }
@@ -151,13 +151,13 @@ addEventListener('pagehide', () => { if (Net.on) coopLeave(); });
 /* 有人走了：房主把他从名单里拿掉；房主走了，大家这一局就散了 */
 function coopDrop(id) {
   Net.players = Net.players.filter(p => p.id !== id); const g = Net.ghosts.get(id); if (g) ghostDrop(g); Net.ghosts.delete(id); Net.ready.delete(id); delete Net.votes[id];
-  Net.bcast({ t: 'gone', id }); Net.lobby(); if (Net.started) { UI.toast(`${coopNameOf(id)}离开了`, 2.4); coopMapInfo(); }
+  Net.bcast({ t: 'gone', id }); Net.lobby(); if (Net.started) { UI.toast(`${coopNameOf(id)}님이 나갔다`, 2.4); coopMapInfo(); }
 }
-const coopNameOf = id => { const g = Net.ghosts.get(id); return g ? g.name : '同袍'; };
+const coopNameOf = id => { const g = Net.ghosts.get(id); return g ? g.name : '동료'; };
 function coopLost() {
   const was = Net.started; coopLeave();
-  if (was && G.state !== 'title' && G.state !== 'over') { Game.over(false); $('overS').textContent = '房主离开了，联机中断'; }
-  else coopMsg('和房主断开了');
+  if (was && G.state !== 'title' && G.state !== 'over') { Game.over(false); $('overS').textContent = '방장이 나가서 멀티플레이가 끊겼다'; }
+  else coopMsg('방장과 연결이 끊겼다');
 }
 
 /* ---------- 房主收到同袍的消息 ---------- */
@@ -323,11 +323,11 @@ function coopSnap(m) {
       if (st === 'windup' || st === 'active' || st === 'recover') { const a = e.cfg.atks[r[6]]; if (a) { if (e.atk !== a || prev !== st) { e.atk = a; e.atkI = r[6]; } e.wind = r[7] || a.wind; e.rec = a.rec; } }
       if (st === 'windup') { e.teleMade = false; e.glinted = false; }
       if (st === 'active') coopActFx(e, r[12], r[13]);
-      if (st === 'down') FX.num({ x: e.pos.x, y: e.hitY + 1.2, z: e.pos.z }, '未死', 'word', 1);
+      if (st === 'down') FX.num({ x: e.pos.x, y: e.hitY + 1.2, z: e.pos.z }, '죽지 않음', 'word', 1);
     }
     if (st === 'stagger') e.stagger = r[14];
     e.hp = Math.min(e.hp, r[8]); if (r[8] > e.hp + 1 && (st === 'return' || st === 'down' || st === 'idle')) e.hp = r[8]; if (Math.abs(e.hp - r[8]) > e.maxHp * .1) e.hp = r[8];
-    const stun0 = e.stun; e.stun = r[9]; if (stun0 <= 0 && e.stun > .5) { FX.num({ x: e.pos.x, y: e.hitY + 1.3, z: e.pos.z }, '破绽', 'word', 1.2); Snd.clang(); }
+    const stun0 = e.stun; e.stun = r[9]; if (stun0 <= 0 && e.stun > .5) { FX.num({ x: e.pos.x, y: e.hitY + 1.3, z: e.pos.z }, '빈틈', 'word', 1.2); Snd.clang(); }
     if (r[10] > (e.phase || 1)) { const P = (PHASES[e.type] || [])[e.pi || 0]; e.pi = (e.pi || 0) + 1; if (P && P.banner) UI.banner(P.banner[0], P.banner[1], 'red'); FX.ring(e.pos, 1, 12, 0xff2a1a, .8); Snd.gong(); }
     e.phase = r[10]; e.poiseD = r[11];
   }
@@ -341,7 +341,7 @@ function coopActFx(e, tx, tz) {
   else if (a.kind === 'leap' && tx !== null) { e.lx = e.pos.x; e.lz = e.pos.z; e.tx = tx; e.tz = tz; e.tele = FX.telegraph({ type: 'circle', x: tx, z: tz, r: a.r, dur: a.act }); Snd.swing(1); }
   else if (a.kind === 'shoot') { if (a.dart) Snd.swing(0); else Snd.bow(); }
   else if (a.kind === 'cast' || a.kind === 'rain') Snd.cast();
-  else if (a.kind === 'summon') { UI.banner('喽啰何在', '', 'red'); Snd.gong(); }
+  else if (a.kind === 'summon') { UI.banner('졸개들은 어디 있느냐', '', 'red'); Snd.gong(); }
 }
 /* 同袍这边的敌人：位置跟着房主走，动作按房主给的状态和进度放 */
 function puppetEnemy(e, dt, t) {
@@ -405,7 +405,7 @@ function coopTick(dt, rdt) {
   if (Pl.state !== 'dead' && G.state === 'playing') for (const g of Net.ghosts.values()) {
     if (g.state !== 'dead') { Net.revT[g.id] = 0; continue; }
     const near = Math.hypot(g.pos.x - Pl.pos.x, g.pos.z - Pl.pos.z) < 2.4; Net.revT[g.id] = near ? (Net.revT[g.id] || 0) + dt : 0;
-    if (near && Math.floor((Net.revT[g.id] - dt) * 2) !== Math.floor(Net.revT[g.id] * 2)) UI.toast(`正在扶起${g.name} · ${Math.min(100, Math.round(Net.revT[g.id] / 2.5 * 100))}%`, .8);
+    if (near && Math.floor((Net.revT[g.id] - dt) * 2) !== Math.floor(Net.revT[g.id] * 2)) UI.toast(`${g.name}님을 일으키는 중 · ${Math.min(100, Math.round(Net.revT[g.id] / 2.5 * 100))}%`, .8);
     if (Net.revT[g.id] >= 2.5) { Net.revT[g.id] = -9; Net.send({ t: 'rev', to: g.id }); FX.pillar(g.pos, 0x8be0a0, 4); Snd.level(); }
   }
   // 房主：全都倒了，这一局就结束
@@ -414,20 +414,20 @@ function coopTick(dt, rdt) {
 /* 左上角：同袍的气血 */
 function coopHud() {
   const el = $('coopHud'), gs = [...Net.ghosts.values()].filter(g => g.net); el.hidden = !gs.length; if (!gs.length) return;
-  el.innerHTML = gs.map(g => `<div class="${g.state === 'dead' ? 'down' : ''}"><span style="color:${COOP_TAG[g.slot % 4]}">${g.name}${g.state === 'dead' ? ' · 倒地' : g.busy ? ' · 挑机缘' : ''}</span><i><b style="width:${Math.round(sat((g.hp || 0) / (g.mhp || 1)) * 100)}%"></b></i></div>`).join('');
+  el.innerHTML = gs.map(g => `<div class="${g.state === 'dead' ? 'down' : ''}"><span style="color:${COOP_TAG[g.slot % 4]}">${g.name}${g.state === 'dead' ? ' · 쓰러짐' : g.busy ? ' · 기연 고르는 중' : ''}</span><i><b style="width:${Math.round(sat((g.hp || 0) / (g.mhp || 1)) * 100)}%"></b></i></div>`).join('');
 }
 function coopAnyAlive() { return Pl.state !== 'dead' || [...Net.ghosts.values()].some(g => g.net && g.state !== 'dead'); }
 /* 自己倒下：画面发灰，等人扶或者等这一处打完 */
 function coopDeadTick(rdt) {
   G.deathT += rdt; GFX.final.uniforms.uGray.value = Math.min(.75, G.deathT / 1.5); G.slowT = 0; G.enemyTS = 1;
-  if (G.deathT - rdt <= .6 && G.deathT > .6) { UI.banner('力竭倒地', '同袍站到身边能扶你起来 · 这一处打完也会醒', 'red'); }
+  if (G.deathT - rdt <= .6 && G.deathT > .6) { UI.banner('힘이 다해 쓰러짐', '동료가 곁에 서면 일으켜 줄 수 있습니다 · 이곳 전투가 끝나도 깨어납니다', 'red'); }
 }
 function coopRevive(k) {
   if (Pl.state !== 'dead') return; Pl.state = 'free'; Pl.st = 0; Pl.deadT = 0; Pl.hp = Math.max(1, Math.round(Pl.maxHp * k)); Pl.iframe = 2; G.deathT = 0; GFX.final.uniforms.uGray.value = 0;
   FX.pillar(Pl.pos, 0x8be0a0, 6); FX.ring(Pl.pos, .5, 5, 0x8be0a0, .5); Snd.level();
 }
-function coopRevived(by) { if (Pl.state !== 'dead') return; coopRevive(.35); UI.banner('起身', `${by}把你扶了起来`, 'gold'); }
-function coopReviveAll() { if (Pl.state === 'dead') { coopRevive(.3); UI.toast('缓过一口气 · 气血三成', 2); } }
+function coopRevived(by) { if (Pl.state !== 'dead') return; coopRevive(.35); UI.banner('일어나기', `${by}님이 당신을 일으켜 세웠다`, 'gold'); }
+function coopReviveAll() { if (Pl.state === 'dead') { coopRevive(.3); UI.toast('한숨 돌림 · 체력 30%', 2); } }
 /* 同袍那边只跑两个计时：一章打完的过场、一处打完的结算 */
 function coopClientStage(dt) {
   if (G.clearT > 0) { G.clearT -= dt; if (G.clearT <= 0) Game.chapterClear(); return; }
@@ -443,7 +443,7 @@ Run.go = function (id) {
   if (G.state !== 'rlmap' || !this.reach().includes(id)) return;
   if (!Net.host) { Net.send({ t: 'vote', n: id }); Net.myVote = id; coopMapInfo(); Snd.ui(); return; }
   const wait = coopWait();
-  if (wait.length && performance.now() - Net.mapAt < 25000) { UI.toast(`等${wait.join('、')}回到路线图（25 秒后可以先走）`, 2.4); return; }
+  if (wait.length && performance.now() - Net.mapAt < 25000) { UI.toast(`${wait.join(', ')}님이 지도로 돌아오길 기다리는 중(25초 후 먼저 갈 수 있음)`, 2.4); return; }
   const n = this.map.nodes[id], m = { t: 'go', n: id }; if (n.t === 'event') m.ev = coopPickEv();
   Run.forceEv = m.ev; Net.ready.clear(); Net.votes = {}; Net.bcast(m); runGo(id);
 };
@@ -473,28 +473,28 @@ Run.won = function () { if (Net.on && Net.host) { Net.bcast({ t: 'won' }); coopR
 Run.event = function () {
   if (!Net.on || !Run.forceEv) return runEvent();
   const e = EVENTS.find(x => x.id === Run.forceEv) || pick(EVENTS); (this.seenEv || (this.seenEv = new Set())).add(e.id); Run.forceEv = null;
-  const opts = e.opts.map(o => { const d = typeof o.d === 'function' ? o.d() : o.d; return o.fight && !Net.host ? { ...o, d: d + '（这一项由房主定夺）', ok: () => false } : { ...o, d }; });
-  this.panel(e.t, Net.host ? '奇遇 · 同袍各选各的' : '奇遇 · 同袍各选各的', e.d, opts);
+  const opts = e.opts.map(o => { const d = typeof o.d === 'function' ? o.d() : o.d; return o.fight && !Net.host ? { ...o, d: d + '(이 항목은 방장이 정합니다)', ok: () => false } : { ...o, d }; });
+  this.panel(e.t, Net.host ? '기우 · 동료는 각자 선택' : '기우 · 동료는 각자 선택', e.d, opts);
 };
 Run.nextChapter = function () {
   if (!Net.on) return runNext();
-  if (!Net.host) { UI.toast('等房主启程', 1.8); $('btnIlGo').textContent = '等房主启程'; return; }
+  if (!Net.host) { UI.toast('방장의 출발을 기다리는 중', 1.8); $('btnIlGo').textContent = '방장의 출발을 기다리는 중'; return; }
   this.ch++; this.map = genMap(); this.at = -1; this.path = []; this.node = null; Net.ready.clear(); Net.bcast({ t: 'chap', ch: this.ch, map: this.map }); Game.enterChapter(this.ch);
 };
 function coopChapter(m) {
-  if (G.state === 'title' || G.state === 'over') return; $('btnIlGo').textContent = '启程';
+  if (G.state === 'title' || G.state === 'over') return; $('btnIlGo').textContent = '출발';
   Run.ch = m.ch; Run.map = m.map; Run.at = -1; Run.path = []; Run.node = null; Game.enterChapter(m.ch);
 }
 Run.showMap = function () {
   runShowMap(); if (!Net.on) return;
   Net.mapAt = performance.now(); if (!Net.host) Net.send({ t: 'rdy', at: Run.at }); coopMapInfo();
 };
-Run.tip = function (n) { runTip(n); if (Net.on && !n) $('rmTip').textContent = Net.host ? '你是房主：由你择路，同袍的建议显示在下面' : '由房主择路 · 点一处可以给房主提个建议'; };
+Run.tip = function (n) { runTip(n); if (Net.on && !n) $('rmTip').textContent = Net.host ? '당신이 방장입니다: 길은 당신이 고르고, 동료의 제안은 아래에 표시됩니다' : '방장이 길을 고릅니다 · 한 곳을 눌러 방장에게 제안할 수 있습니다'; };
 function coopMapInfo() {
-  const el = $('rmCoop'); if (!el) return; el.hidden = !Net.on; $('btnRmLeave').textContent = Net.on ? '退出联机' : '暂离 · 已存档'; if (!Net.on || G.state !== 'rlmap') return;
+  const el = $('rmCoop'); if (!el) return; el.hidden = !Net.on; $('btnRmLeave').textContent = Net.on ? '멀티플레이 나가기' : '잠시 이탈 · 저장됨'; if (!Net.on || G.state !== 'rlmap') return;
   const ns = Run.map.nodes, lines = Net.players.map(p => {
     const me = p.id === Net.me, ok = p.id === 0 || Net.ready.has(p.id) || me, v = p.id === Net.me ? Net.myVote : Net.votes[p.id];
-    return `<span style="color:${COOP_TAG[coopSlot(p.id) % 4]}">${p.name}${p.id === 0 ? '（房主）' : ''}</span>${Net.host ? (ok ? ' 已到' : ' 还在路上') : ''}${v !== undefined && v !== null && ns[v] ? ' · 想走' + NODE[ns[v].t].n : ''}`;
+    return `<span style="color:${COOP_TAG[coopSlot(p.id) % 4]}">${p.name}${p.id === 0 ? '(방장)' : ''}</span>${Net.host ? (ok ? ' 도착' : ' 이동 중') : ''}${v !== undefined && v !== null && ns[v] ? ' · 희망 경로: ' + NODE[ns[v].t].n : ''}`;
   });
   el.innerHTML = lines.join('<br>');
   // 同袍想走的那一处，在图上描一圈
@@ -503,7 +503,7 @@ function coopMapInfo() {
 }
 
 /* ---------- 大厅 ---------- */
-const coopMyName = () => (($('coopName') && $('coopName').value.trim()) || Save.load().coopName || '无名侠客').slice(0, 8);
+const coopMyName = () => (($('coopName') && $('coopName').value.trim()) || Save.load().coopName || '무명 협객').slice(0, 8);
 function coopSaveName() { const v = $('coopName').value.trim().slice(0, 8); if (v) { Save.load().coopName = v; Save.write(); } }
 function coopMsg(s) { const el = $('coopMsg'); if (el) el.textContent = s; }
 function coopShow() {
@@ -512,8 +512,8 @@ function coopShow() {
 function coopLobbyUI() {
   const room = Net.on && Net.code; $('coopRoom').hidden = !room; $('coopPre').hidden = !!room; $('btnCoopGo').hidden = !(Net.on && Net.host);
   if (!room) return; $('coopCodeT').textContent = Net.code;
-  $('coopList').innerHTML = Net.players.map(p => `<span style="border-color:${COOP_TAG[coopSlot(p.id) % 4]};color:${COOP_TAG[coopSlot(p.id) % 4]}">${p.name}${p.id === 0 ? ' · 房主' : ''}${p.id === Net.me ? ' · 你' : ''}</span>`).join('');
-  $('btnCoopGo').textContent = `开局 · ${Net.players.length} 人`;
+  $('coopList').innerHTML = Net.players.map(p => `<span style="border-color:${COOP_TAG[coopSlot(p.id) % 4]};color:${COOP_TAG[coopSlot(p.id) % 4]}">${p.name}${p.id === 0 ? ' · 방장' : ''}${p.id === Net.me ? ' · 나' : ''}</span>`).join('');
+  $('btnCoopGo').textContent = `시작 · ${Net.players.length}명`;
 }
 /* 房主开局：把第一章的路线图发给大家，各自带着自己藏经阁的修为上路 */
 function coopGoAll() {

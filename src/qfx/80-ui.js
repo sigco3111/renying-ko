@@ -8,31 +8,31 @@ const UI = {
   hide(id, h) { const key = id + '.h'; if (this.c[key] !== h) { this.c[key] = h; $(id).hidden = h; } },
   toast(msg, dur = 1.8) { const el = $('toast'); el.textContent = msg; el.classList.add('show'); this.toastT = dur; },
   banner(t, s = '', cls = '') { const el = $('banner'); $('banT').textContent = t; $('banS').textContent = s; el.className = 'banner ' + cls; void el.offsetWidth; el.classList.add('show'); },
-  combo(n) { if (n < 2) { this.hide('combo', true); return; } this.hide('combo', false); this.set('comboN', n); this.set('comboR', n >= 60 ? '万夫莫敌' : n >= 40 ? '无双' : n >= 25 ? '游龙' : n >= 12 ? '流水' : n >= 5 ? '行云' : ''); const el = $('combo'); el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); },
+  combo(n) { if (n < 2) { this.hide('combo', true); return; } this.hide('combo', false); this.set('comboN', n); this.set('comboR', n >= 60 ? '만부막적' : n >= 40 ? '무쌍' : n >= 25 ? '유룡' : n >= 12 ? '유수' : n >= 5 ? '행운' : ''); const el = $('combo'); el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); },
   update(dt) {
     this.cls('game', 'touch', Input.touch);
     if (this.toastT > 0) { this.toastT -= dt; if (this.toastT <= 0) $('toast').classList.remove('show'); }
     this.bar('hpFill', Pl.hp / Pl.maxHp); this.bar('hpLag', Pl.hp / Pl.maxHp); this.set('hpTxt', Math.ceil(Pl.hp) + ' / ' + Pl.maxHp); this.bar('mpFill', Pl.mp / Pl.maxMp); this.bar('staFill', Pl.sta / Pl.maxSta);
-    this.cls('hpBar', 'shield', Pl.shield > 0); this.set('lvNum', cnNum(Pl.lv)); this.set('gold', Math.floor(Pl.gold)); this.set('swName', swordTier().name + (Pl.swordLv ? ' · ' + cnNum(Pl.swordLv) + '重' : '')); this.set('pots', Pl.pots);
-    this.set('buffs', (Pl.buffT > 0 ? '踏雪 ' : '') + (Pl.shield > 0 ? '真气 ' : '') + (Pl.bellT > 0 ? '金钟 ' : '') + (Pl.wuyingT > 0 ? '无影 ' : '') + (Pl.nextCrit > 0 ? '回锋 ' : '')); this.bar('xpFill', Pl.xp / Pl.xpNeed);
-    for (let i = 0; i < 4; i++) { const d = slotDef(i), id = 'sk' + i, empty = !d; this.cls(id, 'empty', empty); if (this.c[id + '.d'] !== d) { this.c[id + '.d'] = d; const b = $(id); b.querySelector('.g').textContent = d ? d.g : i === 3 ? '绝' : '空'; b.querySelector('.n').textContent = d ? d.n + (i < 3 && skLv(Pl.slots[i]) > 1 ? ' · ' + cnNum(skLv(Pl.slots[i])) + '重' : '') : i === 3 ? '绝学' : '空槽'; }
+    this.cls('hpBar', 'shield', Pl.shield > 0); this.set('lvNum', cnNum(Pl.lv)); this.set('gold', Math.floor(Pl.gold)); this.set('swName', swordTier().name + (Pl.swordLv ? ' · ' + cnNum(Pl.swordLv) + '중' : '')); this.set('pots', Pl.pots);
+    this.set('buffs', (Pl.buffT > 0 ? '답설 ' : '') + (Pl.shield > 0 ? '진기 ' : '') + (Pl.bellT > 0 ? '금종 ' : '') + (Pl.wuyingT > 0 ? '무영 ' : '') + (Pl.nextCrit > 0 ? '회봉 ' : '')); this.bar('xpFill', Pl.xp / Pl.xpNeed);
+    for (let i = 0; i < 4; i++) { const d = slotDef(i), id = 'sk' + i, empty = !d; this.cls(id, 'empty', empty); if (this.c[id + '.d'] !== d) { this.c[id + '.d'] = d; const b = $(id); b.querySelector('.g').textContent = d ? d.g : i === 3 ? '절' : '비어 있음'; b.querySelector('.n').textContent = d ? d.n + (i < 3 && skLv(Pl.slots[i]) > 1 ? ' · ' + cnNum(skLv(Pl.slots[i])) + '중' : '') : i === 3 ? '절학' : '빈 슬롯'; }
       if (i < 3) { const lvk = id + '.l', lv = d ? skLv(Pl.slots[i]) : 0; if (this.c[lvk] !== lv) { this.c[lvk] = lv; this.c[id + '.d'] = null; } }
       const cd = empty ? 0 : i === 3 ? 0 : Pl.cds[i] / (Pl.cdMax[i] || d.cd), k = id + '.cd', v = Math.round(cd * 100) / 100; if (this.c[k] !== v) { this.c[k] = v; $(id).style.setProperty('--cd', v); } this.cls(id, 'nomp', !empty && i < 3 && Pl.mp < d.mp); }
     { const v = Math.round(Pl.rage) / 100; if (this.c.rage !== v) { this.c.rage = v; $('sk3').style.setProperty('--rage', v); } this.cls('sk3', 'ready', !!Pl.ult && Pl.rage >= 100); }
     { const v = Math.round(sat(Pl.potCd / 1.5) * 100) / 100; if (this.c.potcd !== v) { this.c.potcd = v; $('sk4').style.setProperty('--cd', v); } }
     const alive = G.enemies.filter(e => e.state !== 'dead').length + G.queue.length;
     let t1, t2; const ch = CHAPTERS[G.chapter] || CHAPTERS[0];
-    if (Tut.on) { t1 = '试剑'; t2 = '山门前 · 先活动活动筋骨'; }
-    else if (G.clearT > 0) { t1 = ch.n; t2 = '已破'; }
+    if (Tut.on) { t1 = '시검'; t2 = '산문 앞 · 먼저 몸 풀기'; }
+    else if (G.clearT > 0) { t1 = ch.n; t2 = '돌파 완료'; }
     else if (!Run.node) { t1 = ch.n; t2 = ch.sub; }
-    else { t1 = Run.node.t === 'boss' ? ch.n + ' · 首领' : `${ch.n} · 第${cnNum(Run.step)}程`; t2 = G.rlDoneT > 0 || G.cleared ? '敌已尽 · 收拾行囊' : `${G.stageName} · 残敌 ${alive}`; }
+    else { t1 = Run.node.t === 'boss' ? ch.n + ' · 두목' : `${ch.n} · 제${cnNum(Run.step)}단계`; t2 = G.rlDoneT > 0 || G.cleared ? '적을 모두 처치 · 짐 챙기기' : `${G.stageName} · 남은 적 ${alive}`; }
     this.set('waveT', t1); this.set('waveS', t2);
     const b = G.boss && G.boss.state !== 'dead' ? G.boss : null; this.hide('bossBox', !b); if (b && this.c.bossTk !== b) { this.c.bossTk = b; const bb = $('bossFill').parentNode; bb.querySelectorAll('.tk').forEach(x => x.remove()); for (const ph of PHASES[b.type] || []) { const t = document.createElement('i'); t.className = 'tk'; t.style.left = (ph.at * 100) + '%'; bb.appendChild(t); } }
     if (b) { this.set('bossName', b.name); this.bar('bossFill', b.hp / b.maxHp); this.bar('bossLag', b.hp / b.maxHp); this.bar('bossPoise', b.stun > 0 ? 1 : b.poiseD / b.cfg.poise); }
     const lk = Pl.lock && Pl.lock.state !== 'dead' && Pl.state !== 'exec' ? Pl.lock : null; this.cls('hud', 'cine', Pl.state === 'exec'); this.hide('lockm', !lk);
     if (lk) { _pv.set(lk.pos.x, lk.hitY + gH(lk.pos.x, lk.pos.z), lk.pos.z).project(GFX.camera); const sx = ((_pv.x * .5 + .5) * innerWidth).toFixed(0), sy = (-_pv.y * .5 + .5) * innerHeight; $('lockm').style.transform = `translate(${sx}px,${sy.toFixed(0)}px) rotate(45deg)`; if (!lk.boss) $('lockInfo').style.transform = `translate(${sx}px,${(sy - 44 - lk.radius * 14).toFixed(0)}px)`; }
     this.hide('lockInfo', !lk || !!lk.boss); if (lk && !lk.boss) { this.bar('lockHp', lk.hp / lk.maxHp); this.bar('lockPo', lk.stun > 0 ? 1 : (lk.poiseD || 0) / (lk.cfg.poise * (lk.elite ? 1.6 : 1))); this.cls('lockInfo', 'stun', lk.stun > 0); }
-    const ex = Pl.state !== 'dead' && Pl.state !== 'exec' ? findExec() : null; this.hide('execm', !ex || Input.touch); this.cls('tParry', 'exec', !!ex); this.set('tParry', ex ? '决' : '格'); this.cls('tLock', 'on', !!lk);
+    const ex = Pl.state !== 'dead' && Pl.state !== 'exec' ? findExec() : null; this.hide('execm', !ex || Input.touch); this.cls('tParry', 'exec', !!ex); this.set('tParry', ex ? '결' : '막기'); this.cls('tLock', 'on', !!lk);
     if (ex && !Input.touch) { _pv.set(ex.pos.x, ex.hitY + .2 + gH(ex.pos.x, ex.pos.z), ex.pos.z).project(GFX.camera); $('execm').style.transform = `translate(${((_pv.x * .5 + .5) * innerWidth).toFixed(0)}px,${((-_pv.y * .5 + .5) * innerHeight).toFixed(0)}px) translate(18px,-50%)`; }
     this.mini();
   },
@@ -51,19 +51,19 @@ const UI = {
     const a = angDiff(yaw, Pl.yaw); g.translate(c, c); g.rotate(-a); g.fillStyle = '#62cdb9'; g.beginPath(); g.moveTo(0, -11); g.lineTo(7, 8); g.lineTo(0, 4); g.lineTo(-7, 8); g.closePath(); g.fill(); g.restore();
   },
   perkList(el) {
-    const sk = Pl.slots.filter(Boolean).map(id => `<span class="pk-sk">${SK[id].n}${skLv(id) > 1 ? ' ' + cnNum(skLv(id)) + '重' : ''}</span>`).concat(Pl.ult ? [`<span class="pk-ult">${ULT[Pl.ult].n}</span>`] : []);
-    const rs = Object.keys(SCHOOLS).filter(s => reso(s) >= 3).map(s => `<span class="pk-rs" style="color:${SCHOOLS[s].c}">${SCHOOLS[s].n}共鸣 ${reso(s) >= 6 ? '六' : '三'}重</span>`);
-    const html = sk.concat(rs, PERKS.filter(p => pk(p.id)).map(p => `<span>${p.n}${pk(p.id) > 1 ? ' ' + cnNum(pk(p.id)) + '重' : ''}</span>`)).join(''); $(el).innerHTML = html || '<span>尚无机缘</span>'; },
+    const sk = Pl.slots.filter(Boolean).map(id => `<span class="pk-sk">${SK[id].n}${skLv(id) > 1 ? ' ' + cnNum(skLv(id)) + '중' : ''}</span>`).concat(Pl.ult ? [`<span class="pk-ult">${ULT[Pl.ult].n}</span>`] : []);
+    const rs = Object.keys(SCHOOLS).filter(s => reso(s) >= 3).map(s => `<span class="pk-rs" style="color:${SCHOOLS[s].c}">${SCHOOLS[s].n}공명 ${reso(s) >= 6 ? '6' : '3'}중</span>`);
+    const html = sk.concat(rs, PERKS.filter(p => pk(p.id)).map(p => `<span>${p.n}${pk(p.id) > 1 ? ' ' + cnNum(pk(p.id)) + '중' : ''}</span>`)).join(''); $(el).innerHTML = html || '<span>기연 없음</span>'; },
   cardHtml(c, i) {
-    if (c.k === 'perk') { const p = c.p, S = SCHOOLS[p.s], r = reso(p.s), nx = r + 1, tip = r < 3 && nx >= 3 ? `共鸣三重：${S.r3}` : r < 6 && nx >= 6 ? `共鸣六重：${S.r6}` : `${S.n} ${r} → ${nx} 重`;
-      return [`card r${p.r}`, `<span class="rs">${['', '凡', '珍', '绝'][p.r]}</span><span class="ct" style="color:${S.c}">机缘 · ${S.n}</span><span class="cn">${p.n}</span><span class="cdsc">${p.d}</span><span class="cr">${tip}</span><span class="cs"><span>${pk(p.id) ? '已修 ' + cnNum(pk(p.id)) + ' 重' : '初悟'} / ${cnNum(p.max)}</span><span class="ck">${i + 1}</span></span>`]; }
-    if (c.k === 'ult') { const u = ULT[c.id]; return ['card ult', `<span class="rs">绝</span><span class="ct">绝学 · V</span><span class="cn">${u.n}</span><span class="cdsc">${u.d}</span><span class="cr">剑意满时施展，只能择一门</span><span class="cs"><span>绝学</span><span class="ck">${i + 1}</span></span>`]; }
+    if (c.k === 'perk') { const p = c.p, S = SCHOOLS[p.s], r = reso(p.s), nx = r + 1, tip = r < 3 && nx >= 3 ? `공명 3중: ${S.r3}` : r < 6 && nx >= 6 ? `공명 6중: ${S.r6}` : `${S.n} ${r} → ${nx} 중`;
+      return [`card r${p.r}`, `<span class="rs">${['', '범', '진', '절'][p.r]}</span><span class="ct" style="color:${S.c}">기연 · ${S.n}</span><span class="cn">${p.n}</span><span class="cdsc">${p.d}</span><span class="cr">${tip}</span><span class="cs"><span>${pk(p.id) ? '수련 ' + cnNum(pk(p.id)) + ' 중' : '초오'} / ${cnNum(p.max)}</span><span class="ck">${i + 1}</span></span>`]; }
+    if (c.k === 'ult') { const u = ULT[c.id]; return ['card ult', `<span class="rs">절</span><span class="ct">절학 · V</span><span class="cn">${u.n}</span><span class="cdsc">${u.d}</span><span class="cr">검의가 가득 찼을 때 발동, 한 가지만 선택 가능</span><span class="cs"><span>절학</span><span class="ck">${i + 1}</span></span>`]; }
     const d = SK[c.id], l = skLv(c.id), slot = l ? Pl.slots.indexOf(c.id) : Pl.slots.indexOf(null);
-    return ['card skill', `<span class="rs">${d.g}</span><span class="ct">剑谱 · ${'QER'[slot]}</span><span class="cn">${d.n}</span><span class="cdsc">${d.d(l + 1)}</span><span class="cr">内力 ${d.mp} · 调息 ${d.cd} 息</span><span class="cs"><span>${l ? `${cnNum(l)}重 → ${cnNum(l + 1)}重` : '新学，入' + 'QER'[slot] + '槽'}</span><span class="ck">${i + 1}</span></span>`];
+    return ['card skill', `<span class="rs">${d.g}</span><span class="ct">검보 · ${'QER'[slot]}</span><span class="cn">${d.n}</span><span class="cdsc">${d.d(l + 1)}</span><span class="cr">내공 ${d.mp} · 재사용 ${d.cd}초</span><span class="cs"><span>${l ? `${cnNum(l)}중 → ${cnNum(l + 1)}중` : '신규, ' + 'QER'[slot] + ' 슬롯'}</span><span class="ck">${i + 1}</span></span>`];
   },
   showLevelUp() {
-    const cards = offerCards(); this.showCards(cards, '破境', `已入${cnNum(Pl.lv - Pl.pending + 1)}境 · 择其一`, c => Game.pickPerk(c));
-    this.perks = cards; const rr = $('btnReroll'); rr.hidden = !(Pl.rerolls > 0); rr.textContent = `重掷 · 余 ${Pl.rerolls}（R）`;
+    const cards = offerCards(); this.showCards(cards, '경지 돌파', `이미 ${cnNum(Pl.lv - Pl.pending + 1)}경지 · 하나를 고르세요`, c => Game.pickPerk(c));
+    this.perks = cards; const rr = $('btnReroll'); rr.hidden = !(Pl.rerolls > 0); rr.textContent = `다시 뽑기 · 남음 ${Pl.rerolls}(R)`;
   },
   /* 三张卷轴择一：破境、精锐、藏宝、奇遇共用 */
   showCards(cards, t, sub, onPick) {
@@ -74,23 +74,23 @@ const UI = {
   showMeta() {
     const d = Save.load(), host = $('metaGrid'); host.innerHTML = ''; $('metaSoul').textContent = d.soul;
     META.forEach((m, i) => { const l = up(m.id), mx = l >= m.max, cost = mx ? 0 : m.cost(l), b = document.createElement('button'); b.type = 'button'; b.className = 'item'; b.id = 'meta' + i; b.disabled = mx || d.soul < cost;
-      b.innerHTML = `<span class="in">${m.n}</span><span class="ip">${mx ? '已臻圆满' : cost + ' 剑魄'}</span><span class="id">${m.d(Math.max(1, mx ? l : l + 1))}</span><span class="mlv">${cnNum(l)} / ${cnNum(m.max)} 重</span>`;
+      b.innerHTML = `<span class="in">${m.n}</span><span class="ip">${mx ? '최대 달성' : cost + ' 검백'}</span><span class="id">${m.d(Math.max(1, mx ? l : l + 1))}</span><span class="mlv">${cnNum(l)} / ${cnNum(m.max)} 중</span>`;
       b.onclick = () => { if (buyMeta(m)) { Snd.init(); Snd.forge(); UI.showMeta(); } }; host.appendChild(b); });
-    const r = d.rec; $('recs').innerHTML = [[r.bestCh ? (r.bestCh >= CHAPTERS.length ? '通关' : '破' + CHAPTERS[r.bestCh - 1].n) : '—', '最远'], [r.clears, '通关'], [d.asc ? ASC[Math.min(d.asc, ASC.length - 1)].n : '—', '已解劫数'], [r.bestTime ? fmtTime(r.bestTime) : '—', '最快'], [r.maxCombo, '最高连击'], [r.kills, '总斩敌'], [r.runs, '开局'], [r.souls || 0, '累计剑魄']].map(([v, k]) => `<span><b>${v}</b>${k}</span>`).join('');
+    const r = d.rec; $('recs').innerHTML = [[r.bestCh ? (r.bestCh >= CHAPTERS.length ? '클리어' : '파' + CHAPTERS[r.bestCh - 1].n) : '—', '최원'], [r.clears, '클리어'], [d.asc ? ASC[Math.min(d.asc, ASC.length - 1)].n : '—', '해금된 겁'], [r.bestTime ? fmtTime(r.bestTime) : '—', '최단'], [r.maxCombo, '최고 연속 타격'], [r.kills, '총 처치'], [r.runs, '시작'], [r.souls || 0, '누적 검백']].map(([v, k]) => `<span><b>${v}</b>${k}</span>`).join('');
     $('meta').hidden = false; $('title').hidden = true;
   },
   showSettings(from) {
     this.setFrom = from; const seg = (id, opts, cur, fn) => { const h = $(id); h.innerHTML = ''; opts.forEach(([v, n]) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = n; b.className = v === cur ? 'on' : ''; b.onclick = () => { fn(v); UI.showSettings(from); }; h.appendChild(b); }); };
     seg('setQ', QN.map((n, i) => [i, n]), GFX.quality, v => { GFX.quality = v; setSetting('q', v); applyQuality(); });
-    seg('setShake', [[0, '关'], [.5, '弱'], [1, '强']], setting('shake'), v => setSetting('shake', v));
-    seg('setNums', [[1, '显示'], [0, '隐藏']], setting('nums'), v => setSetting('nums', v));
+    seg('setShake', [[0, '관'], [.5, '약'], [1, '강']], setting('shake'), v => setSetting('shake', v));
+    seg('setNums', [[1, '표시'], [0, '숨김']], setting('nums'), v => setSetting('nums', v));
     $('setSens').value = setting('sens'); $('setVol').value = setting('vol');
     if (from === 'pause') $('pause').hidden = true; else $('title').hidden = true; $('settings').hidden = false;
   },
   closeSettings() { $('settings').hidden = true; if (this.setFrom === 'pause') $('pause').hidden = false; else $('title').hidden = false; },
   showShop() {
     const host = $('shopGrid'); host.innerHTML = ''; $('shopGold').textContent = Math.floor(Pl.gold);
-    SHOP.forEach((it, i) => { const b = document.createElement('button'), mx = it.max(), cost = it.cost(); b.type = 'button'; b.className = 'item'; b.id = 'shop' + i; b.disabled = mx || Pl.gold < cost; b.innerHTML = `<span class="in">${it.n()}</span><span class="ip">${mx ? '已臻极致' : cost + ' 文'}</span><span class="id">${it.d()}</span>`; b.onclick = () => { if (Pl.gold >= cost && !it.max()) { Pl.gold -= cost; it.buy(); UI.showShop(); } }; host.appendChild(b); });
+    SHOP.forEach((it, i) => { const b = document.createElement('button'), mx = it.max(), cost = it.cost(); b.type = 'button'; b.className = 'item'; b.id = 'shop' + i; b.disabled = mx || Pl.gold < cost; b.innerHTML = `<span class="in">${it.n()}</span><span class="ip">${mx ? '최대 달성' : cost + ' 문'}</span><span class="id">${it.d()}</span>`; b.onclick = () => { if (Pl.gold >= cost && !it.max()) { Pl.gold -= cost; it.buy(); UI.showShop(); } }; host.appendChild(b); });
     $('shop').hidden = false;
   },
 };

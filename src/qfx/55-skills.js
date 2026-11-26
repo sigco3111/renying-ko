@@ -2,26 +2,26 @@
 // 本文件：剑谱：SK（Q / E / R 三个槽能学的剑技）和 ULT（V 绝学），地面区域效果（Zones）、冰冻、连锁雷，以及各招的具体做法 SKST。
 /* 剑技从破境的三选一里得来：槽没满就学新的，满了只出已学的升重（最多三重） */
 const SK = {
-  qi: { n: '剑气纵横', g: '气', mp: 20, cd: 4, st: 'castQ', d: l => `横扫出 ${1 + 2 * (l - 1)} 道剑气，穿身而过。` },
-  whirl: { n: '回风落雁', g: '风', mp: 30, cd: 9, st: 'whirl', d: l => `旋身成风 ${(1.3 + .3 * (l - 1)).toFixed(1)} 息，可走动、减伤一半，收势一震。` },
-  fly: { n: '御剑术', g: '御', mp: 28, cd: 8, st: 'castR', d: l => `召出 ${5 + 2 * (l - 1)} 柄飞剑环身，片刻后各寻敌人。` },
-  thunder: { n: '惊雷剑', g: '雷', mp: 26, cd: 7, st: 'skThunder', d: l => `引天雷劈向眼前之敌，再跳向近旁 ${2 + l} 人。` },
-  fire: { n: '焚天', g: '焚', mp: 30, cd: 8, st: 'skFire', d: l => `向前斩出一道 ${9 + 2 * l} 步长的火痕，烧 ${3 + l} 息，踏入即燃。` },
-  shadow: { n: '流影', g: '影', mp: 22, cd: 6, st: 'skShadow', d: l => `化作残影连闪 ${2 + l} 下，每闪一斩，期间刀枪不入。` },
-  frost: { n: '寒江雪', g: '寒', mp: 32, cd: 11, st: 'skFrost', d: l => `寒气炸开，近身敌人冻住 ${(1.4 + .4 * l).toFixed(1)} 息，冻住即露破绽可处决。` },
-  bell: { n: '金钟罩', g: '钟', mp: 24, cd: 14, st: 'skBell', d: l => `${3 + l} 息之内，接得住的招式全数自动弹开，接不住的减半。` },
+  qi: { n: '검기종횡', g: '기', mp: 20, cd: 4, st: 'castQ', d: l => `검기 ${1 + 2 * (l - 1)}줄기를 가로로 휘둘러 몸을 관통합니다.` },
+  whirl: { n: '회풍낙안', g: '풍', mp: 30, cd: 9, st: 'whirl', d: l => `${(1.3 + .3 * (l - 1)).toFixed(1)}초 동안 바람처럼 회전하며 이동 가능, 피해 절반 감소, 마지막에 진동.` },
+  fly: { n: '어검술', g: '어', mp: 28, cd: 8, st: 'castR', d: l => `비검 ${5 + 2 * (l - 1)}자루를 몸 주위에 불러내고, 잠시 후 각자 적을 찾아갑니다.` },
+  thunder: { n: '경뢰검', g: '뇌', mp: 26, cd: 7, st: 'skThunder', d: l => `천둥을 불러 눈앞의 적을 치고, 근처의 ${2 + l}명에게 튑니다.` },
+  fire: { n: '분천', g: '분', mp: 30, cd: 8, st: 'skFire', d: l => `앞으로 ${9 + 2 * l}보 길이의 불길을 베어 내고 ${3 + l}초 동안 태웁니다. 들어서면 불붙습니다.` },
+  shadow: { n: '유영', g: '영', mp: 22, cd: 6, st: 'skShadow', d: l => `잔영으로 ${2 + l}번 연달아 번쩍이며 번쩍일 때마다 베고, 그동안 공격을 받지 않습니다.` },
+  frost: { n: '한강설', g: '한', mp: 32, cd: 11, st: 'skFrost', d: l => `한기가 터져 근처 적이 ${(1.4 + .4 * l).toFixed(1)}초 동안 얼어붙고, 얼면 빈틈이 드러나 처형할 수 있습니다.` },
+  bell: { n: '금종조', g: '종', mp: 24, cd: 14, st: 'skBell', d: l => `${3 + l} 초 동안 받을 수 있는 공격은 모두 자동으로 튕겨내고, 못 받는 공격은 절반으로 줄입니다.` },
 };
 const ULT = {
-  wanjian: { n: '万剑归宗', g: '万', st: 'ult', d: '万剑自天而降，追着敌人落，最后一震荡开四周。' },
-  leiting: { n: '雷霆万钧', g: '霆', st: 'ultL', d: '三息之内天雷连落，专劈敌人，头领也躲不开。' },
-  wuying: { n: '无影', g: '影', st: 'ultW', d: '天地一静：四息半之内敌人几近停滞，你的每一剑伤害 +50%。' },
+  wanjian: { n: '만검귀종', g: '만', st: 'ult', d: '수많은 검이 하늘에서 내려 적을 쫓아 떨어지고, 마지막에 사방을 진동시킵니다.' },
+  leiting: { n: '뇌정만균', g: '정', st: 'ultL', d: '3초 안에 천둥이 연달아 내려 적만 가르고, 우두머리도 피하지 못합니다.' },
+  wuying: { n: '무영', g: '영', st: 'ultW', d: '천지가 고요해집니다: 4.5초 동안 적이 거의 멈추고, 당신의 모든 검 피해 +50%.' },
 };
 const skLv = id => (Pl.skLv && Pl.skLv[id]) || 0;
 const slotDef = i => i === 3 ? (Pl.ult ? ULT[Pl.ult] : null) : (Pl.slots[i] ? SK[Pl.slots[i]] : null);
 function learnSkill(id) {
-  if (ULT[id]) { Pl.ult = id; UI.toast(`悟得绝学「${ULT[id].n}」· V 施展`, 3); return; }
+  if (ULT[id]) { Pl.ult = id; UI.toast(`절학 「${ULT[id].n}」 획득 · V 사용`, 3); return; }
   if (skLv(id)) { Pl.skLv[id]++; return; }
-  const i = Pl.slots.indexOf(null); if (i < 0) return; Pl.slots[i] = id; Pl.skLv[id] = 1; Pl.cds[i] = 0; UI.toast(`悟得剑技「${SK[id].n}」· ${'QER'[i]} 施展`, 3);
+  const i = Pl.slots.indexOf(null); if (i < 0) return; Pl.slots[i] = id; Pl.skLv[id] = 1; Pl.cds[i] = 0; UI.toast(`검기술 「${SK[id].n}」 획득 · ${'QER'[i]} 사용`, 3);
 }
 
 /* 技能区域：焚天火痕等留在地上的东西 */
@@ -142,7 +142,7 @@ const SKST = {
 const rig0 = () => Pl.rig;
 
 /* 剑意：命中、弹反、处决、踏雪都长，满了可放绝学 */
-function gainRage(v) { if (!Pl.ult) return; const b = Pl.rage; Pl.rage = Math.min(100, Pl.rage + v); if (b < 100 && Pl.rage >= 100) { UI.toast(`剑意已满 · V「${ULT[Pl.ult].n}」`, 2); Snd.charged(); } }
+function gainRage(v) { if (!Pl.ult) return; const b = Pl.rage; Pl.rage = Math.min(100, Pl.rage + v); if (b < 100 && Pl.rage >= 100) { UI.toast(`검의 충만 · V「${ULT[Pl.ult].n}」`, 2); Snd.charged(); } }
 
 /* 身法六重：踏雪时原地留一道残影，一息后炸开 */
 function afterImage() {

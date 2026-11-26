@@ -4,14 +4,14 @@
 const G = { state: 'title', t: 0, hitstop: 0, enemyTS: 1, slowT: 0, enemies: [], projs: [], hazards: [], wave: 0, kills: 0, inter: 0, queue: [], spawnT: 0, tokens: 0, boss: null, endless: false, dmgDone: 0, maxCombo: 0, playT: 0 };
 const Cam = { yaw: PI, pitch: .34, dist: 7.4, distT: 7.4, shake: 0, pos: new V3(0, 4, 14), look: new V3(), fov: 52, tOrbit: 0 };
 const ATK = [
-  { name: '横斩', dur: .40, w: .26, a: .52, cancel: .6, mult: 1.0, range: 3.1, arc: 2.9, lunge: 1.7, anim: 'sweepRL', roll: .14, dir: 1, knock: 2.2, stop: .04, shake: .1, poise: 1 },
-  { name: '反撩', dur: .40, w: .24, a: .52, cancel: .6, mult: 1.08, range: 3.1, arc: 2.9, lunge: 1.5, anim: 'sweepLR', roll: -.42, dir: -1, knock: 2.2, stop: .04, shake: .1, poise: 1 },
-  { name: '突刺', dur: .44, w: .3, a: .56, cancel: .66, mult: 1.35, range: 4.0, arc: 1.0, lunge: 2.8, anim: 'thrust', knock: 4, stop: .06, shake: .16, poise: 1.4 },
-  { name: '跃斩', dur: .7, w: .4, a: .6, cancel: .82, mult: 2.3, range: 3.4, arc: TAU, lunge: 2.4, anim: 'jumpChop', knock: 6.5, stop: .11, shake: .42, poise: 3, slam: true },
+  { name: '횡참', dur: .40, w: .26, a: .52, cancel: .6, mult: 1.0, range: 3.1, arc: 2.9, lunge: 1.7, anim: 'sweepRL', roll: .14, dir: 1, knock: 2.2, stop: .04, shake: .1, poise: 1 },
+  { name: '반격', dur: .40, w: .24, a: .52, cancel: .6, mult: 1.08, range: 3.1, arc: 2.9, lunge: 1.5, anim: 'sweepLR', roll: -.42, dir: -1, knock: 2.2, stop: .04, shake: .1, poise: 1 },
+  { name: '돌자', dur: .44, w: .3, a: .56, cancel: .66, mult: 1.35, range: 4.0, arc: 1.0, lunge: 2.8, anim: 'thrust', knock: 4, stop: .06, shake: .16, poise: 1.4 },
+  { name: '도약참', dur: .7, w: .4, a: .6, cancel: .82, mult: 2.3, range: 3.4, arc: TAU, lunge: 2.4, anim: 'jumpChop', knock: 6.5, stop: .11, shake: .42, poise: 3, slam: true },
 ];
-const HEAVY = { name: '旋风斩', dur: .72, w: .28, a: .64, cancel: .82, mult: 1.9, range: 3.7, arc: TAU, lunge: .6, anim: 'spin', knock: 5.5, stop: .08, shake: .3, poise: 2.5, sta: 16, spin: true };
+const HEAVY = { name: '선풍참', dur: .72, w: .28, a: .64, cancel: .82, mult: 1.9, range: 3.7, arc: TAU, lunge: .6, anim: 'spin', knock: 5.5, stop: .08, shake: .3, poise: 2.5, sta: 16, spin: true };
 /* 按住重剑蓄满：破山，一记力劈带出地裂剑气 */
-const PISHAN = { name: '破山', dur: .7, w: .36, a: .58, cancel: .86, mult: 3.4, range: 2.7, off: 2.2, arc: TAU, lunge: 1.9, anim: 'chop', knock: 7.5, stop: .15, shake: .55, poise: 6, sta: 24, slam: true, pishan: true };
+const PISHAN = { name: '파산', dur: .7, w: .36, a: .58, cancel: .86, mult: 3.4, range: 2.7, off: 2.2, arc: TAU, lunge: 1.9, anim: 'chop', knock: 7.5, stop: .15, shake: .55, poise: 6, sta: 24, slam: true, pishan: true };
 /* 弹反：起手 win 秒内卸开来招；win 到 guard 之间只算格挡；落空后还要 rec 秒收势 */
 const PARRY = { win: .22, guard: .45, rec: .3, sta: 8 };
 const Pl = { pos: new V3(0, 0, 9), vel: new V3(), yaw: PI, kx: 0, kz: 0 };
@@ -53,12 +53,12 @@ function startAttack(def) {
   Pl.yawT = want; Snd.swing(def.slam || def.spin ? 1 : 0);
 }
 function tryDodge() {
-  const cost = 22 * (1 - .2 * pk('mspd')) * (reso('shen') >= 3 ? .7 : 1); if (Pl.sta < cost) { UI.toast('体力不济'); return false; }
+  const cost = 22 * (1 - .2 * pk('mspd')) * (reso('shen') >= 3 ? .7 : 1); if (Pl.sta < cost) { UI.toast('체력 부족'); return false; }
   Pl.sta -= cost; Pl.staDelay = .7; Pl.state = 'dodge'; Tut.dodged = true; Pl.st = 0; Pl.iframe = .36; Pl.perfect = false;
   Pl.dodgeYaw = Pl.moveMag > .3 ? Pl.moveYaw : Pl.yaw + PI; Pl.yawT = Pl.moveMag > .3 ? Pl.moveYaw : Pl.yaw; Snd.dodge(); FX.dust(Pl.pos, 5, .5); return true;
 }
 function startParry() {
-  if (Pl.sta < PARRY.sta) { UI.toast('体力不济'); return; }
+  if (Pl.sta < PARRY.sta) { UI.toast('체력 부족'); return; }
   Pl.sta -= PARRY.sta; Pl.staDelay = .5; Pl.state = 'parry'; Pl.st = 0; Pl.combatT = 3; Pl.buf = 0; Pl.bufH = 0;
   const tg = Pl.lock && Pl.lock.state !== 'dead' ? Pl.lock : pickTarget(Pl.moveMag > .3 ? Pl.moveYaw : Pl.yaw, 6, PI);
   Pl.yawT = tg ? Math.atan2(tg.pos.x - Pl.pos.x, tg.pos.z - Pl.pos.z) : Pl.yaw; Snd.guard();
@@ -73,7 +73,7 @@ function onDeflect(src, sx, sz, o) {
   const p = { x: Pl.pos.x + ax / d * .75, y: 1.3, z: Pl.pos.z + az / d * .75 };
   FX.sparks(p, 24, 0xfff2c8, 11, 2.5); FX.glint(p, 0xfff6e0, 2.2, .28); FX.ring(p, .3, 2.4, 0xfff0c8, .25, 1.3); GFX.flashAt(p, 0xfff0d0, 4);
   G.hitstop = Math.max(G.hitstop, .1); Cam.shake = Math.max(Cam.shake, .22); Snd.parry();
-  if (!(src && !o.proj && parriedBy(src))) FX.num({ x: Pl.pos.x, y: 2.3, z: Pl.pos.z }, '卸', 'word parry', .7);
+  if (!(src && !o.proj && parriedBy(src))) FX.num({ x: Pl.pos.x, y: 2.3, z: Pl.pos.z }, '벗기', 'word parry', .7);
 }
 /* 眼前露出破绽、够得着的敌人；锁定的优先 */
 function findExec() {
@@ -97,7 +97,7 @@ function execImpact(e) {
   FX.inkBurst(p, 16, 1.1); FX.sparks(p, 30, 0xff5a3a, 12, 3); FX.glow(p, 0xffffff, 4, .2); FX.decal(e.pos, 3.4);
   FX.slash({ x: Pl.pos.x, y: e.hitY, z: Pl.pos.z, yaw: Pl.yaw, roll: PI / 2, r: 3.2, arc: .45, inner: .05, color: 0xffe6c0, dur: .22, inten: 2 });
   G.hitstop = .18; Cam.shake = Math.max(Cam.shake, .55); GFX.final.uniforms.uFlash.value = .22; GFX.flashAt(p, 0xffe0c0, 6);
-  FX.num({ x: e.pos.x, y: e.hitY + .5, z: e.pos.z }, '斩', 'exec', 1.4); Snd.exec(); Pl.mp = Math.min(Pl.maxMp, Pl.mp + 15); healPlayer(Pl.maxHp * (.04 + .04 * pk('duanyue'))); gainRage(18);
+  FX.num({ x: e.pos.x, y: e.hitY + .5, z: e.pos.z }, '참', 'exec', 1.4); Snd.exec(); Pl.mp = Math.min(Pl.maxMp, Pl.mp + 15); healPlayer(Pl.maxHp * (.04 + .04 * pk('duanyue'))); gainRage(18);
 }
 /* 踏雪之后趁势出剑：瞬身至出手者背后一斩 */
 function startFlash(e) {
@@ -113,10 +113,10 @@ function switchLock(dir) {
   if (best) { Pl.lock = best; Snd.pick(); }
 }
 function trySkill(i) {
-  const s = slotDef(i); if (!s) { if (i < 3) UI.toast('此槽尚空 · 破境时择剑谱'); else UI.toast('尚未悟得绝学'); return; }
+  const s = slotDef(i); if (!s) { if (i < 3) UI.toast('이 슬롯은 비어 있음 · 경지 돌파 때 검보 선택'); else UI.toast('아직 절학을 깨닫지 못함'); return; }
   if (Pl.cds[i] > 0) return;
-  if (i === 3) { if (Pl.rage < 100) { UI.toast('剑意未满'); return; } Pl.rage = 0; }
-  else if (Pl.mp < s.mp) { UI.toast('内力不继'); return; }
+  if (i === 3) { if (Pl.rage < 100) { UI.toast('검의 부족'); return; } Pl.rage = 0; }
+  else if (Pl.mp < s.mp) { UI.toast('내공 부족'); return; }
   else { Pl.mp -= s.mp; Pl.cds[i] = s.cd * Pl.cdr; Pl.cdMax[i] = Pl.cds[i]; }
   Pl.combatT = 3; Pl.st = 0; Pl.tick = 0; Pl.fired = false; Pl.hitSet.clear(); Snd.skill();
   const tg = Pl.lock && Pl.lock.state !== 'dead' ? Pl.lock : pickTarget(Pl.yaw, 22, 1.2); if (tg && s.st !== 'whirl') Pl.yawT = Pl.yaw = Math.atan2(tg.pos.x - Pl.pos.x, tg.pos.z - Pl.pos.z);
@@ -126,7 +126,7 @@ function trySkill(i) {
   FX.ring(Pl.pos, .4, 3.2, swordTier().trail, .4); FX.wisp({ x: Pl.pos.x, y: 1, z: Pl.pos.z }, swordTier().trail, 14, 2.4);
 }
 function usePotion() {
-  if (Pl.potCd > 0 || Pl.state === 'dead') return; if (Pl.pots <= 0) { UI.toast('回春丹已尽'); return; } if (Pl.hp >= Pl.maxHp) { UI.toast('气血充盈'); return; }
+  if (Pl.potCd > 0 || Pl.state === 'dead') return; if (Pl.pots <= 0) { UI.toast('회춘단이 다 떨어졌다'); return; } if (Pl.hp >= Pl.maxHp) { UI.toast('체력 충만'); return; }
   Pl.pots--; Pl.potCd = 1.5; const h = Math.round(Pl.maxHp * .45); healPlayer(h); Snd.level(); FX.pillar(Pl.pos, 0x8be0a0, 3);
 }
 function healPlayer(h, quiet) { const b = Pl.hp; Pl.hp = Math.min(Pl.maxHp, Pl.hp + h); const d = Math.round(Pl.hp - b); if (d >= 1 && !quiet) FX.num({ x: Pl.pos.x, y: 2, z: Pl.pos.z }, '+' + d, 'heal'); }
@@ -163,21 +163,21 @@ function hurtPlayer(dmg, sx, sz, o = {}) {
   if (Pl.iframe > 0) {
     if (Pl.state === 'dodge' && Pl.st < .3 && !Pl.perfect) {
       Pl.perfect = true; G.enemyTS = .22; G.slowT = 1.1; Pl.mp = Math.min(Pl.maxMp, Pl.mp + 14); gainRage(10); Pl.sta = Math.min(Pl.maxSta, Pl.sta + 22); if (pk('snow')) Pl.buffT = 3 + pk('snow');
-      FX.num({ x: Pl.pos.x, y: 2.2, z: Pl.pos.z }, '踏雪', 'word', 1.1); Snd.perfect(); FX.ring(Pl.pos, .5, 4, 0x9ff0e0, .5); GFX.final.uniforms.uFlash.value = .12;
-      if (o.src && !o.proj && o.src.state !== 'dead') { Pl.perfectSrc = o.src; Pl.perfectT = 1.2; UI.toast('趁势出剑 · 瞬斩', 1.2); }
+      FX.num({ x: Pl.pos.x, y: 2.2, z: Pl.pos.z }, '답설', 'word', 1.1); Snd.perfect(); FX.ring(Pl.pos, .5, 4, 0x9ff0e0, .5); GFX.final.uniforms.uFlash.value = .12;
+      if (o.src && !o.proj && o.src.state !== 'dead') { Pl.perfectSrc = o.src; Pl.perfectT = 1.2; UI.toast('기세를 타 검 휘두르기 · 순참', 1.2); }
       if (reso('shen') >= 6) afterImage();
     }
     return false;
   }
-  if (Pl.shield > 0) { Pl.shield--; Pl.shieldT = 12; Pl.iframe = .5; FX.num({ x: Pl.pos.x, y: 2.1, z: Pl.pos.z }, '真气护体', 'word', .9); FX.ring(Pl.pos, .6, 2.6, 0x62cdb9, .35); Snd.clang(); return false; }
+  if (Pl.shield > 0) { Pl.shield--; Pl.shieldT = 12; Pl.iframe = .5; FX.num({ x: Pl.pos.x, y: 2.1, z: Pl.pos.z }, '호체진기', 'word', .9); FX.ring(Pl.pos, .6, 2.6, 0x62cdb9, .35); Snd.clang(); return false; }
   const armor = Pl.state === 'whirl' || Pl.bellT > 0; if (armor) dmg *= .5; if (guard) dmg *= reso('yi') >= 3 ? 0 : .3;
   dmg = Math.round(dmg); if (dmg < 1 && !guard) { Pl.iframe = .3; return false; } Pl.hp -= dmg; Pl.iframe = .5; Pl.hurtV = guard ? .35 : 1; Pl.hits = 0; UI.combo(0); Cam.shake = Math.max(Cam.shake, (guard ? .18 : .35) + dmg * .008);
   FX.num({ x: Pl.pos.x, y: 2.1, z: Pl.pos.z }, '-' + dmg, 'hurt');
-  if (guard) { Pl.sta = Math.max(0, Pl.sta - 14); Pl.staDelay = .8; Snd.block(); FX.sparks({ x: Pl.pos.x, y: 1.3, z: Pl.pos.z }, 10, 0xffd8a0, 7); FX.num({ x: Pl.pos.x, y: 2.5, z: Pl.pos.z }, '格', 'word', .7); }
+  if (guard) { Pl.sta = Math.max(0, Pl.sta - 14); Pl.staDelay = .8; Snd.block(); FX.sparks({ x: Pl.pos.x, y: 1.3, z: Pl.pos.z }, 10, 0xffd8a0, 7); FX.num({ x: Pl.pos.x, y: 2.5, z: Pl.pos.z }, '막기', 'word', .7); }
   else { Snd.hurt(); FX.inkBurst({ x: Pl.pos.x, y: 1.1, z: Pl.pos.z }, 6, .7); }
   const dx = Pl.pos.x - sx, dz = Pl.pos.z - sz, d = Math.hypot(dx, dz) || 1, kb = (o.knock === undefined ? 5 : o.knock) * (guard ? .5 : 1); Pl.kx += dx / d * kb; Pl.kz += dz / d * kb;
-  if (Pl.hp <= 0 && reso('gen') >= 6 && !Pl.reviveUsed) { Pl.reviveUsed = true; Pl.hp = Math.round(Pl.maxHp * .4); Pl.iframe = 2; FX.pillar(Pl.pos, 0x8be0a0, 8); FX.ring(Pl.pos, .5, 6, 0x8be0a0, .6); UI.banner('回魂', '根基深厚，一口气续上', 'gold'); Snd.level(); G.enemyTS = .2; G.slowT = 1.2; }
-  if (Pl.hp <= 0 && Pl.metaRevive) { Pl.metaRevive = false; Pl.hp = Math.round(Pl.maxHp * .3); Pl.iframe = 2; FX.pillar(Pl.pos, 0x8be0a0, 8); FX.ring(Pl.pos, .5, 6, 0x8be0a0, .6); UI.banner('回魂', '藏经阁所授，续一口气', 'gold'); Snd.level(); G.enemyTS = .2; G.slowT = 1.2; }
+  if (Pl.hp <= 0 && reso('gen') >= 6 && !Pl.reviveUsed) { Pl.reviveUsed = true; Pl.hp = Math.round(Pl.maxHp * .4); Pl.iframe = 2; FX.pillar(Pl.pos, 0x8be0a0, 8); FX.ring(Pl.pos, .5, 6, 0x8be0a0, .6); UI.banner('회혼', '근기가 깊어 숨이 단숨에 이어진다', 'gold'); Snd.level(); G.enemyTS = .2; G.slowT = 1.2; }
+  if (Pl.hp <= 0 && Pl.metaRevive) { Pl.metaRevive = false; Pl.hp = Math.round(Pl.maxHp * .3); Pl.iframe = 2; FX.pillar(Pl.pos, 0x8be0a0, 8); FX.ring(Pl.pos, .5, 6, 0x8be0a0, .6); UI.banner('회혼', '장경각의 가르침, 숨을 한 번 더 잇는다', 'gold'); Snd.level(); G.enemyTS = .2; G.slowT = 1.2; }
   if (Pl.hp <= 0) { Pl.hp = 0; Pl.state = 'dead'; Pl.st = 0; G.enemyTS = .25; G.slowT = 99; Game.onDeath(); return true; }
   if (!armor && !guard && Pl.state !== 'ult') { Pl.state = 'hurt'; Pl.st = 0; }
   return true;
@@ -204,7 +204,7 @@ function updatePlayer(dt) {
   Pl.perfectT -= dt; Pl.flickCd -= dt; Pl.execT = alive && !busy ? findExec() : null;
   if (alive && !busy) {
     if (Input.hit('KeyC')) usePotion();
-    if (Input.hit('Tab')) { if (Pl.lock) Pl.lock = null; else { Pl.lock = pickTarget(Cam.yaw, 30, 1.0) || nearestEnemy(Pl.pos.x, Pl.pos.z, 30); if (!Pl.lock) UI.toast('四下无敌可锁'); } }
+    if (Input.hit('Tab')) { if (Pl.lock) Pl.lock = null; else { Pl.lock = pickTarget(Cam.yaw, 30, 1.0) || nearestEnemy(Pl.pos.x, Pl.pos.z, 30); if (!Pl.lock) UI.toast('주변에 고정할 적이 없다'); } }
     if (Pl.lock && Pl.lock.state === 'dead') Pl.lock = nearestEnemy(Pl.pos.x, Pl.pos.z, 22);
     // 锁定时 ← → 或甩一下鼠标换目标
     if (Pl.lock) { Pl.flickAcc = Pl.flickAcc * Math.exp(-dt * 10) + Input.mdx; if (Input.hit('ArrowRight')) switchLock(1); else if (Input.hit('ArrowLeft')) switchLock(-1); else if (Math.abs(Pl.flickAcc) > 90 && Pl.flickCd <= 0) { switchLock(Math.sign(Pl.flickAcc)); Pl.flickCd = .4; Pl.flickAcc = 0; } }
@@ -217,7 +217,7 @@ function updatePlayer(dt) {
       else if (Input.hit('KeyR') || Input.hit('Digit3') || Input.hit('Sk2')) trySkill(2); else if (Input.hit('KeyV') || Input.hit('Digit4') || Input.hit('Sk3')) trySkill(3);
     }
     if (canAct && (Pl.state === 'free' || Pl.state === 'attack' || Pl.state === 'deflect')) {
-      if (Pl.bufH > 0) { if (Pl.sta >= HEAVY.sta) { Pl.state = 'charge'; Pl.st = 0; Pl.charged = false; Pl.bufH = 0; Pl.buf = 0; Pl.combatT = 3; } else { Pl.bufH = 0; UI.toast('体力不济'); } }
+      if (Pl.bufH > 0) { if (Pl.sta >= HEAVY.sta) { Pl.state = 'charge'; Pl.st = 0; Pl.charged = false; Pl.bufH = 0; Pl.buf = 0; Pl.combatT = 3; } else { Pl.bufH = 0; UI.toast('체력 부족'); } }
       else if (Pl.buf > 0) { const i = Pl.state === 'attack' || Pl.comboT > 0 ? Pl.combo : 0; startAttack(ATK[i]); Pl.combo = (i + 1) % ATK.length; }
     }
   }
@@ -301,7 +301,7 @@ function updatePlayer(dt) {
     if (Pl.lock) Pl.yaw = dampAng(Pl.yaw, Math.atan2(Pl.lock.pos.x - Pl.pos.x, Pl.lock.pos.z - Pl.pos.z), 8, dt); else if (mag > .1) Pl.yaw = dampAng(Pl.yaw, Pl.moveYaw, 6, dt);
     if (Pl.st >= .5 && !Pl.charged) { Pl.charged = true; rig.bladePts(_b, _t); FX.glint(_t, tier.trail, 1.6); FX.ring(Pl.pos, .3, 2.4, tier.trail, .3); Snd.charged(); }
     if (Pl.st > .12 && Math.random() < (Pl.charged ? .8 : .45)) { rig.bladePts(_b, _t); _c.set(tier.trail); const a = rand(TAU), r = rand(.8, 1.6); _v1.lerpVectors(_b, _t, rand()); FX.add.emit({ x: _v1.x + Math.cos(a) * r, y: _v1.y + rand(-.4, .6), z: _v1.z + Math.sin(a) * r, vx: -Math.cos(a) * r * 3, vy: 0, vz: -Math.sin(a) * r * 3, life: .3, s0: .14, s1: .02, r: _c.r, g: _c.g, b: _c.b, grav: 0 }); }
-    if (!held || Pl.st > 2.4) { const def = Pl.charged ? PISHAN : HEAVY; if (Pl.sta >= def.sta) { Pl.sta -= def.sta; Pl.staDelay = .6; Pl.combo = 0; startAttack(def); } else { Pl.state = 'free'; UI.toast('体力不济'); } Pl.charged = false; }
+    if (!held || Pl.st > 2.4) { const def = Pl.charged ? PISHAN : HEAVY; if (Pl.sta >= def.sta) { Pl.sta -= def.sta; Pl.staDelay = .6; Pl.combo = 0; startAttack(def); } else { Pl.state = 'free'; UI.toast('체력 부족'); } Pl.charged = false; }
   } else if (Pl.state === 'flash') {
     const e = Pl.flashE, u = Pl.st / .46; action = { name: 'sweepRL', u: Math.min(1, u), w: .18, a: .5 }; rate = 40; Pl.vel.x = Pl.vel.z = 0; trailOn = u > .1 && u < .62;
     if (e.state !== 'dead') Pl.yaw = dampAng(Pl.yaw, Math.atan2(e.pos.x - Pl.pos.x, e.pos.z - Pl.pos.z), 20, dt);

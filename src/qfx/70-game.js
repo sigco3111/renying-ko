@@ -96,32 +96,32 @@ function gainXp(v) {
   Pl.xp += v * (1 + .0 * 1);
   while (Pl.xp >= Pl.xpNeed) {
     Pl.xp -= Pl.xpNeed; Pl.lv++; recalc(); healPlayer(Pl.maxHp * .15); Pl.mp = Pl.maxMp; Pl.pending++; FX.pillar(Pl.pos, 0x62cdb9, 8); FX.ring(Pl.pos, .5, 7, 0x62cdb9, .7); Snd.level(); GFX.flashAt(Pl.pos, 0x9ff0e0, 5);
-    FX.num({ x: Pl.pos.x, y: 2.5, z: Pl.pos.z }, `${cnNum(Pl.lv)}境`, 'word', 1.4);
+    FX.num({ x: Pl.pos.x, y: 2.5, z: Pl.pos.z }, `${cnNum(Pl.lv)}경지`, 'word', 1.4);
   }
 }
 
 /* ---- 机缘 ---- */
 /* s 流派：qi 剑气 · lei 雷火 · shen 身法 · yi 剑意 · gen 根基；同派机缘合计三重、六重各有共鸣 */
 const PERKS = [
-  { id: 'atk', s: 'gen', n: '锋锐', r: 1, max: 6, d: '剑锋加锐，攻击提高 15%。' }, { id: 'aspd', s: 'qi', n: '疾风', r: 1, max: 5, d: '剑走疾风，出剑速度提高 10%。' }, { id: 'crit', s: 'lei', n: '洞察', r: 1, max: 5, d: '目察破绽，暴击几率提高 8%。' },
-  { id: 'critd', s: 'lei', n: '破军', r: 2, max: 4, d: '一击破军，暴击伤害提高 35%。' }, { id: 'hp', s: 'gen', n: '金钟', r: 1, max: 6, d: '身如金钟，生命上限 +30，并回复等量生命。' }, { id: 'leech', s: 'gen', n: '汲魂', r: 2, max: 3, d: '剑饮敌血，造成伤害的 2.5% 化为生命。' },
-  { id: 'mspd', s: 'shen', n: '凌波', r: 1, max: 4, d: '踏波而行，移动速度 +8%，闪避更省体力。' }, { id: 'mp', s: 'gen', n: '归元', r: 1, max: 4, d: '气归丹田，内力上限 +20，回复加快 50%。' },
-  { id: 'wave', s: 'qi', n: '剑气外放', r: 2, max: 3, d: '轻剑末式「跃斩」与「破山」落地，荡出剑气，每重多一道。' }, { id: 'thunder', s: 'lei', n: '惊雷', r: 3, max: 3, d: '暴击时或有落雷应声而下，殃及周围敌人。' },
-  { id: 'frost', s: 'lei', n: '寒魄', r: 2, max: 3, d: '剑附寒魄，中者迟缓；对迟缓之敌伤害 +15%。' }, { id: 'burn', s: 'lei', n: '焚心', r: 2, max: 3, d: '命中即燃，三息之内灼烧不止。' },
-  { id: 'split', s: 'qi', n: '分光', r: 2, max: 2, d: '「剑气纵横」多荡出两道剑气。', need: 'qi' }, { id: 'jiangang', s: 'qi', n: '剑罡', r: 1, max: 3, d: '剑气凝罡，一切剑气伤害 +25%。' },
-  { id: 'cdr', s: 'qi', n: '剑心通明', r: 2, max: 3, d: '心念一动，剑技调息缩短 13%。' }, { id: 'shield', s: 'gen', n: '护体真气', r: 3, max: 3, d: '真气自凝成罩，每隔一阵可挡一次伤害。' },
-  { id: 'snow', s: 'shen', n: '踏雪', r: 3, max: 2, d: '贴刃闪避成「踏雪」，数息之内伤害 +40%。' }, { id: 'wolf', s: 'shen', n: '贪狼', r: 1, max: 3, d: '每斩一敌，回 4 点内力、2% 生命。' },
-  { id: 'youshen', s: 'shen', n: '游身', r: 2, max: 3, d: '踏雪判定更宽，「瞬斩」伤害 +30%。' },
-  { id: 'tingfeng', s: 'yi', n: '听风', r: 1, max: 3, d: '听风辨器，弹反时机放宽 0.05 息。' }, { id: 'huifeng', s: 'yi', n: '回锋', r: 2, max: 1, d: '弹反之后三息之内，下一剑必定暴击。' },
-  { id: 'duanyue', s: 'yi', n: '断岳', r: 2, max: 3, d: '处决伤害 +30%，处决回复的生命多 4%。' }, { id: 'jieli', s: 'yi', n: '借力', r: 1, max: 2, d: '反弹回去的飞物伤害翻倍；接住飞物回 10 点内力。' },
-  { id: 'gold', s: 'gen', n: '聚宝', r: 1, max: 3, d: '财气自聚，铜钱收获 +30%，拾取范围更广。' },
+  { id: 'atk', s: 'gen', n: '예리함', r: 1, max: 6, d: '검끝이 더 예리해졌습니다. 공격 +15%.' }, { id: 'aspd', s: 'qi', n: '질풍', r: 1, max: 5, d: '검이 질풍처럼 달립니다. 검 휘두르는 속도 +10%.' }, { id: 'crit', s: 'lei', n: '통찰', r: 1, max: 5, d: '눈으로 빈틈을 살펴 치명타 확률 +8%.' },
+  { id: 'critd', s: 'lei', n: '파군', r: 2, max: 4, d: '일격에 군을 깨뜨립니다. 치명타 피해 +35%.' }, { id: 'hp', s: 'gen', n: '금종', r: 1, max: 6, d: '몸이 금종 같아 생명 상한 +30, 같은 만큼 생명 회복.' }, { id: 'leech', s: 'gen', n: '급혼', r: 2, max: 3, d: '검이 적의 피를 마셔, 준 피해의 2.5%가 생명으로 바뀝니다.' },
+  { id: 'mspd', s: 'shen', n: '능파', r: 1, max: 4, d: '물결을 밟고 가며 이동 속도 +8%, 회피 체력 소모 감소.' }, { id: 'mp', s: 'gen', n: '귀원', r: 1, max: 4, d: '기가 단전으로 돌아가 내공 상한 +20, 회복 50% 빨라집니다.' },
+  { id: 'wave', s: 'qi', n: '검기 방출', r: 2, max: 3, d: '가벼운 검 끝 초식 「도약참」과 「파산」이 착지하며 검기를 퍼뜨리고, 중첩마다 한 줄기 추가.' }, { id: 'thunder', s: 'lei', n: '경뢰', r: 3, max: 3, d: '치명타 때 낙뢰가 떨어져 주변 적에게 피해를 줄 수 있습니다.' },
+  { id: 'frost', s: 'lei', n: '한백', r: 2, max: 3, d: '검에 한백이 깃들어 맞은 적이 느려집니다. 느려진 적에게 피해 +15%.' }, { id: 'burn', s: 'lei', n: '분심', r: 2, max: 3, d: '맞으면 불붙어 3초 동안 계속 탑니다.' },
+  { id: 'split', s: 'qi', n: '분광', r: 2, max: 2, d: '「검기종횡」으로 검기가 두 줄기 더 퍼집니다.', need: 'qi' }, { id: 'jiangang', s: 'qi', n: '검강', r: 1, max: 3, d: '검기가 강기로 응축됩니다. 모든 검기 피해 +25%.' },
+  { id: 'cdr', s: 'qi', n: '검심통명', r: 2, max: 3, d: '마음이 움직여 검기술 재사용 시간이 13% 줄었다.' }, { id: 'shield', s: 'gen', n: '호체진기', r: 3, max: 3, d: '진기가 저절로 응결해 방어막이 되어, 일정 간격마다 피해를 한 번 막습니다.' },
+  { id: 'snow', s: 'shen', n: '답설', r: 3, max: 2, d: '칼날에 붙어 회피하면 「답설」이 되어, 몇 초 동안 피해 +40%.' }, { id: 'wolf', s: 'shen', n: '탐랑', r: 1, max: 3, d: '적을 벨 때마다 내공 4, 생명 2% 회복.' },
+  { id: 'youshen', s: 'shen', n: '유신', r: 2, max: 3, d: '답설 판정이 넓어지고 「순참」 피해 +30%.' },
+  { id: 'tingfeng', s: 'yi', n: '청풍', r: 1, max: 3, d: '바람 소리로 병기를 가립니다. 패리 시점이 0.05초 넓어집니다.' }, { id: 'huifeng', s: 'yi', n: '회봉', r: 2, max: 1, d: '패리 후 3초 안에 다음 일검은 반드시 치명타입니다.' },
+  { id: 'duanyue', s: 'yi', n: '단악', r: 2, max: 3, d: '처형 피해 +30%, 처형으로 회복하는 생명 +4%.' }, { id: 'jieli', s: 'yi', n: '힘 빌리기', r: 1, max: 2, d: '튕겨낸 투사체의 피해가 두 배가 되고, 투사체를 받으면 내공 10을 회복합니다.' },
+  { id: 'gold', s: 'gen', n: '취보', r: 1, max: 3, d: '재물운이 저절로 모여 동전 획득 +30%, 줍는 범위가 넓어집니다.' },
 ];
 const SCHOOLS = {
-  qi: { n: '剑气', c: '#62cdb9', r3: '剑气伤害 +30%', r6: '每一式轻剑都带出一道小剑气' },
-  lei: { n: '雷火', c: '#e8874f', r3: '暴击必燃', r6: '每斩六剑，引落一道天雷' },
-  shen: { n: '身法', c: '#9fc7e8', r3: '闪避省三成体力，踏雪判定更宽', r6: '踏雪时留下残影，一息后炸开' },
-  yi: { n: '剑意', c: '#dcae55', r3: '格挡不再掉血', r6: '弹反时震出一圈剑气' },
-  gen: { n: '根基', c: '#c9b48a', r3: '生命上限 +15%', r6: '每章一次，濒死回魂' },
+  qi: { n: '검기', c: '#62cdb9', r3: '검기 피해 +30%', r6: '가벼운 검 초식마다 작은 검기가 함께 나갑니다' },
+  lei: { n: '뇌화', c: '#e8874f', r3: '치명타는 반드시 불붙음', r6: '여섯 번 벨 때마다 천둥 한 줄기를 끌어옵니다' },
+  shen: { n: '신법', c: '#9fc7e8', r3: '회피 체력 소모 30% 감소, 답설 판정 확대', r6: '답설 때 잔영이 남아 1초 뒤 폭발' },
+  yi: { n: '검의', c: '#dcae55', r3: '막아도 체력이 닳지 않음', r6: '패리할 때 검기가 한 바퀴 퍼집니다' },
+  gen: { n: '근기', c: '#c9b48a', r3: '생명 상한 +15%', r6: '장마다 한 번, 빈사 시 혼 회복' },
 };
 function reso(s) { let n = 0; for (const p of PERKS) if (p.s === s) n += pk(p.id); return n; }
 const cardW = r => [0, 55, 32, 14][r];
@@ -142,13 +142,13 @@ function wpick(a) { let tw = 0; for (const c of a) tw += c.w; let r = Math.rando
 function takeCard(c) {
   if (c.k !== 'perk') { learnSkill(c.id); Snd.ui(); return; }
   const p = c.p, s0 = reso(p.s); takePerk(p); const s1 = reso(p.s), S = SCHOOLS[p.s];
-  if (s0 < 3 && s1 >= 3) UI.toast(`${S.n}共鸣 · 三重：${S.r3}`, 3.2); else if (s0 < 6 && s1 >= 6) UI.toast(`${S.n}共鸣 · 六重：${S.r6}`, 3.2);
+  if (s0 < 3 && s1 >= 3) UI.toast(`${S.n} 공명 · 3중: ${S.r3}`, 3.2); else if (s0 < 6 && s1 >= 6) UI.toast(`${S.n} 공명 · 6중: ${S.r6}`, 3.2);
 }
 function takePerk(p) { Pl.perks[p.id] = pk(p.id) + 1; const hp0 = Pl.maxHp; recalc(); Pl.hp = Math.min(Pl.maxHp, Pl.hp + Math.max(0, Pl.maxHp - hp0)); if (p.id === 'mp') Pl.mp = Pl.maxMp; if (p.id === 'shield') { Pl.shield = 1; } Snd.ui(); }
 const SHOP = [
-  { id: 'sword', n: () => '锻剑 · ' + cnNum(Pl.swordLv + 1) + '重', cost: () => Math.round(55 * Math.pow(1.5, Pl.swordLv)), max: () => Pl.swordLv >= 9, d: () => { const nt = SWORD_TIERS[Math.min(4, Math.floor((Pl.swordLv + 1) / 2))]; return '攻击 +13%。' + (nt !== swordTier() ? `剑身一振，蜕作「${nt.name}」。` : `手中仍是「${swordTier().name}」`); }, buy: () => { Pl.swordLv++; recalc(); setSwordTier(); Snd.forge(); } },
-  { id: 'body', n: () => '淬体', cost: () => Math.round(45 * Math.pow(1.38, Pl.bodyLv)), max: () => Pl.bodyLv >= 10, d: () => '筋强骨壮，生命上限 +28，并回复三成生命。', buy: () => { Pl.bodyLv++; recalc(); healPlayer(Pl.maxHp * .3 + 28); Snd.ui(); } },
-  { id: 'qi', n: () => '养气', cost: () => Math.round(45 * Math.pow(1.38, Pl.qiLv)), max: () => Pl.qiLv >= 8, d: () => '吐纳养气，内力上限 +22，回复更快。', buy: () => { Pl.qiLv++; recalc(); Pl.mp = Pl.maxMp; Snd.ui(); } },
-  { id: 'pot', n: () => `回春丹（${Pl.pots}/5）`, cost: () => 35, max: () => Pl.pots >= 5, d: () => '一丸入喉，回复 45% 生命。', buy: () => { Pl.pots++; Snd.ui(); } },
+  { id: 'sword', n: () => '검 단련 · ' + cnNum(Pl.swordLv + 1) + '중', cost: () => Math.round(55 * Math.pow(1.5, Pl.swordLv)), max: () => Pl.swordLv >= 9, d: () => { const nt = SWORD_TIERS[Math.min(4, Math.floor((Pl.swordLv + 1) / 2))]; return '공격 +13%.' + (nt !== swordTier() ? `검신이 떨리며 「${nt.name}」(으)로 탈바꿈했다.` : `손에 든 것은 여전히 「${swordTier().name}」`); }, buy: () => { Pl.swordLv++; recalc(); setSwordTier(); Snd.forge(); } },
+  { id: 'body', n: () => '쇄체', cost: () => Math.round(45 * Math.pow(1.38, Pl.bodyLv)), max: () => Pl.bodyLv >= 10, d: () => '근골이 튼튼해져 생명 상한 +28, 생명 30% 회복.', buy: () => { Pl.bodyLv++; recalc(); healPlayer(Pl.maxHp * .3 + 28); Snd.ui(); } },
+  { id: 'qi', n: () => '양기', cost: () => Math.round(45 * Math.pow(1.38, Pl.qiLv)), max: () => Pl.qiLv >= 8, d: () => '호흡을 가다듬어 내공 상한 +22, 회복이 빨라집니다.', buy: () => { Pl.qiLv++; recalc(); Pl.mp = Pl.maxMp; Snd.ui(); } },
+  { id: 'pot', n: () => `회춘단(${Pl.pots}/5)`, cost: () => 35, max: () => Pl.pots >= 5, d: () => '알약을 삼키자 생명이 45% 회복됩니다.', buy: () => { Pl.pots++; Snd.ui(); } },
 ];
 

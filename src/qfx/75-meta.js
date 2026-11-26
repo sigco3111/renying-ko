@@ -39,14 +39,14 @@ const fmtTime = s => { s = Math.round(s); const m = Math.floor(s / 60); return `
 
 /* ---------------- 剑魄与藏经阁：死了也留得住的东西 ---------------- */
 const META = [
-  { id: 'gu', n: '根骨', max: 5, cost: l => 30 + 25 * l, d: l => `生命上限 +${6 * l}%` },
-  { id: 'jian', n: '剑骨', max: 5, cost: l => 30 + 25 * l, d: l => `攻击 +${5 * l}%` },
-  { id: 'dan', n: '丹房', max: 2, cost: l => 50 + 50 * l, d: l => `开局多带 ${l} 枚回春丹` },
-  { id: 'pan', n: '盘缠', max: 3, cost: l => 40 + 30 * l, d: l => `开局铜钱 +${40 * l}` },
-  { id: 'wu', n: '悟性', max: 2, cost: l => 80 + 70 * l, d: l => `每章可重掷破境卡 ${l} 次` },
-  { id: 'xia', n: '剑匣', max: 1, cost: () => 160, d: () => '开局 E 槽自带一门随机剑技' },
-  { id: 'yuan', n: '宿缘', max: 2, cost: l => 90 + 60 * l, d: l => `开局自带 ${l} 道随机机缘` },
-  { id: 'hun', n: '回魂', max: 1, cost: () => 220, d: () => '每局一次，濒死时回复三成生命' },
+  { id: 'gu', n: '근골', max: 5, cost: l => 30 + 25 * l, d: l => `생명 상한 +${6 * l}%` },
+  { id: 'jian', n: '검골', max: 5, cost: l => 30 + 25 * l, d: l => `공격 +${5 * l}%` },
+  { id: 'dan', n: '단방', max: 2, cost: l => 50 + 50 * l, d: l => `시작 시 회춘단 ${l}알 추가` },
+  { id: 'pan', n: '노잣돈', max: 3, cost: l => 40 + 30 * l, d: l => `시작 동전 +${40 * l}` },
+  { id: 'wu', n: '오성', max: 2, cost: l => 80 + 70 * l, d: l => `장마다 경지 돌파 카드를 ${l}번 다시 뽑을 수 있습니다` },
+  { id: 'xia', n: '검갑', max: 1, cost: () => 160, d: () => '시작 시 E 슬롯에 무작위 검기술 1개' },
+  { id: 'yuan', n: '숙연', max: 2, cost: l => 90 + 60 * l, d: l => `시작 시 무작위 기연 ${l}개` },
+  { id: 'hun', n: '회혼', max: 1, cost: () => 220, d: () => '한 판에 한 번, 빈사 시 생명 30% 회복' },
 ];
 const up = k => Save.load().up[k] || 0;
 function buyMeta(m) { const d = Save.load(), l = up(m.id); if (l >= m.max || d.soul < m.cost(l)) return false; d.soul -= m.cost(l); d.up[m.id] = l + 1; Save.write(); return true; }

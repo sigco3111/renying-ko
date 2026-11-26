@@ -191,7 +191,7 @@ function buildBamboo(scene) {
   for (const sx of [-2.5, 2.5]) for (const sz of [-1.6, 1.7]) mesh(cylG(.17, .19, 2.7, 10), redF, sx, 1.85, sz, sh);
   mesh(boxG(5.4, 2.6, .25), stoneD, 0, 1.8, -1.8, sh); for (const sx of [-2.6, 2.6]) mesh(boxG(.25, 2.6, 3.4), stoneD, sx, 1.8, -.1, sh);
   mesh(boxG(6.2, .35, 4.4), redF, 0, 3.3, 0, sh); const rf = roofMesh(7.8, 6.2, 1.7, tile); rf.position.set(0, 3.45, 0); sh.add(rf); mesh(boxG(3.2, .3, .3), tile, 0, 5.1, 0, sh);
-  const plq = new T.Mesh(new T.PlaneGeometry(2.1, .75), new T.MeshStandardMaterial({ map: canvasTex(texPlaque('土地祠', 420, 150)), roughness: .6, emissive: 0x2a1a08, emissiveIntensity: .6 })); plq.position.set(0, 3.08, 2.42); sh.add(plq);
+  const plq = new T.Mesh(new T.PlaneGeometry(2.1, .75), new T.MeshStandardMaterial({ map: canvasTex(texPlaque('토지사', 420, 150)), roughness: .6, emissive: 0x2a1a08, emissiveIntensity: .6 })); plq.position.set(0, 3.08, 2.42); sh.add(plq);
   mesh(boxG(2.2, .9, 1), wood, 0, .95, -.9, sh); const statM = stdMat(0x3c3d3a, { rough: .9 }); mesh(sphG(.17, 10, 8), statM, 0, 2.1, -1.3, sh); mesh(coneG(.36, 1.0, 10), statM, 0, 1.55, -1.3, sh); mesh(boxG(.9, .12, .5), statM, 0, 1.05, -1.3, sh);
   mesh(cylG(.22, .18, .26, 10), stdMat(0x6a5a3a, { metal: .6, rough: .5 }), 0, 1.53, -.6, sh);
   for (let i = -1; i <= 1; i++) { mesh(cylG(.012, .012, .5, 4), wood, i * .07, 1.85, -.6, sh); mesh(sphG(.025, 6, 4), glowM, i * .07, 2.1, -.6, sh); }
@@ -213,7 +213,7 @@ function buildBamboo(scene) {
   }
   /* 石碑：竹海听涛 */
   { const sg = group(-16, 0, -19, scene); sg.rotation.y = .5; mesh(boxG(1.9, .5, 1.1), stone, 0, .25, 0, sg); mesh(boxG(1.3, 2.9, .34), stoneD, 0, 1.95, 0, sg);
-    const face = new T.Mesh(new T.PlaneGeometry(1.2, 2.5), stdMat(0xffffff, { map: canvasTex(texStele('竹海听涛')), rough: .9 })); face.position.set(0, 1.98, .175); sg.add(face);
+    const face = new T.Mesh(new T.PlaneGeometry(1.2, 2.5), stdMat(0xffffff, { map: canvasTex(texStele('죽해청도')), rough: .9 })); face.position.set(0, 1.98, .175); sg.add(face);
     const cap = mesh(boxG(1.5, .22, .5), stone, 0, 3.5, 0, sg); cap.rotation.z = 0; shadowAll(sg); addCol(-16, -19, 1.1); }
 
   /* 萤火、落叶、地雾 */
