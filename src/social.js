@@ -559,7 +559,7 @@ function socStateText() {
   if (SOC.state === 'on') return `${SOC.online.length} 人在线`;
   if (SOC.state !== 'connecting') return '未连接';
   const p = SOC.peer;
-  if (p && p.open) return SOC.slot ? `正在换大厅（${SOC.slot + 1} 号）…` : '正在进大厅…';
+  if (p && p.open) return SOC.slot ? `대청 ${SOC.slot + 1}번으로 이동하는 중…` : '正在进大厅…';
   return Date.now() - SOC.startAt > 12000 ? '连不上牵线服务器，检查网络' : '连接中…';
 }
 function socRenderStatus() {

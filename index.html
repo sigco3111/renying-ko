@@ -5449,7 +5449,7 @@ window.RYBoot = (function () {
                   <button class="ghost small" data-mode="melee" type="button">群雄会战 · 8v8</button>
                   <button class="ghost small" data-mode="ctf" type="button">夺旗争锋 · 8v8</button>
                 </div>
-                <p class="tp-note">建房前选好；进了房间以后房主还能改，对面会跟着变。常规标准已融合动态天机异变。</p>
+                <p class="tp-note">방을 만들기 전에 정해 두세요. 방에 들어간 뒤에도 방장이 바꿀 수 있고 상대에게도 함께 적용됩니다. 표준 규칙에는 이미 동적 천기 변이가 포함되어 있습니다.</p>
               </details>
             </div>
           </div>
@@ -5699,7 +5699,7 @@ window.RYBoot = (function () {
         </div>
       </div>
       <div class="mb-footer">
-        <div class="mb-hint">按 <kbd>空格</kbd> 或 <kbd>回车</kbd> 快速进入点将台</div>
+        <div class="mb-hint"><kbd>스페이스</kbd> 또는 <kbd>엔터</kbd>를 눌러 선발 화면으로 입장</div>
         <button type="button" class="go mb-continue-btn" id="mbContinueBtn">进入点将台 (<span id="mbTimer">4</span>s)</button>
       </div>
     </div>
@@ -6231,7 +6231,7 @@ window.RYBoot = (function () {
       <div class="st-who" id="stWho"></div>
       <div class="st-line" id="stLine"></div>
       <div class="st-opts" id="stOpts"></div>
-      <div class="st-hint" id="stHint">点击或按空格继续 · Esc 跳过对话</div>
+      <div class="st-hint" id="stHint">클릭하거나 스페이스를 눌러 계속 · Esc로 대화 건너뛰기</div>
     </div>
   </div>
 
@@ -62505,9 +62505,9 @@ startMatch('demo');
 renderSaga();
 }
 const SC_SCHOOLS = {
-lei: { n: '雷', rgb: '255,220,90' }, shuang: { n: '霜', rgb: '140,220,255' }, xue: { n: '血', rgb: '255,90,100' },
-mo: { n: '墨', rgb: '170,170,200' }, feng: { n: '风', rgb: '120,230,180' }, jin: { n: '金', rgb: '240,200,110' },
-ying: { n: '影', rgb: '200,140,255' }, qi: { n: '气', rgb: '110,200,255' }, xian: { n: '险', rgb: '255,120,60' }, hero: { n: '侠', rgb: '233,196,106' }
+lei: { n: '뇌', rgb: '255,220,90' }, shuang: { n: '서리', rgb: '140,220,255' }, xue: { n: '혈', rgb: '255,90,100' },
+mo: { n: '먹', rgb: '170,170,200' }, feng: { n: '바람', rgb: '120,230,180' }, jin: { n: '금', rgb: '240,200,110' },
+ying: { n: '그림자', rgb: '200,140,255' }, qi: { n: '기', rgb: '110,200,255' }, xian: { n: '위험', rgb: '255,120,60' }, hero: { n: '협객', rgb: '233,196,106' }
 };
 const SC_RARITY = { c: { n: '凡品', w: 10 }, r: { n: '精品', w: 6 }, e: { n: '绝品', w: 2.5 }, x: { n: '险卷', w: 3 }, l: { n: '天书', w: 1.5 } };
 const SC_RESONANCE = 3;   // 同一流派凑够几卷触发流派共鸣
@@ -68747,7 +68747,7 @@ function socStateText() {
 if (SOC.state === 'on') return `${SOC.online.length} 人在线`;
 if (SOC.state !== 'connecting') return '未连接';
 const p = SOC.peer;
-if (p && p.open) return SOC.slot ? `正在换大厅（${SOC.slot + 1} 号）…` : '正在进大厅…';
+if (p && p.open) return SOC.slot ? `대청 ${SOC.slot + 1}번으로 이동하는 중…` : '正在进大厅…';
 return Date.now() - SOC.startAt > 12000 ? '连不上牵线服务器，检查网络' : '连接中…';
 }
 function socRenderStatus() {

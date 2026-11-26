@@ -13,9 +13,9 @@
 //   dash / esc / jump / skill(f, o, slot) / ult / atk(f, o, name) / parry / land(f, o, vy) / start / tick(f, o) / clear(f)
 //   proj(f, p) 主人生成飞行道具时改它   jg(f) 精准招架窗口（秒）   spd(f) 移速倍数   cd(f) 技能冷却额外流速
 const SC_SCHOOLS = {
-  lei: { n: '雷', rgb: '255,220,90' }, shuang: { n: '霜', rgb: '140,220,255' }, xue: { n: '血', rgb: '255,90,100' },
-  mo: { n: '墨', rgb: '170,170,200' }, feng: { n: '风', rgb: '120,230,180' }, jin: { n: '金', rgb: '240,200,110' },
-  ying: { n: '影', rgb: '200,140,255' }, qi: { n: '气', rgb: '110,200,255' }, xian: { n: '险', rgb: '255,120,60' }, hero: { n: '侠', rgb: '233,196,106' }
+  lei: { n: '뇌', rgb: '255,220,90' }, shuang: { n: '서리', rgb: '140,220,255' }, xue: { n: '혈', rgb: '255,90,100' },
+  mo: { n: '먹', rgb: '170,170,200' }, feng: { n: '바람', rgb: '120,230,180' }, jin: { n: '금', rgb: '240,200,110' },
+  ying: { n: '그림자', rgb: '200,140,255' }, qi: { n: '기', rgb: '110,200,255' }, xian: { n: '위험', rgb: '255,120,60' }, hero: { n: '협객', rgb: '233,196,106' }
 };
 const SC_RARITY = { c: { n: '凡品', w: 10 }, r: { n: '精品', w: 6 }, e: { n: '绝品', w: 2.5 }, x: { n: '险卷', w: 3 }, l: { n: '天书', w: 1.5 } };
 const SC_RESONANCE = 3;   // 同一流派凑够几卷触发流派共鸣
