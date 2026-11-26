@@ -44931,7 +44931,7 @@ if (creditT > 0) {
 creditT -= real;
 if (creditT <= 0 && creditPending) {
 creditPending = false;
-const rTxt = isRaid() ? `同袍肉鸽 · 第 ${M.raidWave || 1} 重魔劫！` : (M.mode === 'melee' ? `群雄会战 · ${M.teamSize || 5}v${M.teamSize || 5} 开战！` : M.mode === 'ctf' ? '夺旗争锋 · 开战！' : M.mode === 'gauntlet' ? '无尽试炼 · 开战！' : M.mode === 'tag3' ? `第${CN[M.round] || M.round}局 · 开战！` : (M.mode === 'mayhem' ? '通天神决 · 开战！' : M.mode === 'cuju' ? '墨球蹴鞠 · 开球' : (M.mode === 'watch2v2' ? '天道 2v2 · 演武开战！' : `第${CN[M.round] || M.round}回合`)));
+const rTxt = isRaid() ? `同袍肉鸽 · 第 ${M.raidWave || 1} 重魔劫！` : (M.mode === 'melee' ? `群雄会战 · ${M.teamSize || 5}대${M.teamSize || 5} 开战！` : M.mode === 'ctf' ? '夺旗争锋 · 开战！' : M.mode === 'gauntlet' ? '无尽试炼 · 开战！' : M.mode === 'tag3' ? `第${CN[M.round] || M.round}局 · 开战！` : (M.mode === 'mayhem' ? '通天神决 · 开战！' : M.mode === 'cuju' ? '墨球蹴鞠 · 开球' : (M.mode === 'watch2v2' ? '天道 2v2 · 演武开战！' : `第${CN[M.round] || M.round}回合`)));
 say(rTxt, 1.1);
 SFX.gong();
 }
@@ -50464,7 +50464,7 @@ ctx.fillStyle = '#6fe0ff'; ctx.fillText(`${ally}${score[allyTeam]}/${target}`, c
 ctx.fillStyle = '#ff7878'; ctx.fillText(`${enemy}${score[enemyTeam]}/${target}`, cx + gap + bw / 2, top + bh + 24);
 ctx.fillStyle = '#e9c46a';
 }
-ctx.fillText(`${sz}v${sz}`, cx, top + 30);
+ctx.fillText(`${sz}대${sz}`, cx, top + 30);
 drawLargeMiniMap(top, cx);
 drawLocalCard();
 if (M.cmd) drawCmdPanel();
@@ -61218,7 +61218,7 @@ human[0].clear();
 paused = false;
 showScreen(null);
 startRound();
-say(`群雄会战 · ${sz}v${sz}`, 1.4);
+say(`群雄会战 · ${sz}대${sz}`, 1.4);
 }
 const ctfOn = () => M.mode === 'ctf' || !!(typeof netRoom === 'function' && netRoom() && netRoom().rule === 'ctf');
 function ctfRoundInit() {
@@ -61342,7 +61342,7 @@ human[0].clear();
 paused = false;
 showScreen(null);
 startRound();
-say(`夺旗争锋 · ${sz}v${sz}`, 1.4);
+say(`夺旗争锋 · ${sz}대${sz}`, 1.4);
 }
 const gauntletOn = () => M.mode === 'gauntlet';
 const GAUNTLET_BEST_KEY = 'renying-gauntlet-best';
@@ -61538,7 +61538,7 @@ human[0].clear();
 paused = false;
 showScreen(null);
 startRound();
-say(`${cvT('四象争锋')} · ${sz}v${sz}v${sz}v${sz}`, 1.4);
+say(`${cvT('四象争锋')} · ${sz}대${sz}대${sz}대${sz}`, 1.4);
 }
 function drawQuadField() {
 if (!quadOn() || !M.quad) return;
@@ -61579,7 +61579,7 @@ ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
 ctx.font = `700 26px ${BODY_FONT}`; ctx.fillStyle = M.timer < 15 ? '#ff7868' : '#efe8d8';
 ctx.fillText(Math.ceil(M.timer), cx, top + 12);
 ctx.font = `600 11px ${BODY_FONT}`; ctx.fillStyle = '#e9c46a';
-ctx.fillText(`${M.teamSize}v${M.teamSize}v${M.teamSize}v${M.teamSize}`, cx, top + 30);
+ctx.fillText(`${M.teamSize}대${M.teamSize}대${M.teamSize}대${M.teamSize}`, cx, top + 30);
 ctx.restore();
 }
 function quadShowEnd(w) {
@@ -65341,9 +65341,9 @@ else if (bpMode === 'cuju' || bpMode === 'cuju2v2') modePrefix = bpMode === 'cuj
 else if (bpMode === 'koth' || bpMode === 'koth2v2') modePrefix = bpMode === 'koth2v2' ? '2v2 灵坛争锋 · ' : '灵坛争锋 · ';
 else if (bpMode === 'party') modePrefix = '江湖百戏 · ';
 else if (bpMode === 'bastion') modePrefix = '天枢守境 · ';
-else if (bpMode === 'melee') modePrefix = `群雄会战 ${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)}v${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)} · `;
+else if (bpMode === 'melee') modePrefix = `群雄会战 ${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)}대${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)} · `;
 else if (bpMode === 'quad') modePrefix = '四象争锋 · ';
-else if (bpMode === 'ctf') modePrefix = `夺旗争锋 ${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)}v${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)} · `;
+else if (bpMode === 'ctf') modePrefix = `夺旗争锋 ${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)}대${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)} · `;
 else if (bpMode === 'mayhem') modePrefix = '通天神决 · ';
 else if (bpMode === 'tag3') modePrefix = '3v3车轮 · ';
 else if (bpMode === 'tower') modePrefix = '问剑密卷 · ';

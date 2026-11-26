@@ -146,7 +146,7 @@ function startQuad(teamSize = 4, heroIdx = 0, level = 'normal') {
   paused = false;
   showScreen(null);
   startRound();
-  say(`${cvT('四象争锋')} · ${sz}v${sz}v${sz}v${sz}`, 1.4);
+  say(`${cvT('四象争锋')} · ${sz}대${sz}대${sz}대${sz}`, 1.4);
 }
 
 // 四个出生点在地上画一圈队色，让人一眼看出各队的地盘
@@ -191,7 +191,7 @@ function drawHUDQuad(top, cx) {
   ctx.font = `700 26px ${BODY_FONT}`; ctx.fillStyle = M.timer < 15 ? '#ff7868' : '#efe8d8';
   ctx.fillText(Math.ceil(M.timer), cx, top + 12);
   ctx.font = `600 11px ${BODY_FONT}`; ctx.fillStyle = '#e9c46a';
-  ctx.fillText(`${M.teamSize}v${M.teamSize}v${M.teamSize}v${M.teamSize}`, cx, top + 30);
+  ctx.fillText(`${M.teamSize}대${M.teamSize}대${M.teamSize}대${M.teamSize}`, cx, top + 30);
   ctx.restore();
 }
 

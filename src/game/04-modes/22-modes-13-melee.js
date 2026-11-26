@@ -79,5 +79,5 @@ function startMelee(teamSize = 5, heroIdx = 0, level = 'normal', mut = 'normal',
   paused = false;
   showScreen(null);
   startRound();
-  say(`群雄会战 · ${sz}v${sz}`, 1.4);
+  say(`群雄会战 · ${sz}대${sz}`, 1.4);
 }

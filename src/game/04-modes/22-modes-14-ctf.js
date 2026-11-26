@@ -132,5 +132,5 @@ function startCtf(teamSize = 4, heroIdx = 0, level = 'normal', drafted = null, m
   paused = false;
   showScreen(null);
   startRound();
-  say(`夺旗争锋 · ${sz}v${sz}`, 1.4);
+  say(`夺旗争锋 · ${sz}대${sz}`, 1.4);
 }

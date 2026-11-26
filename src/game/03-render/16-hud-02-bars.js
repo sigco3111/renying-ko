@@ -309,7 +309,7 @@ function drawHUDLargeTeam() {
     ctx.fillStyle = '#ff7878'; ctx.fillText(`${enemy}${score[enemyTeam]}/${target}`, cx + gap + bw / 2, top + bh + 24);
     ctx.fillStyle = '#e9c46a';
   }
-  ctx.fillText(`${sz}v${sz}`, cx, top + 30);
+  ctx.fillText(`${sz}대${sz}`, cx, top + 30);
   drawLargeMiniMap(top, cx);
   drawLocalCard();
   if (M.cmd) drawCmdPanel();

@@ -95,7 +95,7 @@ function frameBody(now) {
       creditT -= real;
       if (creditT <= 0 && creditPending) {
         creditPending = false;
-        const rTxt = isRaid() ? `同袍肉鸽 · 第 ${M.raidWave || 1} 重魔劫！` : (M.mode === 'melee' ? `群雄会战 · ${M.teamSize || 5}v${M.teamSize || 5} 开战！` : M.mode === 'ctf' ? '夺旗争锋 · 开战！' : M.mode === 'gauntlet' ? '无尽试炼 · 开战！' : M.mode === 'tag3' ? `第${CN[M.round] || M.round}局 · 开战！` : (M.mode === 'mayhem' ? '通天神决 · 开战！' : M.mode === 'cuju' ? '墨球蹴鞠 · 开球' : (M.mode === 'watch2v2' ? '天道 2v2 · 演武开战！' : `第${CN[M.round] || M.round}回合`)));
+        const rTxt = isRaid() ? `同袍肉鸽 · 第 ${M.raidWave || 1} 重魔劫！` : (M.mode === 'melee' ? `群雄会战 · ${M.teamSize || 5}대${M.teamSize || 5} 开战！` : M.mode === 'ctf' ? '夺旗争锋 · 开战！' : M.mode === 'gauntlet' ? '无尽试炼 · 开战！' : M.mode === 'tag3' ? `第${CN[M.round] || M.round}局 · 开战！` : (M.mode === 'mayhem' ? '通天神决 · 开战！' : M.mode === 'cuju' ? '墨球蹴鞠 · 开球' : (M.mode === 'watch2v2' ? '天道 2v2 · 演武开战！' : `第${CN[M.round] || M.round}回合`)));
         say(rTxt, 1.1);
         SFX.gong();
       }

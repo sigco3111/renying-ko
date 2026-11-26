@@ -172,9 +172,9 @@ function renderBP() {
   else if (bpMode === 'koth' || bpMode === 'koth2v2') modePrefix = bpMode === 'koth2v2' ? '2v2 灵坛争锋 · ' : '灵坛争锋 · ';
   else if (bpMode === 'party') modePrefix = '江湖百戏 · ';
   else if (bpMode === 'bastion') modePrefix = '天枢守境 · ';
-  else if (bpMode === 'melee') modePrefix = `群雄会战 ${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)}v${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)} · `;
+  else if (bpMode === 'melee') modePrefix = `群雄会战 ${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)}대${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)} · `;
   else if (bpMode === 'quad') modePrefix = '四象争锋 · ';
-  else if (bpMode === 'ctf') modePrefix = `夺旗争锋 ${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)}v${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)} · `;
+  else if (bpMode === 'ctf') modePrefix = `夺旗争锋 ${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)}대${(bpCustomOpts && bpCustomOpts.teamSize) || (BP.picks[0] ? BP.picks[0].length : 5)} · `;
   else if (bpMode === 'mayhem') modePrefix = '通天神决 · ';
   else if (bpMode === 'tag3') modePrefix = '3v3车轮 · ';
   else if (bpMode === 'tower') modePrefix = '问剑密卷 · ';
